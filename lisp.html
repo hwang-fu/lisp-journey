@@ -85,9 +85,13 @@
         font-family: "KaiTi", "楷体", "STKaiti", "Kaiti SC", serif;
     }
 
+    li {
+        list-style-type: disc;
+    }
+
     code {
         color: purple;
-        font-weight: bold;
+        /* font-weight: bold; */
     }
 </style>
 <!-- * * * * * * * * * * * * * * -->
@@ -100,7 +104,406 @@
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3></h3>
+<h3>How to use SBCL?</h3>
+<ol>
+    <li>To run a <i>.lisp</i> or <i>.lsp</i> file:<br/><br/>
+        <code>sbcl --script &lt;filename&gt;</code></li>
+    <br/>
+    <br/>
+    <li>To load a <i>.lisp</i> or <i>.lsp</i> file:<br/><br/>
+        <code>sbcl --load &lt;filename&gt;</code></li>
+    <br/>
+    <br/>
+    <li>To load a <i>.lisp</i> or <i>.lsp</i> file inside the SBCL prompt:<br/><br/>
+        <code>* (load "hello.lisp")</code></li>
+    <br/>
+    <br/>
+    <li>To quit inside the SBCL prompt:<br/><br/>
+        <code>* (quit)</code><br/>
+        <code>* (sb-ext:quit)</code></li>
+    <br/>
+</ol>
+<br/>
+<!-- * * * * * * * * * * * * * * -->
+
+
+<hr/>
+
+
+<!-- * * * * * * * * * * * * * * -->
+<h3>Hello World in Common Lisp</h3>
+<ol>
+    <li>Genre 1:<br/><br/>
+        <code>(write-line "Hello World!")</code>
+    </li>
+    <br/>
+    <br/>
+    <li>Genre 2:
+<pre><code>
+(defun hello-world()
+    (format t "Hello World!"))
+
+(hello-world)
+</code></pre>
+    </li>
+    <br/>
+</ol>
+<br/>
+<!-- * * * * * * * * * * * * * * -->
+
+
+<hr/>
+
+
+<!-- * * * * * * * * * * * * * * -->
+<h3>Lisp Uses Prefix Notation</h3>
+<ol>
+    <li>In prefix notation, operators are written before their operands.</li>
+<pre><code>
+a * (b + c) / d
+(/ (* a (+ b c)) d)
+</pre></code>
+    <br/>
+</ol>
+<br/>
+<!-- * * * * * * * * * * * * * * -->
+
+
+<hr/>
+
+
+<!-- * * * * * * * * * * * * * * -->
+<h3>Basic Building Blocks in Lisp</h3>
+<ol>
+    <li>Lisp programs are made of three basic building blocks.</li>
+    <br/>
+    <ul>
+        <li>atom</li>
+        <br/>
+        <li>list</li>
+        <br/>
+        <li>string</li>
+        <br/>
+    </ul>
+    <br/>
+    <br/>
+    <li>An <b>atom</b> is a number or a string of contiguous characters.</li>
+<pre><code>
+    hello-from-lisp
+    12300009
+    *hello*
+    block#123
+    abc123
+</code></pre>
+    <br/>
+    <br/>
+    <li>A <b>list</b> is a sequence of atoms and other lists enclosed in parentheses.</li>
+<pre><code>
+    (this is a list)
+    (a (a b c) d e f)
+    (Sun Mon Tue Wed Thu Fri Sat)
+    ( )
+</code></pre>
+    <br/>
+    <br/>
+    <li>A <b>string</b> is a group of characters enclosed in double quotation mark ( " )</li>
+<pre><code>
+    "here is a string"
+    "hello"
+    "Please enter a number:"
+    " "
+</code></pre>
+    <br/>
+</ol>
+<br/>
+<!-- * * * * * * * * * * * * * * -->
+
+
+<hr/>
+
+
+<!-- * * * * * * * * * * * * * * -->
+<h3>Comments</h3>
+<ol>
+    <li>The semicolon <code>;</code> indicates a line-comment.</li>
+    <br/>
+</ol>
+<br/>
+<!-- * * * * * * * * * * * * * * -->
+
+
+<hr/>
+
+
+<!-- * * * * * * * * * * * * * * -->
+<h3>Data Types</h3>
+<ol>
+    <li>Lisp data types can be categorized as:</li>
+    <ul>
+        <br/>
+        <li>Scalar types (e.g., number, characters, symbols, ...)</li>
+        <br/>
+        <li>Data structures (e.g., list, vector, bit-vector, ...)</li>
+    </ul>
+    <br/>
+    <br/>
+    <li>The <code>type-of</code> function returns the data type of a given object.</li>
+<pre><code>
+(let ((x 42) (y "hello"))
+    (format t "~%The type of X is: ~a" (type-of x))
+    (format t "~%The type of Y is: ~a" (type-of y)))
+</code></pre>
+    <br/>
+    <br/>
+    <li>Using scalar data types:</li>
+<pre><code>
+    ; Set values to variables.
+    (setq x 10)
+    (setq y 34.567)
+    (setq ch nil)
+    (setq n 123.78)
+    (setq bg 11.0e+4)
+    (setq r 124/2)
+    (setq q (/ 124 2))
+
+    ; Print values of variables.
+    (print x)
+    (print y)
+    (print ch)
+    (print n)
+    (print bg)
+    (print r)
+    (print q)
+</code></pre>
+    <br/>
+    <br/>
+    <li>Checking types of variables:</li>
+<pre><code>
+    ; Define variables and set values.
+    (defvar x 10)
+    (defvar y 34.567)
+    (defvar ch nil)
+    (defvar n 123.78)
+    (defvar bg 11.0e+4)
+    (defvar r 124/2)
+
+    ; Print types of variables.
+    (print (type-of x))
+    (print (type-of y))
+    (print (type-of n))
+    (print (type-of ch))
+    (print (type-of bg))
+    (print (type-of r))</code></pre>
+    <br/>
+</ol>
+<br/>
+<!-- * * * * * * * * * * * * * * -->
+
+
+<hr/>
+
+
+<!-- * * * * * * * * * * * * * * -->
+<h3>Macro</h3>
+<ol>
+    <li><b>Macros</b> allow you to extend the syntax of standard Lisp.</li>
+    <br/>
+    <br/>
+    <li>Technically, a macro is a function that takes an s-expression as arguments and returns a Lisp form, which is then evaluated.</li>
+    <br/>
+    <br/>
+    <li>Syntax for defining a named macro:</li>
+<pre><code>
+    (defmacro &lt;macro-name&gt; (&lt;param-list&gt;)
+        "optional document string."
+        &lt;body&gt;)
+</code></pre>
+    <br/>
+    <br/>
+    <li>Simple Example:</li>
+<pre><code>
+    (defmacro assign10 (num)
+        "A macro that sets a given variable to value 10"
+        (setq num 10)
+        (print num))
+
+    (seq x 100)
+    (print x)       ; 100
+    (assign10 x)    ; 10
+    (print x)       ; 100
+</code></pre>
+    <br/>
+    <br/>
+</ol>
+<br/>
+<!-- * * * * * * * * * * * * * * -->
+
+
+<hr/>
+
+
+<!-- * * * * * * * * * * * * * * -->
+<h3>Variable</h3>
+<ol>
+    <li>Global variables are generally declared using the <code>defvar</code> construct.</li>
+<pre><code>
+    ; Define a global variable x with a value of `100`
+    (defvar x 100)
+    ; Print the value of `x`
+    (print x)
+</code></pre>
+    <br/>
+    <li>If there is no type declaration for variables in Lisp, you can directly specify a value for a symbol with the <code>setq</code> construct.</li>
+    <br/>
+    <li>There are two constructs: <code>let</code> and <code>prog</code>(no longer commonly used) for creating local variables.</li>
+    <br/>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
+<!-- * * * * * * * * * * * * * * -->
+
+
+<hr/>
+
+
+<!-- * * * * * * * * * * * * * * -->
+<h3>Escape Character</h3>
+<ol>
+    <li>A backslash ( <code>\</code> ) escapes the next character, causing it to be included in the string regardless of what it is.</li>
+<pre><code>
+    "foo"       ; foo
+    "f\oo"      ; foo,  because `\o` escapes `o`, treating it iterally like the character `o`.
+    "fo\\o"     ; fo\o
+    "fo\'o"     ; fo'o
+    "fo\"o"     ; fo"o
+</code></pre>
+</ol>
+<br/>
+<!-- * * * * * * * * * * * * * * -->
+
+
+<hr/>
+
+
+<!-- * * * * * * * * * * * * * * -->
+<h3>Basics about Symbol</h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
+<!-- * * * * * * * * * * * * * * -->
+
+
+<hr/>
+
+
+<!-- * * * * * * * * * * * * * * -->
+<h3>Keyword Symbols</h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
+<!-- * * * * * * * * * * * * * * -->
+
+
+<hr/>
+
+
+<!-- * * * * * * * * * * * * * * -->
+<h3><u>if</u> Statement</h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
+<!-- * * * * * * * * * * * * * * -->
+
+
+<hr/>
+
+
+<!-- * * * * * * * * * * * * * * -->
+<h3>Basics about <u>quote</u></h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
+<!-- * * * * * * * * * * * * * * -->
+
+
+<hr/>
+
+
+<!-- * * * * * * * * * * * * * * -->
+<h3>Basics about <u>let</u></h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
+<!-- * * * * * * * * * * * * * * -->
+
+
+<hr/>
+
+
+<!-- * * * * * * * * * * * * * * -->
+<h3>True, False and Equality</h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
+<!-- * * * * * * * * * * * * * * -->
+
+
+<hr/>
+
+
+<!-- * * * * * * * * * * * * * * -->
+<h3>Basics about <u>cond</u></h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
+<!-- * * * * * * * * * * * * * * -->
+
+
+<hr/>
+
+
+<!-- * * * * * * * * * * * * * * -->
+<h3>Basics about Functions</h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
 <!-- * * * * * * * * * * * * * * -->
 
 
@@ -109,6 +512,13 @@
 
 <!-- * * * * * * * * * * * * * * -->
 <h3></h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
 <!-- * * * * * * * * * * * * * * -->
 
 
@@ -117,6 +527,13 @@
 
 <!-- * * * * * * * * * * * * * * -->
 <h3></h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
 <!-- * * * * * * * * * * * * * * -->
 
 
@@ -125,6 +542,13 @@
 
 <!-- * * * * * * * * * * * * * * -->
 <h3></h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
 <!-- * * * * * * * * * * * * * * -->
 
 
@@ -133,6 +557,13 @@
 
 <!-- * * * * * * * * * * * * * * -->
 <h3></h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
 <!-- * * * * * * * * * * * * * * -->
 
 
@@ -141,6 +572,13 @@
 
 <!-- * * * * * * * * * * * * * * -->
 <h3></h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
 <!-- * * * * * * * * * * * * * * -->
 
 
@@ -149,6 +587,13 @@
 
 <!-- * * * * * * * * * * * * * * -->
 <h3></h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
 <!-- * * * * * * * * * * * * * * -->
 
 
@@ -157,6 +602,13 @@
 
 <!-- * * * * * * * * * * * * * * -->
 <h3></h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
 <!-- * * * * * * * * * * * * * * -->
 
 
@@ -165,6 +617,13 @@
 
 <!-- * * * * * * * * * * * * * * -->
 <h3></h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
 <!-- * * * * * * * * * * * * * * -->
 
 
@@ -173,6 +632,13 @@
 
 <!-- * * * * * * * * * * * * * * -->
 <h3></h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
 <!-- * * * * * * * * * * * * * * -->
 
 
@@ -181,6 +647,13 @@
 
 <!-- * * * * * * * * * * * * * * -->
 <h3></h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
 <!-- * * * * * * * * * * * * * * -->
 
 
@@ -189,6 +662,13 @@
 
 <!-- * * * * * * * * * * * * * * -->
 <h3></h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
 <!-- * * * * * * * * * * * * * * -->
 
 
@@ -197,134 +677,13 @@
 
 <!-- * * * * * * * * * * * * * * -->
 <h3></h3>
-<!-- * * * * * * * * * * * * * * -->
-
-
-<hr/>
-
-
-<!-- * * * * * * * * * * * * * * -->
-<h3></h3>
-<!-- * * * * * * * * * * * * * * -->
-
-
-<hr/>
-
-
-<!-- * * * * * * * * * * * * * * -->
-<h3></h3>
-<!-- * * * * * * * * * * * * * * -->
-
-
-<hr/>
-
-
-<!-- * * * * * * * * * * * * * * -->
-<h3></h3>
-<!-- * * * * * * * * * * * * * * -->
-
-
-<hr/>
-
-
-<!-- * * * * * * * * * * * * * * -->
-<h3></h3>
-<!-- * * * * * * * * * * * * * * -->
-
-
-<hr/>
-
-
-<!-- * * * * * * * * * * * * * * -->
-<h3></h3>
-<!-- * * * * * * * * * * * * * * -->
-
-
-<hr/>
-
-
-<!-- * * * * * * * * * * * * * * -->
-<h3></h3>
-<!-- * * * * * * * * * * * * * * -->
-
-
-<hr/>
-
-
-<!-- * * * * * * * * * * * * * * -->
-<h3></h3>
-<!-- * * * * * * * * * * * * * * -->
-
-
-<hr/>
-
-
-<!-- * * * * * * * * * * * * * * -->
-<h3></h3>
-<!-- * * * * * * * * * * * * * * -->
-
-
-<hr/>
-
-
-<!-- * * * * * * * * * * * * * * -->
-<h3></h3>
-<!-- * * * * * * * * * * * * * * -->
-
-
-<hr/>
-
-
-<!-- * * * * * * * * * * * * * * -->
-<h3></h3>
-<!-- * * * * * * * * * * * * * * -->
-
-
-<hr/>
-
-
-<!-- * * * * * * * * * * * * * * -->
-<h3></h3>
-<!-- * * * * * * * * * * * * * * -->
-
-
-<hr/>
-
-
-<!-- * * * * * * * * * * * * * * -->
-<h3></h3>
-<!-- * * * * * * * * * * * * * * -->
-
-
-<hr/>
-
-
-<!-- * * * * * * * * * * * * * * -->
-<h3></h3>
-<!-- * * * * * * * * * * * * * * -->
-
-
-<hr/>
-
-
-<!-- * * * * * * * * * * * * * * -->
-<h3></h3>
-<!-- * * * * * * * * * * * * * * -->
-
-
-<hr/>
-
-
-<!-- * * * * * * * * * * * * * * -->
-<h3></h3>
-<!-- * * * * * * * * * * * * * * -->
-
-
-<hr/>
-
-
-<!-- * * * * * * * * * * * * * * -->
-<h3></h3>
+<ol>
+    <li></li>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
 <!-- * * * * * * * * * * * * * * -->
 
 
