@@ -895,6 +895,15 @@ a * (b + c) / d
         However, <b>DEFUN</b> automatically wraps the whole function body in a block with the same name as the function.<br/>
         So, evaluating a <b>RETURN-FROM</b> with the <u>name of the function</u> and the <u>value</u> you want to return will cause the function to immediately exit with that value.</li>
     </li>
+<pre><code>
+(defun first-positive (xs)
+  (dolist (x xs)
+    (when (plusp x)
+      (return-from first-positive x)))
+  nil)
+
+(first-positive '(-3 -2 0 4 -1)); 4
+</code></pre>
     <br/>
 </ol>
 <br/>
