@@ -758,7 +758,8 @@ a * (b + c) / d
     <br/>
     <br/>
     <li>If the function takes no arguments, the list is empty, written as <code>()</code>.<br/>
-        Different flavors of parameters handle <i>required</i>, <i>optional</i>, <i>multiple</i>, and <i>keyword</i> arguments.</li>
+        Different flavors of parameters handle <u>required</u>, <u>optional</u>, <u>rest</u>, and <u>keyword</u> arguments.
+    </li>
     <br/>
     <br/>
     <li>If a string literal follows the parameter list,
@@ -775,13 +776,16 @@ a * (b + c) / d
 </code></pre>
     <br/>
     <br/>
-    <li>When a parameter list is a simple list of variable names, as in <code>verbose-sum</code>, the parameters are called <i>required parameters</i>.<br/>
+    <li>
+        When a parameter list is a simple list of variable names, as in <code>verbose-sum</code>, the parameters are called <u>required parameters</u>.<br/>
         If a function is called with too few or too many arguments, Lisp will signal an error.</li>
     <br/>
     <br/>
-    <li>To define a function with <i>optional parameters</i>,<br/>
-        after the names of any <i>required parameters</i>,
-        place the symbol <b>&amp;optional</b> followed by the name(s) of the <i>optional parameters</i>.</li>
+    <li>
+        To define a function with <u>optional parameters</u>,<br/>
+        after the names of any <u>required parameters</u>,
+        place the symbol <b>&amp;optional</b> followed by the name(s) of the <u>optional parameters</u>.
+    </li>
 <pre><code>
 (defun foo (a b &amp;optional c d)
   (list a b c d))
@@ -819,7 +823,8 @@ a * (b + c) / d
     <br/>
     <br/>
     <li>Lisp lets you include a catchall parameter after the symbol <b>&amp;rest</b>.<br/>
-        It should be placed after the <i>required parameter(s)</i> and <i>optional parameter(s)</i>.</li>
+        It should be placed after the <u>required parameter(s)</u> and <u>optional parameter(s)</u>.
+    </li>
 <pre><code>
 (defun sum (&amp;rest nums)
   (reduce #'+ nums :initial-value 0))
@@ -829,7 +834,7 @@ a * (b + c) / d
 </code></pre>
     <br/>
     <br/>
-    <li>To give a function keyword parameters, after any <i>required</i>, <i>optional</i>, and <i>rest</i> parameters,<br/>
+    <li>To give a function keyword parameters, after any <u>required</u>, <u>optional</u>, and <u>rest</u> parameters,<br/>
         you include the symbol <b>&amp;key</b> and then any number of keyword parameter specifiers.</li>
 <pre><code>
 (defun foo (&amp;key a b c)
