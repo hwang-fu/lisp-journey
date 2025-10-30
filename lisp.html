@@ -78,6 +78,10 @@
         color: grey;
     }
 
+    .hl-black-fg {
+        color: black;
+    }
+
     .red-underline {
         text-decoration-line: underline;
         text-decoration-color: red;
@@ -94,8 +98,9 @@
     }
 
     code {
-        color: purple;
-        /* font-weight: bold; */
+        /*color: purple;*/
+        font-family: "FiraCode Nerd Font";
+        font-size: 11.0
     }
 </style>
 <!-- * * * * * * * * * * * * * * -->
@@ -368,14 +373,18 @@ a * (b + c) / d
         If you did NOT include an initial value for a variable, it is assigned <code>nil</code>.</li>
 <pre><code>
     (let ((var-1 val-1) (var-2 val-2) ... (var-n val-n))
-      &lt;s-expression&gt;)
+      &lt;s-expression&gt;
+      &lt;s-expression&gt;
+      ...)
 </code></pre>
     <br/>
     <br/>
     <li>The <code>prog</code> construct has the following syntax.</li>
 <pre><code>
     (prog (var-1 var-2 ... var-n)
-      &lt;s-expression&gt;)
+      &lt;s-expression&gt;
+      &lt;s-expression&gt;
+      ...)
 </code></pre>
     <br/>
 </ol>
@@ -456,7 +465,7 @@ a * (b + c) / d
         The symbol names are <u>case-insensitive</u>,
         it converts all unescaped characters to upper case,
         like <i>foo</i>, <i>Foo</i>, and <i>FOO</i> are the same.<br/>
-        Furthermore, the f\o\o and |foo| will both be read as foo.</li>
+        However, the f\o\o and |foo| will preserve the case, they are read as <i>foo</i>.</li>
     <br/>
 </ol>
 <br/>
@@ -566,6 +575,8 @@ a * (b + c) / d
     <br/>
     <li>The <i>if</i> expression returns the result of the evaluated <i>then</i> or <i>else</i> form.</li>
 <pre><code>
+    (let ((x 10))
+      (if (&gt; x 5) (+ x 10) (- x 10)))
 </code></pre>
 </ol>
 <br/>
@@ -578,24 +589,30 @@ a * (b + c) / d
 <!-- * * * * * * * * * * * * * * -->
 <h3>Basics about <u>quote</u></h3>
 <ol>
-    <li></li>
+    <li>It is used to prevent an expression from being evaluated.</li>
     <br/>
-    <li></li>
     <br/>
-</ol>
-<br/>
-<!-- * * * * * * * * * * * * * * -->
-
-
-<hr/>
-
-
-<!-- * * * * * * * * * * * * * * -->
-<h3>Basics about <u>let</u></h3>
-<ol>
-    <li></li>
+    <li>Syntax:<br/>
+        <code>(quote &lt;expr&gt;)</code> or shorthandly <code>'&lt;expr&gt;</code></li>
     <br/>
-    <li></li>
+    <br/>
+    <li>Example Usage:</li>
+<pre><code>
+    &gt; (quote (+ 1 2))
+    (+ 1 2)
+
+    &gt; '(+ 1 2)
+    (+ 1 2)
+
+    &gt; (+ 1 2)
+    3
+
+    &gt; 'a
+    A
+
+    &gt; '\a
+    |a|
+</code></pre>
     <br/>
 </ol>
 <br/>
@@ -608,9 +625,48 @@ a * (b + c) / d
 <!-- * * * * * * * * * * * * * * -->
 <h3>True, False and Equality</h3>
 <ol>
-    <li></li>
+    <li>The symbol <b>t</b> or <b>T</b> is conventionally treated as true in Common Lisp.<br/><br/>
+        <code>(if t "True" "False")</code><code class="hl-grey-fg"> ; returns "True"</code></li>
     <br/>
-    <li></li>
+    <br/>
+    <li>The expressions <b>nil</b>, <b>'nil</b>, <b>()</b> and <b>'()</b> are considered false in Common Lisp.<br/><br/>
+        <code>(if nil "T" "F")</code><code class="hl-grey-fg"> ; returns "F"</code><br/>
+        <code>(if () "T" "F")</code><code class="hl-grey-fg"> ; returns "F"</code><br/>
+    </li>
+    <br/>
+    <br/>
+    <li><b>EQ</b> checks whether two values are literally the same object: the same address, same identity.</li>
+<pre><code>
+    (eq 1000 1000)   ;; might be NIL on some Lisps
+    (eq 'foo 'foo)   ;; always T (same interned symbol)
+</code></pre>
+    <br/>
+    <br/>
+    <li><b>EQL</b> is just like <b>EQ</b>, but slightly stronger: it also considers numbers and characters with the same value as equal.</li>
+<pre><code>
+    (eql 1000 1000)  ;; always T
+    (eql 1.0 1)      ;; NIL (different types)
+    (eql #\A #\A)    ;; T
+</code></pre>
+    <br/>
+    <br/>
+    <li><b>EQUAL</b> compares structural lists and strings (and bit-vectors).</li>
+<pre><code>
+    (equal '(a (b)) '(a (b)))   ;; T
+    (equal "Foo" "Foo")         ;; T
+    (equal "Foo" "foo")         ;; NIL (case-sensitive)
+    (equal 1 1.0)               ;; NIL (numbers must be EQL)
+    (equal #\A #\a)             ;; NIL
+</code></pre>
+    <br/>
+    <br/>
+    <li><b>EQUALP</b> is more forgiving: case-insensitive for strings and characters, and value comparison for numbers.</li>
+<pre><code>
+    (equalp "Foo" "foo")        ;; T
+    (equalp #\A #\a)            ;; T
+    (equalp 1 1.0)              ;; T
+    (equalp '(1 "A") #(1 "a"))  ;; T (list vs vector ok; string case ignored)
+</code></pre>
     <br/>
 </ol>
 <br/>
@@ -623,9 +679,51 @@ a * (b + c) / d
 <!-- * * * * * * * * * * * * * * -->
 <h3>Basics about <u>cond</u></h3>
 <ol>
-    <li></li>
+    <li><b>cond</b> is a versatile conditional construcy used for multi-branch descision-making.
+        It is preferred over nested <b>if</b>.</li>
     <br/>
-    <li></li>
+    <br/>
+    <li>Syntax:</li>
+<pre><code>
+    (cond
+      (&lt;cond-1&gt; &lt;form-1-1&gt; &lt;form-1-2&gt; ...)
+      (&lt;cond-2&gt; &lt;form-2-1&gt; &lt;form-2-2&gt; ...)
+      ...
+      (t &lt;default-form-1&gt; &lt;default-form-2&gt; ...))
+</code></pre>
+    <ul>
+        <br/>
+        <li><b><i>cond-n</i></b> is a condition</li>
+        <br/>
+        <li><b><i>form</i></b> is one or more expressions to be executed if <b><i>cond-n</i></b> is true.</li>
+        <br/>
+        <li><b><i>t</i></b> in the end act as a default case.</li>
+        <br/>
+        <li><mark>NOTE</mark>: only the first <b><i>cond</i></b> which is eval-ed to true is exec-ed.</li>
+    </ul>
+    <br/>
+    <br/>
+    <li>Example Usage:</li>
+<pre><code>
+    (defun categorize-number (x)
+      (cond
+        ((&lt; x 0) "negative")
+        ((&gt; x 0) "positive")
+        ((= x 0) "zero")))
+
+    (categorize-number 10)
+    (categorize-number -7)
+    (categorize-number 0)
+
+    (defun analyze-number (x)
+      (cond
+        ((&lt; x 0) (format t "~a &lt; 0~%" x) "negative")
+        ((&gt; x 0) (format t "~a &gt; 0~%" x) "positive")
+        ((= x 0) (format t "x = 0~%") "zero")))
+
+    (analyze-number -3)
+    ; it will "-3 &lt; 0" and return "negative"
+</code></pre>
     <br/>
 </ol>
 <br/>
