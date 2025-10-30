@@ -809,10 +809,14 @@ a * (b + c) / d
 <!-- * * * * * * * * * * * * * * -->
 <h3>Function Return Values</h3>
 <ol>
-    <li></li>
+    <li><b>RETURN-FROM</b> is actually not tied to functions at all.
+        It is used to return from a block of code defined with the <b>BLOCK</b> special operator.<br/>
     <br/>
     <br/>
-    <li></li>
+    <li>
+        However, <b>DEFUN</b> automatically wraps the whole function body in a block with the same name as the function.<br/>
+        So, evaluating a <b>RETURN-FROM</b> with the <u>name of the function</u> and the <u>value</u> you want to return will cause the function to immediately exit with that value.</li>
+    </li>
     <br/>
     <br/>
     <li></li>
