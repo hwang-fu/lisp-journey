@@ -1229,12 +1229,27 @@ NIL
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3></h3>
+<h3>PROGN</h3>
 <ol>
-    <li></li>
+    <li><b>PROGN</b> is a special operator in Common Lisp that evaluates multiple expressions in sequence and returns the value of the last one.</li>
     <br/>
     <br/>
-    <li></li>
+    <li>Syntax: <code>(progn &lt;expr1&gt; &lt;expr2&gt; ... &lt;exprN&gt;)</code></li>
+    <br/>
+    <br/>
+    <li>Example:</li>
+<pre><code>
+    (progn
+      (format t "Step 1~%")
+      (format t "Step 2~%")
+      (+ 2 3))   ;; last expression
+
+    ;; Output:
+    ;; Step 1
+    ;; Step 2
+    ;; 5
+
+</code></pre>
     <br/>
 </ol>
 <br/>
@@ -1245,12 +1260,20 @@ NIL
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3></h3>
+<h3>WHEN</h3>
 <ol>
-    <li></li>
+    <li><b>WHEN</b> is like a simplified IF that only has a then branch (no else).<br/>
+        If the condition is true, it executes one or more expressions.</li>
     <br/>
-    <br/>
-    <li></li>
+<pre><code>
+    (let ((x 5))
+      (when (&gt; x 0)
+        (format t "x is positive~%")
+        (* x 2)))
+    ;; prints "x is positive"
+    ;; returns 10
+
+</code></pre>
     <br/>
 </ol>
 <br/>
@@ -1261,11 +1284,19 @@ NIL
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3></h3>
+<h3>UNLESS</h3>
 <ol>
-    <li></li>
+    <li><b>UNLESS</b> is the logical opposite of <b>WHEN</b>. If the condition is false (<code>NIL</code>), it executes the body.</li>
     <br/>
-    <li></li>
+<pre><code>
+(let ((x 0))
+  (unless (&gt; x 0)
+    (format t "x is not positive~%")
+    "Did something"))
+;; prints "x is not positive"
+;; returns "Did something"
+
+</code></pre>
     <br/>
 </ol>
 <br/>
