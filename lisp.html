@@ -1754,11 +1754,71 @@ NIL
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3></h3>
+<h3>Destructing Parameter in DEFMACRO</h3>
 <ol>
-    <li></li>
+    <li>When you define a macro, you tell Lisp how to map the call form into symbols that you can use inside the macro body.</li>
+<pre><code>
+(defmacro simple (x y)
+  `(list ,x ,y))
+
+(simple 10 20)
+;; expands to (LIST 10 20) and will be evaluated when using it.
+
+</code></pre>
     <br/>
-    <li></li>
+    <br/>
+    <li>In a <b>DEFMACRO</b>,
+        your lambda list doesn't just bind symbols to arguments — it can pattern-match the entire shape of the call form.</li>
+<pre><code>
+(defmacro swap! ((a b))
+  `(let ((temp ,a))
+     (setf ,a ,b
+           ,b temp)))
+
+(swap! (x y))
+;; expands to:
+;; (LET ((TEMP X)) (SETF X Y Y TEMP))
+
+
+
+(defmacro let1 ((var val) &amp;body body)
+  `(let ((,var ,val))
+     ,@body))
+
+(let1 (x (+ 1 2))
+  (print x))
+;; expands to (LET ((X (+ 1 2))) (PRINT X))
+
+
+
+(defmacro bind2 ((a &amp;optional (b 10)) &amp;body body)
+  `(let ((,a ,b))
+     ,@body))
+
+(bind2 (x 5) (print x)) ;; (LET ((X 5)) (PRINT X))
+(bind2 (x) (print x))   ;; (LET ((X 10)) (PRINT X))
+
+
+
+(defmacro with-options ((&amp;key (a 1) (b 2)) &amp;body body)
+  `(let ((x ,a) (y ,b))
+     ,@body))
+
+(with-options (:a 10)
+  (print (+ x y)))
+;; expands to:
+;; (LET ((X 10) (Y 2)) (PRINT (+ X Y)))
+
+
+</code></pre>
+    <br/>
+    <br/>
+    <li>All in all, what I understood it, in the language I could understand, is that:<br/>
+        normally because <code>&amp;body</code> acts like <code>&amp;rest</code>,
+        so this caused the <i>body</i> would very frequently also include the leter key parameters if given,<br/>
+        using this pattern-matching, we can promote the key parameters before the body,
+        so it very much eases our work to remove the key parameters from the macro call.
+    </li>
     <br/>
 </ol>
 <br/>
