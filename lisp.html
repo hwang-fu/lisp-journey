@@ -1358,16 +1358,61 @@ NIL
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3></h3>
+<h3>DOLIST and DOTIMES</h3>
 <ol>
-    <li></li>
+    <li><b>DOLIST</b> iterates over each element in a list, binding it to a variable for each iteration.<br/>
+        Syntax: <code>(dolist (&lt;variable&gt; &lt;list&gt; &amp;optional &lt;return-value&gt;) &lt;body&gt;)</code></li>
+    <ul>
+        <br/>
+        <li><i>variable</i>: The loop variable that it takes on each element of <i>list</i>.</li>
+        <br/>
+        <li><i>list</i>: The list to iterate over.</li>
+        <br/>
+        <li><i>body</i>: Evaluation for each iteration.</li>
+        <br/>
+        <li><i>return-value</i>: Expression evaluated and returned after the loop finishes.</li>
+    </ul>
+    <br/>
+<pre><code>
+(dolist (x '(a b c))
+  (format t "Element: ~A~%" x))
+;; Element: A
+;; Element: B
+;; Element: C
+
+
+(dolist (x '(1 2 3) "Done")
+  (print x))
+;; Returns "Done" after printing the numbers.
+
+</code></pre>
     <br/>
     <br/>
-    <li></li>
+    <li><b>DOTIMES</b> iterates over a fixed number of times.<br/>
+        Syntax: <code>(dotimes (&lt;variable&gt; &lt;N&gt; &amp;optional &lt;return-value&gt;) &lt;body&gt;)</code></li>
     <br/>
-    <br/>
-    <li></li>
-    <br/>
+    <ul>
+        <li>The loop counter starts at <i>0</i> and ends at <i>N-1</i>, exactly <i>N</i> iterations.</li>
+        <br/>
+    </ul>
+<pre><code>
+(dotimes (i 5)
+  (format t "i = ~A~%" i))
+;; i = 0
+;; i = 1
+;; i = 2
+;; i = 3
+;; i = 4
+
+
+(dotimes (i 3 "Loop done")
+  (print i))
+;; i = 0
+;; i = 1
+;; i = 2
+;; "Loop done"
+
+</code></pre>
 </ol>
 <br/>
 <!-- * * * * * * * * * * * * * * -->
