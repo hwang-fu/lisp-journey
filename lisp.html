@@ -393,7 +393,7 @@ a * (b + c) / d
 <!-- * * * * * * * * * * * * * * -->
 <h3>Variables</h3>
 <ol>
-    <li>Global variables are generally declared using the <code>defvar</code> construct.</li>
+    <li>Global variables are generally declared using the <code>DEFVAR</code> construct.</li>
 <pre><code>
     ; Define a global variable x with a value of `100`
     (defvar x 100)
@@ -402,14 +402,14 @@ a * (b + c) / d
 </code></pre>
     <br/>
     <br/>
-    <li>If there is no type declaration for variables in Lisp, you can directly specify a value for a symbol with the <code>setq</code> construct.</li>
+    <li>If there is no type declaration for variables in Lisp, you can directly specify a value for a symbol with the <code>SETQ</code> construct.</li>
     <br/>
     <br/>
-    <li>There are two constructs: <code>let</code> and <code>prog</code> (no longer commonly used) for creating local variables.</li>
+    <li>There are two constructs: <code>LET</code> and <code>PROG</code> (no longer commonly used) for creating local variables.</li>
     <br/>
     <br/>
-    <li>The <code>let</code> construct has the following syntax.<br/>
-        If you did NOT include an initial value for a variable, it is assigned <code>nil</code>.</li>
+    <li>The <code>LET</code> construct has the following syntax.<br/>
+        If you did NOT include an initial value for a variable, it is assigned <code>NIL</code>.</li>
 <pre><code>
     (let ((var-1 val-1) (var-2 val-2) ... (var-n val-n))
       &lt;s-expression&gt;
@@ -418,7 +418,7 @@ a * (b + c) / d
 </code></pre>
     <br/>
     <br/>
-    <li>The <code>prog</code> construct has the following syntax.</li>
+    <li>The <code>PROG</code> construct has the following syntax.</li>
 <pre><code>
     (prog (var-1 var-2 ... var-n)
       &lt;s-expression&gt;
@@ -453,7 +453,67 @@ a * (b + c) / d
 </code></pre>
     <br/>
     <br/>
-    <li></li>
+    <li><b>SETF</b> is the general-purpose <u>assignment operator</u> in Common Lisp.<br/>
+        It is used to set or update the value of variables, places (like array elements, object fields, etc.), and more.<br/>
+        <br/><code>(setf place value)</code></li>
+    <br/>
+    <br/>
+    <li><b>SET</b> works only with symbols (like global variables).</li>
+    <br/>
+    <br/>
+    <li><b>SETF</b> can also assign to multiple places in sequence.</li>
+<pre><code>
+(setf x 1)
+(setf y 1)
+
+(setf x 1 y 2)
+</code></pre>
+    <br/>
+    <br/>
+    <li><b>SETF</b> returns the newly assigned value,<br/>
+        so you can also nest calls to <b>SETF</b> as in the following expression, which assigns both <i>x</i> and <i>y</i> the same random value: <code>(setf x (setf y (random 10)))</code></li>
+    <br/>
+    <br/>
+    <li>You could increment / decrement a number with <b>SETF</b>:</li>
+<pre><code>
+    (setf x (+ x 1));   (incf x)
+    (setf x (+ x 10));  (incf x 10)
+    (setf x (- x 1));   (decf x)
+</code></pre>
+    <br/>
+    <br/>
+    <li><b>ROTATEF</b>: swaps values in-place by rotating them left-wise, returns <b>NIL</b>.<br/>
+        <mark>NOTE</mark>: All places (variables, array elements, etc.) must be writable with <b>SETF</b>.</li>
+<pre><code>
+    (rotatef &lt;place1&gt; &lt;place2&gt; ... &lt;placeN&gt;)
+
+    place1 &lt;- place2
+    place2 &lt;- place3
+    ...
+    placeN &lt;- original place1
+
+    (let ((a 1) (b 2) (c 3))
+      (rotatef a b c)
+      (list a b c))
+
+    (2 3 1)
+</code></pre>
+    <br/>
+    <br/>
+    <li><b>SHIFTF</b> shifts values left-wise and returns the original first value.</li>
+<pre><code>
+    (shiftf &lt;place1&gt; &lt;place2&gt; ... &lt;placeN&gt; &lt;new-value&gt;)
+
+    place1 &lt;- place2
+    place2 &lt;- place3
+    ...
+    placeN &lt;- new-value
+    return &lt;- original place1
+
+    (let ((a 1) (b 2) (c 3))
+      (shiftf a b c 100))       ;; returns 1
+
+</code></pre>
     <br/>
 </ol>
 <br/>
@@ -490,7 +550,7 @@ a * (b + c) / d
 <!-- * * * * * * * * * * * * * * -->
 <h3>Difference between <code>DEFVAR</code> and <code>DEFPARAMETER</code></h3>
 <ol>
-    <li><code>DEFVAR</code>: does not overwrite an existing value.</li>
+    <li><code>DEFVAR</code>: re-decl does not overwrite an existing value (can be later changed with assignment).</li>
 <pre><code>
 (sbcl) (defvar *x* 10)
 (sbcl) (defvar *x* 20)
@@ -499,7 +559,7 @@ a * (b + c) / d
 </code></pre>
     <br/>
     <br/>
-    <li><code>DEFPARAMETER</code>: always resets the value.</li>
+    <li><code>DEFPARAMETER</code>: re-decl always resets the value.</li>
 <pre><code>
 (sbcl) (defparameter *x* 10)
 (sbcl) (defparameter *x* 20)
@@ -1173,6 +1233,7 @@ NIL
 <ol>
     <li></li>
     <br/>
+    <br/>
     <li></li>
     <br/>
 </ol>
@@ -1187,6 +1248,7 @@ NIL
 <h3></h3>
 <ol>
     <li></li>
+    <br/>
     <br/>
     <li></li>
     <br/>
