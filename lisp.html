@@ -372,7 +372,7 @@ a * (b + c) / d
 <pre><code>
     (defmacro assign10 (num)
       "A macro that sets a given variable to value 10"
-      (setq num 10)
+      `(setq num 10)
       (print num))
 
     (setq x 100)
@@ -381,6 +381,53 @@ a * (b + c) / d
     (print x)       ; 100
 </code></pre>
     <br/>
+    <br/>
+    <li>Backquote Examples:</li>
+    <br/>
+<table>
+    <thead>
+        <tr>
+            <th>Backquote Syntax</th>
+            <th>Equivalent List-Building Code</th>
+            <th>Result</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>`(a (+ 1 2) c)</code></td>
+            <td><code>(list 'a '(+ 1 2) 'c)</code></td>
+            <td><code>(a (+ 1 2) c)</code></td>
+        </tr>
+        <tr>
+            <td><code>`(a ,(+ 1 2) c)</code></td>
+            <td><code>(list 'a (+ 1 2) 'c)</code></td>
+            <td><code>(a 3 c)</code></td>
+        </tr>
+        <tr>
+            <td><code>`(a (list 1 2) c)</code></td>
+            <td><code>(list 'a '(list 1 2) 'c)</code></td>
+            <td><code>(a (list 1 2) c)</code></td>
+        </tr>
+        <tr>
+            <td><code>`(a ,(list 1 2) c)</code></td>
+            <td><code>(list 'a (list 1 2) 'c)</code></td>
+            <td><code>(a (1 2) c)</code></td>
+        </tr>
+        <tr>
+            <td><code>`(a ,@(list 1 2) c)</code></td>
+            <td><code>(append (list 'a) (list 1 2) (list 'c))</code></td>
+            <td><code>(a 1 2 c)</code></td>
+        </tr>
+    </tbody>
+</table>
+    <br/>
+    <li></li>
+    <br/>
+    <br/>
+    <li></li>
+    <br/>
+    <br/>
+    <li></li>
     <br/>
 </ol>
 <br/>
@@ -1610,26 +1657,37 @@ NIL
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3></h3>
+<h3>Quote vs. Backquote</h3>
 <ol>
-    <li></li>
+    <li>Quote (<code>'</code> or <code>(quote ...)</code>): Don't evaluate, take it as data (prevents the usual evaluation of lists/symbols.).</li>
     <br/>
-    <li></li>
+<pre><code>
+'foo            ;; FOO            ; a symbol, not the value of variable FOO
+(quote foo)     ;; same as above
+
+'(1 2 3)        ;; (1 2 3)        ; a literal list (don't evaluate it)
+'(+ 1 2)        ;; (+ 1 2)        ; code-as-data, not 3
+
+</code></pre>
     <br/>
-</ol>
-<br/>
-<!-- * * * * * * * * * * * * * * -->
+    <li>Backquote / Quasiquote (<code>`</code> or <code>(quasiquote ...)</code>): Make a template, selectively evaluate with commas.</li>
+    <ul>
+        <br/>
+        <li><code>,expr</code> (unquote): evaluates expr and inserts the result.</li>
+        <br/>
+        <li><code>,@expr</code> (unquote-splicing): evaluates expr and splices its elements into the surrounding list.</li>
+    </ul>
+<pre><code>
+    (let ((a 10) (b '(x y)))
+      `(+ ,a 20)                ;; (+ 10 20)    NOTE: it evals a template to a list (not 30 that no further evaluation by far!).
+      `(1 2 ,a ,@b 99))         ;; (1 2 10 X Y 99)
+
+    (let ((xs '(a b)))
+      `(x ,xs y))   ;;  (X (A B) Y)
+      `(x ,@xs y))  ;;  (X A B Y)
 
 
-<hr/>
-
-
-<!-- * * * * * * * * * * * * * * -->
-<h3></h3>
-<ol>
-    <li></li>
-    <br/>
-    <li></li>
+</code></pre>
     <br/>
 </ol>
 <br/>
