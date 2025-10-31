@@ -1422,11 +1422,85 @@ NIL
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3></h3>
+<h3>DO</h3>
 <ol>
-    <li></li>
+    <li><b>DO</b> is a low-level, general-purpose looping construct in Common Lisp.</li>
     <br/>
-    <li></li>
+    <br/>
+    <li>Syntax:</li>
+<pre><code>
+(do ((&lt;var1&gt; &lt;init1&gt; [&lt;step1&gt;])
+     (&lt;var2&gt; &lt;init2&gt; [&lt;step2&gt;])
+     ...
+     (&lt;varN&gt; &lt;initN&gt; [&lt;stepN&gt;]))
+    (&lt;end-test&gt; [&lt;result-form&gt;])
+  &lt;body&gt;)
+
+</code></pre>
+<ul>
+    <br/>
+    <li><i>var</i>: iter variable.</li>
+    <br/>
+    <li><i>init</i>: initial value (evaluated once at start).</li>
+    <br/>
+    <li><i>step</i>: optional. Controls how to update the variable (evaluated after each iteration).</li>
+    <br/>
+    <li><i>end-test</i>: checked before each iteration.<br/>
+        If true, loop exists and evaluates <i>return-from</i>;<br/>
+        if false, executes the loop body.</li>
+    <br/>
+    <li><i>return-from</i>: optional. If omitted, the loop returns <code>NIL</code>.</li>
+</ul>
+    <br/>
+    <br/>
+    <li>Basic Example:</li>
+<pre><code>
+(do ((i 0 (+ i 1)))
+    ((&gt;= i 5) 'done)
+  (format t "i = ~A~%" i))
+
+;; i = 0
+;; i = 1
+;; i = 2
+;; i = 3
+;; i = 4
+;; DONE
+
+
+
+(do ((i 0 (+ i 1))
+     (j 10 (- j 2)))
+    ((&gt; i 3) (list i j))
+  (format t "i=~A, j=~A~%" i j))
+
+;; i=0, j=10
+;; i=1, j=8
+;; i=2, j=6
+;; i=3, j=4
+;; (4 2)
+
+
+
+(do ((x 5))         ; x stays 5 forever — infinite loop!
+    ((<= x 0))
+  (print x))
+
+</code></pre>
+    <br/>
+    <br/>
+    <li>Early exit using <b>RETURN</b>:</li>
+<pre><code>
+(do ((i 0 (+ i 1)))
+    (nil)           ; end test is NIL, infinite loop unless broken
+  (when (= i 3) (return 'early))
+  (print i))
+
+;; 0
+;; 1
+;; 2
+;; EARLY
+
+</code></pre>
     <br/>
 </ol>
 <br/>
@@ -1437,9 +1511,19 @@ NIL
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3></h3>
+<h3>LOOP</h3>
 <ol>
     <li></li>
+    <br/>
+    <br/>
+    <li></li>
+    <br/>
+    <br/>
+    <li></li>
+    <br/>
+    <br/>
+    <li></li>
+    <br/>
     <br/>
     <li></li>
     <br/>
