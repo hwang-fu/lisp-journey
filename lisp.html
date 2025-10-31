@@ -435,6 +435,36 @@ a * (b + c) / d
 
 
 <!-- * * * * * * * * * * * * * * -->
+<h3>Difference between <code>LET</code> and <code>LET*</code></h3>
+<ol>
+    <li><code>LET</code>: All variables are initialized in parallel.</li>
+    <br/>
+    <br/>
+    <li><code>LET*</code>:
+        Variables are initialized one by one in sequence,
+        left to right, and each one can use the previous ones.</li>
+<pre><code>
+(let* ((a 2)
+       (b (+ a 3))      ; b = 2 + 3 = 5
+       (c (* b 4)))     ; c = 5 * 4 = 20
+  (list a b c))         ; (2 5 20)
+</code></pre>
+    <br/>
+    <br/>
+    <li></li>
+    <br/>
+    <br/>
+    <li></li>
+    <br/>
+</ol>
+<br/>
+<!-- * * * * * * * * * * * * * * -->
+
+
+<hr/>
+
+
+<!-- * * * * * * * * * * * * * * -->
 <h3>Escape Character</h3>
 <ol>
     <li>A backslash ( <code>\</code> ) escapes the next character, causing it to be included in the string regardless of what it is.</li>
@@ -1033,15 +1063,6 @@ NIL
 ;; Example of closure: (11 12 13)
 
 </code></pre>
-    <br/>
-    <br/>
-    <li></li>
-    <br/>
-    <br/>
-    <li></li>
-    <br/>
-    <br/>
-    <li></li>
     <br/>
 </ol>
 <br/>
