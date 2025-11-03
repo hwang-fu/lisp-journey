@@ -1927,7 +1927,7 @@ NIL
             <tr>
                 <td><b>POSITION</b></td>
                 <td>Item and sequence.</td>
-                <td>Index into sequence or <b>NIL</b></td>
+                <td>Index into sequence or <b>NIL</b> (0-indexed).</td>
             </tr>
             <tr>
                 <td><b>REMOVE</b></td>
@@ -1966,7 +1966,51 @@ NIL
 </code></pre>
     <br/>
     <br/>
-    <li></li>
+    <li>Standard Sequence Function Keyword Arguments</li>
+    <br/>
+    <table>
+        <thead>
+            <tr>
+                <th>Argument</th>
+                <th>Meaning</th>
+                <th>Default</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>:test</code></td>
+                <td>Two-argument function used to compare item (or value extracted by <code>:key</code> function) to element.</td>
+                <td><b>EQL</b></td>
+            </tr>
+            <tr>
+                <td><code>:key</code></td>
+                <td>One-argument function to extract key value from actual sequence element.<br/>
+                    <b>NIL</b> means use element as is.</td>
+                <td><b>NIL</b></td>
+            </tr>
+            <tr>
+                <td><code>:start</code></td>
+                <td>Starting index (inclusive) of subsequence.</td>
+                <td><b>0</b></td>
+            </tr>
+            <tr>
+                <td><code>:end</code></td>
+                <td>Ending index (exclusive) of subsequence.<br/>
+                    <b>NIL</b> indicates end of sequence.</td>
+                <td><b>NIL</b></td>
+            </tr>
+            <tr>
+                <td><code>:from-end</code></td>
+                <td>If true, the sequence will be traversed in reverse order, from end to start.</td>
+                <td><b>NIL</b></td>
+            </tr>
+            <tr>
+                <td><code>:count</code></td>
+                <td>Number indicating the number of elements to remove or substitute or <b>NIL</b> to indicate all (<b>REMOVE</b> and <b>SUBSTITUTE</b> only).</td>
+                <td><b>NIL</b></td>
+            </tr>
+        </tbody>
+    </table>
     <br/>
 </ol>
 <br/>
