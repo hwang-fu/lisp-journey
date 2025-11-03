@@ -1834,7 +1834,7 @@ NIL
     <li>Vectors are Common Lisp's basic integer-indexed collection, and they come in two flavors: fixed-size vectors and resizable vectors.</li>
     <br/>
     <br/>
-    <li>Simplest way to construct a fixed-size vector with existing elements,<br/>
+    <li>Simplest way to construct a fixed-size vector with existing elements,
         is to use either <code>(vector [&lt;elements&gt;])</code> or <code>#(&lt;elements&gt;)</code> syntax:</li>
 <pre><code>
     (vector)
@@ -1845,13 +1845,102 @@ NIL
 
     (vector 1 2)
     #(1 2)
+
 </code></pre>
     <br/>
     <br/>
-    <li></li>
+    <li><b>MAKE-ARRAY</b> is much more vesatile;</li>
+<pre><code>
+    (make-array 5 :initial-element nil);    #(NIL NIL NIL NIL NIL)
+
+
+
+    ;; `fill-pointer` stores the number of elements inside the vector.
+    (make-array 5 :fill-pointer 0);         #()
+
+
+
+    (defparameter *x* (make-array 5 :fill-pointer 0))
+
+    (vector-push 'a *x*);                   0
+    *x*                 ;					#(A)
+    (vector-push 'b *x*);					1
+    *x*                 ;					#(A B)
+    (vector-push 'c *x*);					2
+    *x*                 ;					#(A B C)
+    (vector-pop *x*)    ;					C
+    *x*                 ;					#(A B)
+    (vector-pop *x*)    ;					B
+    *x*                 ;					#(A)
+    (vector-pop *x*)    ;					A
+    *x*                 ;					#()
+
+
+
+    ;; To make an arbitrarily resizable vector, you need to pass MAKE-ARRAY another keyword argument: `:adjustable`.
+    (make-array 5 :fill-pointer 0 :adjustable t); #()
+
+
+
+    ;; You can also specify that a vector only contains certain types of elements (if non-specified, then it could take different kinds of elements).
+    (make-array 5 :fill-pointer 0 :adjustable t :element-type 'character)
+
+</code></pre>
     <br/>
     <br/>
-    <li></li>
+    <li>Vector as sequence:</li>
+<pre><code>
+	(sbcl)    (defparameter *x* (vector 1 2 3))
+
+	(sbcl)    (length *x*); 3
+	(sbcl)    (elt *x* 0) ; 1
+	(sbcl)    (elt *x* 1) ; 2
+	(sbcl)    (elt *x* 2) ; 3
+	(sbcl)    (elt *x* 3) ; error
+
+	(sbcl)    (setf (elt *x* 0) 10)
+	(sbcl)    *x*; #(10 2 3)
+</code></pre>
+    <br/>
+    <br/>
+    <li>Basic Sequence Functions</li>
+    <br/>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b></b></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b></b></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b></b></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b></b></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b></b></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
     <br/>
     <br/>
     <li></li>
