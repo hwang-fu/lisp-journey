@@ -1963,6 +1963,17 @@ NIL
     (remove #\a "foobarbaz" :count 1)            ; "foobrbaz"
     (remove #\a "foobarbaz" :count 1 :from-end t); "foobarbz"
 
+    (count-if #'evenp #(1 2 3 4 5))        ; 2
+
+    (count-if-not #'evenp #(1 2 3 4 5))    ; 3
+
+    (position-if #'digit-char-p "abcd0001"); 4
+
+    (remove-if-not #'(lambda (x) (char= (elt x 0) #\f))
+      #("foo" "bar" "baz" "foom"))
+    ;; #("foo" "foom")
+
+    (remove-duplicates #(1 2 1 2 3 1 2 3 4)); #(1 2 3 4)
 </code></pre>
     <br/>
     <br/>
