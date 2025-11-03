@@ -1908,39 +1908,62 @@ NIL
     <table>
         <thead>
             <tr>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th>Name</th>
+                <th>Required Arguments</th>
+                <th>Returns</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td><b></b></td>
-                <td></td>
-                <td></td>
+                <td><b>COUNT</b></td>
+                <td>Item and sequence.</td>
+                <td>Number of times item appear in sequence.</td>
             </tr>
             <tr>
-                <td><b></b></td>
-                <td></td>
-                <td></td>
+                <td><b>FIND</b></td>
+                <td>Item and sequence.</td>
+                <td>Item or <b>NIL</b></td>
             </tr>
             <tr>
-                <td><b></b></td>
-                <td></td>
-                <td></td>
+                <td><b>POSITION</b></td>
+                <td>Item and sequence.</td>
+                <td>Index into sequence or <b>NIL</b></td>
             </tr>
             <tr>
-                <td><b></b></td>
-                <td></td>
-                <td></td>
+                <td><b>REMOVE</b></td>
+                <td>Item and sequence.</td>
+                <td>Sequence with instances of item removed.</td>
             </tr>
             <tr>
-                <td><b></b></td>
-                <td></td>
-                <td></td>
+                <td><b>SUBSTITUTE</b></td>
+                <td>New-Item, item, and sequence.</td>
+                <td>Sequence with instances of item replaced.</td>
             </tr>
         </tbody>
     </table>
+<pre><code>
+
+    (count 1 #(1 2 1 2 3 1 2 3 4))        ;		3
+    (remove 1 #(1 2 1 2 3 1 2 3 4))       ;		#(2 2 3 2 3 4)
+    (remove 1 '(1 2 1 2 3 1 2 3 4))       ;		(2 2 3 2 3 4)
+    (remove #\a "foobarbaz")              ;		"foobrbz"
+    (substitute 10 1 #(1 2 1 2 3 1 2 3 4));		#(10 2 10 2 3 10 2 3 4)
+    (substitute 10 1 '(1 2 1 2 3 1 2 3 4));		(10 2 10 2 3 10 2 3 4)
+    (substitute #\x #\b "foobarbaz")      ;		"fooxarxaz"
+    (find 1 #(1 2 1 2 3 1 2 3 4))         ;		1
+    (find 10 #(1 2 1 2 3 1 2 3 4))        ;		NIL
+    (position 1 #(1 2 1 2 3 1 2 3 4))     ;		0
+
+    (count "foo" #("foo" "bar" "baz") :test #'string=)   ; 1
+    (find 'c #((a 10) (b 20) (c 30) (d 40)) :key #'first); (C 30)
+
+    (find 'a #((a 10) (b 20) (a 30) (b 40)) :key #'first)            ; (A 10)
+    (find 'a #((a 10) (b 20) (a 30) (b 40)) :key #'first :from-end t); (A 30)
+
+    (remove #\a "foobarbaz" :count 1)            ; "foobrbaz"
+    (remove #\a "foobarbaz" :count 1 :from-end t); "foobarbz"
+
+</code></pre>
     <br/>
     <br/>
     <li></li>
