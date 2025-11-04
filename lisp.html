@@ -438,19 +438,18 @@
     <br/>
     <br/>
     <li>Example:</li>
-<pre><code class="language-lisp line-numbers">
-    (defmacro my-when (test &amp;body body)
-      "If TEST is true, execute BODY like (progn ...)."
-      `(if ,test
-           (progn ,@body)))
+<pre><code class="language-lisp line-numbers">(defmacro my-when (test &amp;body body)
+  "If TEST is true, execute BODY like (progn ...)."
+  `(if ,test
+       (progn ,@body)))
 
-    (my-when (&gt; x 10)
-      (print "positive")
-      (incf x))
+(my-when (&gt; x 10)
+  (print "positive")
+  (incf x))
 
-    Macro expansion (what Lisp actually sees):
-    (if (&gt; x 0)
-      (progn (print "positive") (incf x)))
+;; Macro expansion (what Lisp actually sees):
+(if (&gt; x 0)
+  (progn (print "positive") (incf x)))
 
 </code></pre>
     <br/>
