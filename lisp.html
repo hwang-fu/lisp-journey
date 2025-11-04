@@ -632,8 +632,7 @@ return &lt;- original place1
     <li><code>LET*</code>:
         Variables are initialized one by one in sequence,
         left to right, and each one can use the previous ones.</li>
-<pre><code class="language-lisp line-numbers">
-(let* ((a 2)
+<pre><code class="language-lisp line-numbers">(let* ((a 2)
        (b (+ a 3))      ; b = 2 + 3 = 5
        (c (* b 4)))     ; c = 5 * 4 = 20
   (list a b c))         ; (2 5 20)
@@ -651,8 +650,7 @@ return &lt;- original place1
 <h3>Difference between <code>DEFVAR</code> and <code>DEFPARAMETER</code></h3>
 <ol>
     <li><code>DEFVAR</code>: re-decl does not overwrite an existing value (can be later changed with assignment).</li>
-<pre><code class="language-lisp line-numbers">
-(sbcl) (defvar *x* 10)
+<pre><code class="language-lisp line-numbers">(sbcl) (defvar *x* 10)
 (sbcl) (defvar *x* 20)
 (sbcl) *x*
     10
@@ -660,8 +658,7 @@ return &lt;- original place1
     <br/>
     <br/>
     <li><code>DEFPARAMETER</code>: re-decl always resets the value.</li>
-<pre><code class="language-lisp line-numbers">
-(sbcl) (defparameter *x* 10)
+<pre><code class="language-lisp line-numbers">(sbcl) (defparameter *x* 10)
 (sbcl) (defparameter *x* 20)
 (sbcl) *x*
     20
@@ -679,12 +676,11 @@ return &lt;- original place1
 <h3>Escape Character</h3>
 <ol>
     <li>A backslash ( <code>\</code> ) escapes the next character, causing it to be included in the string regardless of what it is.</li>
-<pre><code class="language-lisp line-numbers">
-    "foo"       ; foo
-    "f\oo"      ; foo,  because `\o` escapes `o`, treating it iterally like the character `o`.
-    "fo\\o"     ; fo\o
-    "fo\'o"     ; fo'o
-    "fo\"o"     ; fo"o
+<pre><code class="language-lisp line-numbers">"foo"       ; foo
+"f\oo"      ; foo,  because `\o` escapes `o`, treating it iterally like the character `o`.
+"fo\\o"     ; fo\o
+"fo\'o"     ; fo'o
+"fo\"o"     ; fo"o
 </code></pre>
 </ol>
 <br/>
