@@ -450,13 +450,11 @@
 ;; Macro expansion (what Lisp actually sees):
 (if (&gt; x 0)
   (progn (print "positive") (incf x)))
-
 </code></pre>
     <br/>
     <br/>
     <li>More advanced example(s):</li>
-<pre><code class="language-lisp line-numbers">
-(defmacro echo-times (&amp;body body &amp;key (times 1) (prefix "=&gt; "))
+<pre><code class="language-lisp line-numbers">(defmacro echo-times (&amp;body body &amp;key (times 1) (prefix "=&gt; "))
   ;; Remove trailing keyword/value pairs from BODY so we only keep real forms.
   (let* ((rev (reverse body))
          (pure-rev
@@ -478,6 +476,8 @@
   :prefix "[*] ")
 
 
+;; --------------------------
+
 
 (defmacro with-prefix ((&amp;key (prefix "=&gt; ") (times 1)) &amp;body body)
   `(dotimes (i ,times)
@@ -487,8 +487,6 @@
 (with-prefix (:prefix "[*] " :times 2)
   (format t "Hello~%")
   (format t "World~%"))
-
-
 </code></pre>
     <br/>
     <br/>
@@ -506,11 +504,10 @@
 <h3>Variables</h3>
 <ol>
     <li>Global variables are generally declared using the <code>DEFVAR</code> construct.</li>
-<pre><code class="language-lisp line-numbers">
-    ; Define a global variable x with a value of `100`
-    (defvar x 100)
-    ; Print the value of `x`
-    (print x)
+<pre><code class="language-lisp line-numbers">; Define a global variable x with a value of `100`
+(defvar x 100)
+; Print the value of `x`
+(print x)
 </code></pre>
     <br/>
     <br/>
@@ -522,20 +519,18 @@
     <br/>
     <li>The <code>LET</code> construct has the following syntax.<br/>
         If you did NOT include an initial value for a variable, it is assigned <code>NIL</code>.</li>
-<pre><code class="language-lisp line-numbers">
-    (let ((var-1 val-1) (var-2 val-2) ... (var-n val-n))
-      &lt;s-expression&gt;
-      &lt;s-expression&gt;
-      ...)
+<pre><code class="language-lisp line-numbers">(let ((var-1 val-1) (var-2 val-2) ... (var-n val-n))
+  &lt;s-expression&gt;
+  &lt;s-expression&gt;
+  ...)
 </code></pre>
     <br/>
     <br/>
     <li>The <code>PROG</code> construct has the following syntax.</li>
-<pre><code class="language-lisp line-numbers">
-    (prog (var-1 var-2 ... var-n)
-      &lt;s-expression&gt;
-      &lt;s-expression&gt;
-      ...)
+<pre><code class="language-lisp line-numbers">(prog (var-1 var-2 ... var-n)
+  &lt;s-expression&gt;
+  &lt;s-expression&gt;
+  ...)
 </code></pre>
     <br/>
     <br/>
@@ -548,8 +543,7 @@
     <br/>
     <br/>
     <li>Global variables are conventionally named with names that start and end with <code>*</code> (e.g., <code>*db*</code>).</li>
-<pre><code class="language-lisp line-numbers">
-(defvar *count* 0
+<pre><code class="language-lisp line-numbers">(defvar *count* 0
   "Count of widgets made so far.")
 
 (defparameter *gap-tolerance* 0.001
@@ -558,8 +552,7 @@
     <br/>
     <br/>
     <li><b>DEFCONSTANT</b> defines a named global constant.</li>
-<pre><code class="language-lisp line-numbers">
-(sbcl) (defconstant +pi+ 3.1415926 "Approximation of PI")
+<pre><code class="language-lisp line-numbers">(sbcl) (defconstant +pi+ 3.1415926 "Approximation of PI")
 (sbcl) +pi+
     3.1415926
 </code></pre>
@@ -574,8 +567,7 @@
     <br/>
     <br/>
     <li><b>SETF</b> can also assign to multiple places in sequence.</li>
-<pre><code class="language-lisp line-numbers">
-(setf x 1)
+<pre><code class="language-lisp line-numbers">(setf x 1)
 (setf y 1)
 
 (setf x 1 y 2)
@@ -587,44 +579,40 @@
     <br/>
     <br/>
     <li>You could increment / decrement a number with <b>SETF</b>:</li>
-<pre><code class="language-lisp line-numbers">
-    (setf x (+ x 1));   (incf x)
-    (setf x (+ x 10));  (incf x 10)
-    (setf x (- x 1));   (decf x)
+<pre><code class="language-lisp line-numbers">(setf x (+ x 1));   (incf x)
+(setf x (+ x 10));  (incf x 10)
+(setf x (- x 1));   (decf x)
 </code></pre>
     <br/>
     <br/>
     <li><b>ROTATEF</b>: swaps values in-place by rotating them left-wise, returns <b>NIL</b>.<br/>
         <mark>NOTE</mark>: All places (variables, array elements, etc.) must be writable with <b>SETF</b>.</li>
-<pre><code class="language-lisp line-numbers">
-    (rotatef &lt;place1&gt; &lt;place2&gt; ... &lt;placeN&gt;)
+<pre><code class="language-lisp line-numbers">(rotatef &lt;place1&gt; &lt;place2&gt; ... &lt;placeN&gt;)
 
-    place1 &lt;- place2
-    place2 &lt;- place3
-    ...
-    placeN &lt;- original place1
+place1 &lt;- place2
+place2 &lt;- place3
+...
+placeN &lt;- original place1
 
-    (let ((a 1) (b 2) (c 3))
-      (rotatef a b c)
-      (list a b c))
+(let ((a 1) (b 2) (c 3))
+  (rotatef a b c)
+  (list a b c))
 
-    (2 3 1)
+(2 3 1)
 </code></pre>
     <br/>
     <br/>
     <li><b>SHIFTF</b> shifts values left-wise and returns the original first value.</li>
-<pre><code class="language-lisp line-numbers">
-    (shiftf &lt;place1&gt; &lt;place2&gt; ... &lt;placeN&gt; &lt;new-value&gt;)
+<pre><code class="language-lisp line-numbers">(shiftf &lt;place1&gt; &lt;place2&gt; ... &lt;placeN&gt; &lt;new-value&gt;)
 
-    place1 &lt;- place2
-    place2 &lt;- place3
-    ...
-    placeN &lt;- new-value
-    return &lt;- original place1
+place1 &lt;- place2
+place2 &lt;- place3
+...
+placeN &lt;- new-value
+return &lt;- original place1
 
-    (let ((a 1) (b 2) (c 3))
-      (shiftf a b c 100))       ;; returns 1
-
+(let ((a 1) (b 2) (c 3))
+  (shiftf a b c 100))       ;; returns 1
 </code></pre>
     <br/>
 </ol>
