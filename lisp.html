@@ -246,30 +246,27 @@
     <br/>
     <br/>
     <li>An <b>atom</b> is a number or a string of contiguous characters.</li>
-<pre><code class="language-lisp line-numbers">
-    hello-from-lisp
-    12300009
-    *hello*
-    block#123
-    abc123
+<pre><code class="language-lisp line-numbers">hello-from-lisp
+12300009
+*hello*
+block#123
+abc123
 </code></pre>
     <br/>
     <br/>
     <li>A <b>list</b> is a sequence of atoms and other lists enclosed in parentheses.</li>
-<pre><code class="language-lisp line-numbers">
-    (this is a list)
-    (a (a b c) d e f)
-    (Sun Mon Tue Wed Thu Fri Sat)
-    ( )
+<pre><code class="language-lisp line-numbers">(this is a list)
+(a (a b c) d e f)
+(Sun Mon Tue Wed Thu Fri Sat)
+( )
 </code></pre>
     <br/>
     <br/>
     <li>A <b>string</b> is a group of characters enclosed in double quotation mark ( " )</li>
-<pre><code class="language-lisp line-numbers">
-    "here is a string"
-    "hello"
-    "Please enter a number:"
-    " "
+<pre><code class="language-lisp line-numbers">"here is a string"
+"hello"
+"Please enter a number:"
+" "
 </code></pre>
     <br/>
 </ol>
@@ -306,52 +303,50 @@
     <br/>
     <br/>
     <li>The <code>type-of</code> function returns the data type of a given object.</li>
-<pre><code class="language-lisp line-numbers">
-    (let ((x 42) (y "hello"))
-      (format t "~%The type of X is: ~a" (type-of x))
-      (format t "~%The type of Y is: ~a" (type-of y)))
+<pre><code class="language-lisp line-numbers">(let ((x 42) (y "hello"))
+  (format t "~%The type of X is: ~a" (type-of x))
+  (format t "~%The type of Y is: ~a" (type-of y)))
 </code></pre>
     <br/>
     <br/>
     <li>Using scalar data types:</li>
-<pre><code class="language-lisp line-numbers">
-    ; Set values to variables.
-    (setq x 10)
-    (setq y 34.567)
-    (setq ch nil)
-    (setq n 123.78)
-    (setq bg 11.0e+4)
-    (setq r 124/2)
-    (setq q (/ 124 2))
+<pre><code class="language-lisp line-numbers">; Set values to variables.
+(setq x 10)
+(setq y 34.567)
+(setq ch nil)
+(setq n 123.78)
+(setq bg 11.0e+4)
+(setq r 124/2)
+(setq q (/ 124 2))
 
-    ; Print values of variables.
-    (print x)
-    (print y)
-    (print ch)
-    (print n)
-    (print bg)
-    (print r)
-    (print q)
+; Print values of variables.
+(print x)
+(print y)
+(print ch)
+(print n)
+(print bg)
+(print r)
+(print q)
 </code></pre>
     <br/>
     <br/>
     <li>Checking types of variables:</li>
-<pre><code class="language-lisp line-numbers">
-    ; Define variables and set values.
-    (defvar x 10)
-    (defvar y 34.567)
-    (defvar ch nil)
-    (defvar n 123.78)
-    (defvar bg 11.0e+4)
-    (defvar r 124/2)
+<pre><code class="language-lisp line-numbers">; Define variables and set values.
+(defvar x 10)
+(defvar y 34.567)
+(defvar ch nil)
+(defvar n 123.78)
+(defvar bg 11.0e+4)
+(defvar r 124/2)
 
-    ; Print types of variables.
-    (print (type-of x))
-    (print (type-of y))
-    (print (type-of n))
-    (print (type-of ch))
-    (print (type-of bg))
-    (print (type-of r))</code></pre>
+; Print types of variables.
+(print (type-of x))
+(print (type-of y))
+(print (type-of n))
+(print (type-of ch))
+(print (type-of bg))
+(print (type-of r))
+</code></pre>
     <br/>
 </ol>
 <br/>
@@ -371,10 +366,9 @@
     <br/>
     <br/>
     <li>Syntax for defining a named macro:</li>
-<pre><code class="language-lisp line-numbers">
-    (defmacro &lt;macro-name&gt; (&lt;param-list&gt;)
-      "optional document string."
-      &lt;body&gt;)
+<pre><code class="language-lisp line-numbers">(defmacro &lt;macro-name&gt; (&lt;param-list&gt;)
+  "optional document string."
+  &lt;body&gt;)
 </code></pre>
     <br/>
     <br/>
