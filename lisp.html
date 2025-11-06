@@ -795,21 +795,32 @@ return &lt;- original place1
     <br/>
     <br/>
     <li>Example Usage:</li>
-<pre><code class="language-lisp line-numbers">
-    &gt; (quote (+ 1 2))
-    (+ 1 2)
+<pre><code class="language-lisp line-numbers">&gt; (quote (+ 1 2))
+(+ 1 2)
 
-    &gt; '(+ 1 2)
-    (+ 1 2)
+&gt; '(+ 1 2)
+(+ 1 2)
 
-    &gt; (+ 1 2)
-    3
+&gt; (+ 1 2)
+3
 
-    &gt; 'a
-    A
+&gt; 'a
+A
 
-    &gt; '\a
-    |a|
+&gt; '\a
+|a|
+
+&gt; (setq a 100)
+100
+
+&gt; a
+100
+
+&gt; 'a
+A
+
+&gt; (symbol-value 'a)
+100
 </code></pre>
     <br/>
 </ol>
