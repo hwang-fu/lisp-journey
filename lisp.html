@@ -676,54 +676,48 @@ return &lt;- original place1
 <!-- * * * * * * * * * * * * * * -->
 <h3>Keyword Symbols</h3>
 <ol>
-    <li>Keyword symbols are prefixed with a colon (e.g., <code>:name</code>, <code>:id</code>).<br/>
+    <li>Keyword symbols are prefixed with a colon (e.g., <code>:name</code>, <code>:id</code>).<br/><br/>
         This prefix automatically makes them part of the <b>KEYWORD</b> package.</li>
     <br/>
     <br/>
     <li>Unlike regular symbols, keyword symbols <u>evaluate to themselves</u>.</li>
-<pre><code class="language-lisp line-numbers">
-    &gt; :example
-    :EXAMPLE
+<pre><code class="language-lisp line-numbers">&gt; :example
+:EXAMPLE
 
-    &gt; :EXample
-    :EXAMPLE
+&gt; :EXample
+:EXAMPLE
 
-    &gt; :\example
-    :|eXAMPLE|
+&gt; :\example
+:|eXAMPLE|
 
-    &gt; :a\,b
-    :|A,B|
+&gt; :a\,b
+:|A,B|
 
-    &gt; :123
-    :|123|
+&gt; :123
+:|123|
 
-    &gt; :123abc
-    :123ABC
+&gt; :123abc
+:123ABC
 
-    &gt; :abc123
-    :ABC123
+&gt; :abc123
+:ABC123
 
-    &gt; :|xyz|
-    :|xyz|
+&gt; :|xyz|
+:|xyz|
 </code></pre>
     <br/>
     <br/>
     <li>Keyword symbols are often used as keys in property list.</li>
-<pre><code class="language-lisp line-numbers">
-    &gt; (setq person '(:name "Alice" :age 20))
-    &gt; (getf person :name)
-    "Alice"
-</code></pre>
-<pre><code class="hl-grey-fg">
-    ; Btw, (setq person (:name "Alice" :age 20)) is invalid, because Lisp will tru to eval as if :name were a function.
-    ; You can also use (setq person (list :name "Alice" :age 20)) instead.
+<pre><code class="language-lisp line-numbers">&gt; (setq person '(:name "Alice" :age 20))
+&gt; (getf person :name)
+"Alice"
+; Btw, (setq person (:name "Alice" :age 20)) is invalid, because Lisp will tru to eval as if :name were a function.
+; You can also use (setq person (list :name "Alice" :age 20)) instead.
 </code></pre>
     <br/>
     <br/>
     <li>Many libraries use keyword symbols for configuration settings.</li>
-<pre><code class="language-lisp line-numbers">
-    (open "settings.conf", :direction :output)
-</code></pre>
+<pre><code class="language-lisp line-numbers">(open "settings.conf", :direction :output)</code></pre>
     <br/>
 </ol>
 <br/>
@@ -749,32 +743,27 @@ return &lt;- original place1
     <br/>
     <br/>
     <li>Basic Example:</li>
-<pre><code class="language-lisp line-numbers">
-    (if (&gt; 10 5)
-      (write-line "10 &gt; 5")
-      (write-line "10 &lt;= 5"))
+<pre><code class="language-lisp line-numbers">(if (&gt; 10 5)
+  (write-line "10 &gt; 5")
+  (write-line "10 &lt;= 5"))
 </code></pre>
     <br/>
     <li>Without <i>else</i> expression:</li>
-<pre><code class="language-lisp line-numbers">
-    (if (= 1 1) (write-line "1 equals 1"))
-</code></pre>
+<pre><code class="language-lisp line-numbers">(if (= 1 1) (write-line "1 equals 1"))</code></pre>
     <br/>
     <br/>
     <li>Nested <i>if</i>: </li>
-<pre><code class="language-lisp line-numbers">
-    (if (&gt; 10 5)
-      (if (&lt; 3 4)
-        (write-line "10 &gt; 5 and 3 &lt; 4")
-        (write-line "10 &gt; 5 and 3 &gt;= 4"))
-      (write-line "10 &lt;= 5"))
+<pre><code class="language-lisp line-numbers">(if (&gt; 10 5)
+  (if (&lt; 3 4)
+    (write-line "10 &gt; 5 and 3 &lt; 4")
+    (write-line "10 &gt; 5 and 3 &gt;= 4"))
+  (write-line "10 &lt;= 5"))
 </code></pre>
     <br/>
     <br/>
     <li>The <i>if</i> expression returns the result of the evaluated <i>then</i> or <i>else</i> form.</li>
-<pre><code class="language-lisp line-numbers">
-    (let ((x 10))
-      (if (&gt; x 5) (+ x 10) (- x 10)))
+<pre><code class="language-lisp line-numbers">(let ((x 10))
+  (if (&gt; x 5) (+ x 10) (- x 10)))
 </code></pre>
 </ol>
 <br/>
@@ -797,31 +786,60 @@ return &lt;- original place1
     <li>Example Usage:</li>
 <pre><code class="language-lisp line-numbers">&gt; (quote (+ 1 2))
 (+ 1 2)
-
 &gt; '(+ 1 2)
 (+ 1 2)
-
 &gt; (+ 1 2)
 3
 
 &gt; 'a
 A
-
 &gt; '\a
 |a|
 
+
 &gt; (setq a 100)
 100
-
 &gt; a
 100
-
 &gt; 'a
 A
-
 &gt; (symbol-value 'a)
 100
+
+
+&gt; (setq a 'b)   ; a holds the symbol B
+B
+&gt; (set a 100)   ; same as (set 'b 100)
+100
+&gt; b
+100
 </code></pre>
+    <br/>
+    <br/>
+    <li><code>(setq a 100)</code> and <code>(setq 'a 100)</code> are NOT the same
+        (<b>SETQ</b> expects an unquoted symbol in the variable position).</li>
+    <br/>
+    <br/>
+    <li>
+        If you want to assign to a variable by a symbol at runtime, use the symbol's value cell:
+        <code>(setf (symbol-value 'a) 100)</code> or <code>(set 'a 100)</code>
+    </li>
+    <br/>
+    <br/>
+    <li><code>'a</code> is a symbol ONLY when evaluated, normally it is treated as an quoted expression <code>(quote A)</code>.</li>
+    <br/>
+    <br/>
+    <li>Quick contrasts:</li>
+    <ul>
+        <br/>
+        <li><code>(setq a 100)</code>: special operator; does NOT evaluate the variable name; sets the variable <code>A</code>.</li>
+        <br/>
+        <li><code>(setf a 100)</code>: for simple variables same as <b>SETQ</b>.</li>
+        <br/>
+        <li><code>(set 'a 100)</code>: function; evaluates <code>'a</code> to <code>A</code>; sets <code>A</code>'s global/special value cell.</li>
+        <br/>
+        <li><code>(set a 100)</code>: function; evaluates <code>a</code> (must be a symbol); sets that symbol's global/special value.</li>
+    </ul>
     <br/>
 </ol>
 <br/>
@@ -845,36 +863,32 @@ A
     <br/>
     <br/>
     <li><b>EQ</b> checks whether two values are literally the same object: the same address, same identity.</li>
-<pre><code class="language-lisp line-numbers">
-    (eq 1000 1000)   ;; might be NIL on some Lisps
-    (eq 'foo 'foo)   ;; always T (same interned symbol)
+<pre><code class="language-lisp line-numbers">(eq 1000 1000)   ;; might be NIL on some Lisps
+(eq 'foo 'foo)   ;; always T (same interned symbol)
 </code></pre>
     <br/>
     <br/>
     <li><b>EQL</b> is just like <b>EQ</b>, but slightly stronger: it also considers numbers and characters with the same value as equal.</li>
-<pre><code class="language-lisp line-numbers">
-    (eql 1000 1000)  ;; always T
-    (eql 1.0 1)      ;; NIL (different types)
-    (eql #\A #\A)    ;; T
+<pre><code class="language-lisp line-numbers">(eql 1000 1000)  ;; always T
+(eql 1.0 1)      ;; NIL (different types)
+(eql #\A #\A)    ;; T
 </code></pre>
     <br/>
     <br/>
     <li><b>EQUAL</b> compares structural lists and strings (and bit-vectors).</li>
-<pre><code class="language-lisp line-numbers">
-    (equal '(a (b)) '(a (b)))   ;; T
-    (equal "Foo" "Foo")         ;; T
-    (equal "Foo" "foo")         ;; NIL (case-sensitive)
-    (equal 1 1.0)               ;; NIL (numbers must be EQL)
-    (equal #\A #\a)             ;; NIL
+<pre><code class="language-lisp line-numbers">(equal '(a (b)) '(a (b)))   ;; T
+(equal "Foo" "Foo")         ;; T
+(equal "Foo" "foo")         ;; NIL (case-sensitive)
+(equal 1 1.0)               ;; NIL (numbers must be EQL)
+(equal #\A #\a)             ;; NIL
 </code></pre>
     <br/>
     <br/>
     <li><b>EQUALP</b> is more forgiving: case-insensitive for strings and characters, and value comparison for numbers.</li>
-<pre><code class="language-lisp line-numbers">
-    (equalp "Foo" "foo")        ;; T
-    (equalp #\A #\a)            ;; T
-    (equalp 1 1.0)              ;; T
-    (equalp '(1 "A") #(1 "a"))  ;; T (list vs vector ok; string case ignored)
+<pre><code class="language-lisp line-numbers">(equalp "Foo" "foo")        ;; T
+(equalp #\A #\a)            ;; T
+(equalp 1 1.0)              ;; T
+(equalp '(1 "A") #(1 "a"))  ;; T (list vs vector ok; string case ignored)
 </code></pre>
     <br/>
 </ol>
@@ -893,12 +907,11 @@ A
     <br/>
     <br/>
     <li>Syntax:</li>
-<pre><code class="language-lisp line-numbers">
-    (cond
-      (&lt;cond-1&gt; &lt;form-1-1&gt; &lt;form-1-2&gt; ...)
-      (&lt;cond-2&gt; &lt;form-2-1&gt; &lt;form-2-2&gt; ...)
-      ...
-      (t &lt;default-form-1&gt; &lt;default-form-2&gt; ...))
+<pre><code class="language-lisp line-numbers">(cond
+  (&lt;cond-1&gt; &lt;form-1-1&gt; &lt;form-1-2&gt; ...)
+  (&lt;cond-2&gt; &lt;form-2-1&gt; &lt;form-2-2&gt; ...)
+  ...
+  (t &lt;default-form-1&gt; &lt;default-form-2&gt; ...))
 </code></pre>
     <ul>
         <br/>
@@ -913,25 +926,24 @@ A
     <br/>
     <br/>
     <li>Example Usage:</li>
-<pre><code class="language-lisp line-numbers">
-    (defun categorize-number (x)
-      (cond
-        ((&lt; x 0) "negative")
-        ((&gt; x 0) "positive")
-        ((= x 0) "zero")))
+<pre><code class="language-lisp line-numbers">(defun categorize-number (x)
+  (cond
+    ((&lt; x 0) "negative")
+    ((&gt; x 0) "positive")
+    ((= x 0) "zero")))
 
-    (categorize-number 10)
-    (categorize-number -7)
-    (categorize-number 0)
+(categorize-number 10)
+(categorize-number -7)
+(categorize-number 0)
 
-    (defun analyze-number (x)
-      (cond
-        ((&lt; x 0) (format t "~a &lt; 0~%" x) "negative")
-        ((&gt; x 0) (format t "~a &gt; 0~%" x) "positive")
-        ((= x 0) (format t "x = 0~%") "zero")))
+(defun analyze-number (x)
+  (cond
+    ((&lt; x 0) (format t "~a &lt; 0~%" x) "negative")
+    ((&gt; x 0) (format t "~a &gt; 0~%" x) "positive")
+    ((= x 0) (format t "x = 0~%") "zero")))
 
-    (analyze-number -3)
-    ; it will "-3 &lt; 0" and return "negative"
+(analyze-number -3)
+; it will "-3 &lt; 0" and return "negative"
 </code></pre>
     <br/>
 </ol>
@@ -947,8 +959,7 @@ A
 <ol>
     <li>Normally functions are defined using the <b>DEFUN</b> macro.<br/>
         The basic skeleton of a <b>DEFUN</b> looks like this:</li>
-<pre><code class="language-lisp line-numbers">
-(defun &lt;function-name&gt; (&lt;param-list&gt;)
+<pre><code class="language-lisp line-numbers">(defun &lt;function-name&gt; (&lt;param-list&gt;)
   "Optional documentation string."
   &lt;function-body&gt;)
 </code></pre>
@@ -968,8 +979,7 @@ A
     <br/>
     <br/>
     <li>Example of a function:</li>
-<pre><code class="language-lisp line-numbers">
-(defun verbose-sum (x y)
+<pre><code class="language-lisp line-numbers">(defun verbose-sum (x y)
   "Sum any two numbers after printing a message."
   (format t "Summing ~d and ~d.~%" x y)
   (+ x y))
@@ -986,8 +996,7 @@ A
         after the names of any <u>required parameters</u>,
         place the symbol <b>&amp;optional</b> followed by the name(s) of the <u>optional parameters</u>.
     </li>
-<pre><code class="language-lisp line-numbers">
-(defun foo (a b &amp;optional c d)
+<pre><code class="language-lisp line-numbers">(defun foo (a b &amp;optional c d)
   (list a b c d))
 
 (foo 1 2);      (1 2 NIL NIL)
@@ -1013,8 +1022,7 @@ A
     <li>Occasionally,
         it's useful to know whether the value of an optional argument was supplied by the caller or is the default value.<br/>
         By convention, these variables are usually named the same as the actual parameter with a <code>"-supplied-p"</code> suffix.</li>
-<pre><code class="language-lisp line-numbers">
-(defun foo (a b &amp;optional (c 3 c-supplied-p))
+<pre><code class="language-lisp line-numbers">(defun foo (a b &amp;optional (c 3 c-supplied-p))
   (list a b c c-supplied-p))
 
 (foo 1 2);      (1 2 3 NIL)
@@ -1025,8 +1033,7 @@ A
     <li>Lisp lets you include a catchall parameter after the symbol <b>&amp;rest</b>.<br/>
         It should be placed after the <u>required parameter(s)</u> and <u>optional parameter(s)</u>.
     </li>
-<pre><code class="language-lisp line-numbers">
-(defun sum (&amp;rest nums)
+<pre><code class="language-lisp line-numbers">(defun sum (&amp;rest nums)
   (reduce #'+ nums :initial-value 0))
 
 (sum);              0
@@ -1036,8 +1043,7 @@ A
     <br/>
     <li>To give a function keyword parameters, after any <u>required</u>, <u>optional</u>, and <u>rest</u> parameters,<br/>
         you include the symbol <b>&amp;key</b> and then any number of keyword parameter specifiers.</li>
-<pre><code class="language-lisp line-numbers">
-(defun foo (&amp;key a b c)
+<pre><code class="language-lisp line-numbers">(defun foo (&amp;key a b c)
   (list a b c))
 
 (foo)                ; (NIL NIL NIL)
@@ -1062,8 +1068,7 @@ A
     <br/>
     <br/>
     <li>Also, you can have keyword alias (it must be in a list):</li>
-<pre><code class="language-lisp line-numbers">
-(defun foo (&amp;key ((:apple a)) ((:banana b) 0) ((:cherry c) 0 c-supplied-p))
+<pre><code class="language-lisp line-numbers">(defun foo (&amp;key ((:apple a)) ((:banana b) 0) ((:cherry c) 0 c-supplied-p))
   (list a b c c-supplied-p))
 
 (foo :apple 10 :banana 20 :cherry 30); (10 20 30 T)
@@ -1095,8 +1100,7 @@ A
         However, <b>DEFUN</b> automatically wraps the whole function body in a block with the same name as the function.<br/>
         So, evaluating a <b>RETURN-FROM</b> with the <u>name of the function</u> and the <u>value</u> you want to return will cause the function to immediately exit with that value.</li>
     </li>
-<pre><code class="language-lisp line-numbers">
-(defun first-positive (xs)
+<pre><code class="language-lisp line-numbers">(defun first-positive (xs)
   (dolist (x xs)
     (when (plusp x)
       (return-from first-positive x)))
@@ -1118,24 +1122,23 @@ A
 <ol>
     <li>The special operator <b>FUNCTION</b> provides the mechanism for getting at a function object.<br/>
         It takes a single argument and returns the function with that name. The syntax <b>#'</b>, is a syntactic sugar for <b>FUNCTION</b></li>
-<pre><code class="language-lisp line-numbers">
-    (sbcl) (defun foo (x) (* 2 x))
-    FOO
-    (sbcl) (function foo)
-    #<Interpreted Function FOO>
-    (sbcl) #'foo
-    #<Interpreted Function FOO>
+<pre><code class="language-lisp line-numbers">(sbcl) (defun foo (x) (* 2 x))
+FOO
+(sbcl) (function foo)
+#<Interpreted Function FOO>
+(sbcl) #'foo
+#<Interpreted Function FOO>
 </code></pre>
     <br/>
     <br/>
     <li><b>FUNCALL</b> is the one to use when you know the number of arguments you're going to pass to the function at the time you write the code.<br/>
-        <code>(foo 1 2 3)</code> and <code>(funcall #'foo 1 2 3)</code> are basically the same.</li>
+        <br/><code>(foo 1 2 3)</code> and <code>(funcall #'foo 1 2 3)</code> are basically the same.</li>
+    <br/>
     <br/>
     <br/>
     <li>The following function demonstrates a more apt use of <b>FUNCALL</b>.<br/>
         It accepts a function object as an argument and plots a simple ASCII-art histogram of the values returned by the argument function when it's invoked on the values from <code>min</code> to <code>max</code>, stepping by <code>step</code>.</li>
-<pre><code class="language-lisp line-numbers">
-(defun plot (fn min max step)
+<pre><code class="language-lisp line-numbers">(defun plot (fn min max step)
   (loop for i from min to max by step do
     (loop repeat (funcall fn i) do (format t "*"))
     (format t "~%")))
@@ -1180,8 +1183,7 @@ NIL
     <li>Anonymous functions are created with <code>(lambda (args...) body...)</code>.<br/>
         They produce a function object (often called a <i>closure</i> when it captures variables).<br/>
         To pass/call them, use a function designator: <code>#'(lambda ...)</code>.</li>
-<pre><code class="language-lisp line-numbers">
-(funcall #'(lambda (x y) (+ x y)) 3 4)
+<pre><code class="language-lisp line-numbers">(funcall #'(lambda (x y) (+ x y)) 3 4)
 ;; 7
 
 
@@ -1215,11 +1217,12 @@ NIL
 <!-- * * * * * * * * * * * * * * -->
 <h3>The difference between (3 4 5) and '(3 4 5)</h3>
 <ol>
-    <li><code>(3 4 5)</code> is a function call.<br/>
+    <li><code>(3 4 5)</code> is a function call.<br/><br/>
         In Lisp, anything inside parentheses is treated as a function call unless you explicitly prevent evaluation.</li>
     <br/>
     <br/>
-    <li><code>'(3 4 5)</code> is a quoted list — a literal value.<br/>
+    <br/>
+    <li><code>'(3 4 5)</code> is a quoted list — a literal value.<br/><br/>
         The single quote ( <code>'</code> ) is shorthand for </code>(quote ...)</code>.</li>
     <br/>
 </ol>
@@ -1243,8 +1246,7 @@ NIL
     <br/>
     <br/>
     <li>Comparison with a real-life example:</li>
-<pre><code class="language-lisp line-numbers">
-(setq a 10 b 20 c 30)
+<pre><code class="language-lisp line-numbers">(setq a 10 b 20 c 30)
 (list a b c)            ;; (10 20 30)
 '(a b c)                ;; (A B C)
 </code></pre>
@@ -1267,17 +1269,15 @@ NIL
     <br/>
     <br/>
     <li>Example:</li>
-<pre><code class="language-lisp line-numbers">
-    (progn
-      (format t "Step 1~%")
-      (format t "Step 2~%")
-      (+ 2 3))   ;; last expression
+<pre><code class="language-lisp line-numbers">(progn
+  (format t "Step 1~%")
+  (format t "Step 2~%")
+  (+ 2 3))   ;; last expression
 
-    ;; Output:
-    ;; Step 1
-    ;; Step 2
-    ;; 5
-
+;; Output:
+;; Step 1
+;; Step 2
+;; 5
 </code></pre>
     <br/>
 </ol>
@@ -1294,14 +1294,12 @@ NIL
     <li><b>WHEN</b> is like a simplified IF that only has a then branch (no else).<br/>
         If the condition is true, it executes one or more expressions.</li>
     <br/>
-<pre><code class="language-lisp line-numbers">
-    (let ((x 5))
-      (when (&gt; x 0)
-        (format t "x is positive~%")
-        (* x 2)))
-    ;; prints "x is positive"
-    ;; returns 10
-
+<pre><code class="language-lisp line-numbers">(let ((x 5))
+  (when (&gt; x 0)
+    (format t "x is positive~%")
+    (* x 2)))
+;; prints "x is positive"
+;; returns 10
 </code></pre>
     <br/>
 </ol>
@@ -1317,14 +1315,12 @@ NIL
 <ol>
     <li><b>UNLESS</b> is the logical opposite of <b>WHEN</b>. If the condition is false (<code>NIL</code>), it executes the body.</li>
     <br/>
-<pre><code class="language-lisp line-numbers">
-(let ((x 0))
+<pre><code class="language-lisp line-numbers">(let ((x 0))
   (unless (&gt; x 0)
     (format t "x is not positive~%")
     "Did something"))
 ;; prints "x is not positive"
 ;; returns "Did something"
-
 </code></pre>
     <br/>
 </ol>
@@ -1363,19 +1359,17 @@ NIL
     <br/>
     <br/>
     <li>Examples:</li>
-<pre><code class="language-lisp line-numbers">
-    (and t 42 "hello")      ;; "hello"
-    (and t nil "oops")      ;; NIL
-    (and)                   ;; T
+<pre><code class="language-lisp line-numbers">(and t 42 "hello")      ;; "hello"
+(and t nil "oops")      ;; NIL
+(and)                   ;; T
 
-    (or nil 0 "yes")        ;; 0
-    (or nil nil nil)        ;; NIL
-    (or)                    ;; NIL
+(or nil 0 "yes")        ;; 0
+(or nil nil nil)        ;; NIL
+(or)                    ;; NIL
 
-    (not nil)               ;; T
-    (not t)                 ;; NIL
-    (not 42)                ;; NIL (42 is truthy)
-
+(not nil)               ;; T
+(not t)                 ;; NIL
+(not 42)                ;; NIL (42 is truthy)
 </code></pre>
     <br/>
 </ol>
@@ -1402,8 +1396,7 @@ NIL
         <li><i>return-value</i>: Expression evaluated and returned after the loop finishes.</li>
     </ul>
     <br/>
-<pre><code class="language-lisp line-numbers">
-(dolist (x '(a b c))
+<pre><code class="language-lisp line-numbers">(dolist (x '(a b c))
   (format t "Element: ~A~%" x))
 ;; Element: A
 ;; Element: B
@@ -1413,7 +1406,6 @@ NIL
 (dolist (x '(1 2 3) "Done")
   (print x))
 ;; Returns "Done" after printing the numbers.
-
 </code></pre>
     <br/>
     <br/>
@@ -1424,8 +1416,7 @@ NIL
         <li>The loop counter starts at <i>0</i> and ends at <i>N-1</i>, exactly <i>N</i> iterations.</li>
         <br/>
     </ul>
-<pre><code class="language-lisp line-numbers">
-(dotimes (i 5)
+<pre><code class="language-lisp line-numbers">(dotimes (i 5)
   (format t "i = ~A~%" i))
 ;; i = 0
 ;; i = 1
@@ -1440,7 +1431,6 @@ NIL
 ;; i = 1
 ;; i = 2
 ;; "Loop done"
-
 </code></pre>
 </ol>
 <br/>
@@ -1457,14 +1447,12 @@ NIL
     <br/>
     <br/>
     <li>Syntax:</li>
-<pre><code class="language-lisp line-numbers">
-(do ((&lt;var1&gt; &lt;init1&gt; [&lt;step1&gt;])
+<pre><code class="language-lisp line-numbers">(do ((&lt;var1&gt; &lt;init1&gt; [&lt;step1&gt;])
      (&lt;var2&gt; &lt;init2&gt; [&lt;step2&gt;])
      ...
      (&lt;varN&gt; &lt;initN&gt; [&lt;stepN&gt;]))
     (&lt;end-test&gt; [&lt;result-form&gt;])
   &lt;body&gt;)
-
 </code></pre>
 <ul>
     <br/>
@@ -1483,8 +1471,7 @@ NIL
     <br/>
     <br/>
     <li>Basic Example:</li>
-<pre><code class="language-lisp line-numbers">
-(do ((i 0 (+ i 1)))
+<pre><code class="language-lisp line-numbers">(do ((i 0 (+ i 1)))
     ((&gt;= i 5) 'done)
   (format t "i = ~A~%" i))
 
@@ -1513,13 +1500,11 @@ NIL
 (do ((x 5))         ; x stays 5 forever — infinite loop!
     ((<= x 0))
   (print x))
-
 </code></pre>
     <br/>
     <br/>
     <li>Early exit using <b>RETURN</b>:</li>
-<pre><code class="language-lisp line-numbers">
-(do ((i 0 (+ i 1)))
+<pre><code class="language-lisp line-numbers">(do ((i 0 (+ i 1)))
     (nil)           ; end test is NIL, infinite loop unless broken
   (when (= i 3) (return 'early))
   (print i))
@@ -1528,7 +1513,6 @@ NIL
 ;; 1
 ;; 2
 ;; EARLY
-
 </code></pre>
     <br/>
 </ol>
@@ -1570,64 +1554,62 @@ NIL
     <br/>
     <li>Examples:</li>
     <br/>
-<pre><code class="language-lisp line-numbers">
-    (loop for x in '(a b c ) do
-      (print x))
-    ;; A
-    ;; B
-    ;; C
+<pre><code class="language-lisp line-numbers">(loop for x in '(a b c ) do
+  (print x))
+;; A
+;; B
+;; C
 
-    (loop as i from 1 to 3 do (print i))
-    ;; 1
-    ;; 2
-    ;; 3
+(loop as i from 1 to 3 do (print i))
+;; 1
+;; 2
+;; 3
 
-    (loop for i from 1 to 3 do (print i))           ;; 1 2 3
-    (loop for i from 3 downto 1 do (print i))       ;; 3 2 1
-    (loop for i from 1 upto 3 do (print i))         ;; 1 2 3
-    (loop for i from 1 below 4 do (print i))        ;; 1 2 3
-    (loop for i from 5 above 2 do (print i))        ;; 5 4 3
-    (loop for i from 0 to 10 by 2 do (print i))     ;; 0 2 4 6 8 10
+(loop for i from 1 to 3 do (print i))           ;; 1 2 3
+(loop for i from 3 downto 1 do (print i))       ;; 3 2 1
+(loop for i from 1 upto 3 do (print i))         ;; 1 2 3
+(loop for i from 1 below 4 do (print i))        ;; 1 2 3
+(loop for i from 5 above 2 do (print i))        ;; 5 4 3
+(loop for i from 0 to 10 by 2 do (print i))     ;; 0 2 4 6 8 10
 
-    (loop repeat 3 do
-      (print "Hello"))
-    ;; "Hello"
-    ;; "Hello"
-    ;; "Hello"
+(loop repeat 3 do
+  (print "Hello"))
+;; "Hello"
+;; "Hello"
+;; "Hello"
 
-    (loop named my-loop
-      for i from 1 to 10 do
-        (when (= i 5) (return-from my-loop 'stopped)))
-    ;; 'STOPPED
+(loop named my-loop
+  for i from 1 to 10 do
+    (when (= i 5) (return-from my-loop 'stopped)))
+;; 'STOPPED
 
-    (loop
-      initially (format t "Start~%")
-      for i from 1 to 2 do (print i))
+(loop
+  initially (format t "Start~%")
+  for i from 1 to 2 do (print i))
 
-    (loop
-      for i from 1 to 2 do (print i)
-      finally (format t "Done~%"))
+(loop
+  for i from 1 to 2 do (print i)
+  finally (format t "Done~%"))
 
-    (loop for x in '(a b c) collect x)                  ;; (A B C)
-    (loop for tail on '(1 2 3) collect tail)            ;; ((1 2 3) (2 3) (3))
-    (loop for x across #(10 20 30) collect (* x 2))     ;; (20 40 60)
+(loop for x in '(a b c) collect x)                  ;; (A B C)
+(loop for tail on '(1 2 3) collect tail)            ;; ((1 2 3) (2 3) (3))
+(loop for x across #(10 20 30) collect (* x 2))     ;; (20 40 60)
 
-    (loop
-      for i from 1 to 3
-        if (evenp i)
-          collect i
-        else
-          collect (- i)
-        end)
-    ;; (-1 2 -3)
+(loop
+  for i from 1 to 3
+    if (evenp i)
+      collect i
+    else
+      collect (- i)
+    end)
+;; (-1 2 -3)
 
-    (loop for i from 1 to 3 collect (* i i))            ;; (1 4 9)
-    (loop for x in '((a b) (c) (d e)) append x)         ;; (A B C D E)
-    (loop for i from 1 to 5 sum i)                      ;; 15
-    (loop for i in '(1 2 3 4 5) count (evenp i))        ;; 2
-    (loop for x in '(3 7 2 9 5) maximize x)             ;; 9
-    (loop for x in '(3 7 2 9 5) minimize x)             ;; 2
-
+(loop for i from 1 to 3 collect (* i i))            ;; (1 4 9)
+(loop for x in '((a b) (c) (d e)) append x)         ;; (A B C D E)
+(loop for i from 1 to 5 sum i)                      ;; 15
+(loop for i in '(1 2 3 4 5) count (evenp i))        ;; 2
+(loop for x in '(3 7 2 9 5) maximize x)             ;; 9
+(loop for x in '(3 7 2 9 5) minimize x)             ;; 2
 </code></pre>
     <br/>
 </ol>
@@ -1643,13 +1625,11 @@ NIL
 <ol>
     <li>Quote (<code>'</code> or <code>(quote ...)</code>): Don't evaluate, take it as data (prevents the usual evaluation of lists/symbols.).</li>
     <br/>
-<pre><code class="language-lisp line-numbers">
-'foo            ;; FOO            ; a symbol, not the value of variable FOO
+<pre><code class="language-lisp line-numbers">'foo            ;; FOO            ; a symbol, not the value of variable FOO
 (quote foo)     ;; same as above
 
 '(1 2 3)        ;; (1 2 3)        ; a literal list (don't evaluate it)
 '(+ 1 2)        ;; (+ 1 2)        ; code-as-data, not 3
-
 </code></pre>
     <br/>
     <li>Backquote / Quasiquote (<code>`</code> or <code>(quasiquote ...)</code>): Make a template, selectively evaluate with commas.</li>
@@ -1659,16 +1639,13 @@ NIL
         <br/>
         <li><code>,@expr</code> (unquote-splicing): evaluates expr and splices its elements into the surrounding list.</li>
     </ul>
-<pre><code class="language-lisp line-numbers">
-    (let ((a 10) (b '(x y)))
-      `(+ ,a 20)                ;; (+ 10 20)    NOTE: it evals a template to a list (not 30 that no further evaluation by far!).
-      `(1 2 ,a ,@b 99))         ;; (1 2 10 X Y 99)
+<pre><code class="language-lisp line-numbers">(let ((a 10) (b '(x y)))
+  `(+ ,a 20)                ;; (+ 10 20)    NOTE: it evals a template to a list (not 30 that no further evaluation by far!).
+  `(1 2 ,a ,@b 99))         ;; (1 2 10 X Y 99)
 
-    (let ((xs '(a b)))
-      `(x ,xs y))   ;;  (X (A B) Y)
-      `(x ,@xs y))  ;;  (X A B Y)
-
-
+(let ((xs '(a b)))
+  `(x ,xs y))   ;;  (X (A B) Y)
+  `(x ,@xs y))  ;;  (X A B Y)
 </code></pre>
     <br/>
 </ol>
@@ -1683,20 +1660,17 @@ NIL
 <h3>Destructing Parameter in DEFMACRO</h3>
 <ol>
     <li>When you define a macro, you tell Lisp how to map the call form into symbols that you can use inside the macro body.</li>
-<pre><code class="language-lisp line-numbers">
-(defmacro simple (x y)
+<pre><code class="language-lisp line-numbers">(defmacro simple (x y)
   `(list ,x ,y))
 
 (simple 10 20)
 ;; expands to (LIST 10 20) and will be evaluated when using it.
-
 </code></pre>
     <br/>
     <br/>
     <li>In a <b>DEFMACRO</b>,
         your lambda list doesn't just bind symbols to arguments — it can pattern-match the entire shape of the call form.</li>
-<pre><code class="language-lisp line-numbers">
-(defmacro swap! ((a b))
+<pre><code class="language-lisp line-numbers">(defmacro swap! ((a b))
   `(let ((temp ,a))
      (setf ,a ,b
            ,b temp)))
@@ -1734,8 +1708,6 @@ NIL
   (print (+ x y)))
 ;; expands to:
 ;; (LET ((X 10) (Y 2)) (PRINT (+ X Y)))
-
-
 </code></pre>
     <br/>
     <br/>
@@ -1762,70 +1734,65 @@ NIL
     <br/>
     <li>Simplest way to construct a fixed-size vector with existing elements,
         is to use either <code>(vector [&lt;elements&gt;])</code> or <code>#(&lt;elements&gt;)</code> syntax:</li>
-<pre><code class="language-lisp line-numbers">
-    (vector)
-    #()
+<pre><code class="language-lisp line-numbers">(vector)
+#()
 
-    (vector 1)
-    #(1)
+(vector 1)
+#(1)
 
-    (vector 1 2)
-    #(1 2)
-
+(vector 1 2)
+#(1 2)
 </code></pre>
     <br/>
     <br/>
     <li><b>MAKE-ARRAY</b> is much more vesatile;</li>
-<pre><code class="language-lisp line-numbers">
-    (make-array 5 :initial-element nil);    #(NIL NIL NIL NIL NIL)
+<pre><code class="language-lisp line-numbers">(make-array 5 :initial-element nil);    #(NIL NIL NIL NIL NIL)
 
 
 
-    ;; `fill-pointer` stores the number of elements inside the vector.
-    (make-array 5 :fill-pointer 0);         #()
+;; `fill-pointer` stores the number of elements inside the vector.
+(make-array 5 :fill-pointer 0);         #()
 
 
 
-    (defparameter *x* (make-array 5 :fill-pointer 0))
+(defparameter *x* (make-array 5 :fill-pointer 0))
 
-    (vector-push 'a *x*);                   0
-    *x*                 ;					#(A)
-    (vector-push 'b *x*);					1
-    *x*                 ;					#(A B)
-    (vector-push 'c *x*);					2
-    *x*                 ;					#(A B C)
-    (vector-pop *x*)    ;					C
-    *x*                 ;					#(A B)
-    (vector-pop *x*)    ;					B
-    *x*                 ;					#(A)
-    (vector-pop *x*)    ;					A
-    *x*                 ;					#()
-
-
-
-    ;; To make an arbitrarily resizable vector, you need to pass MAKE-ARRAY another keyword argument: `:adjustable`.
-    (make-array 5 :fill-pointer 0 :adjustable t); #()
+(vector-push 'a *x*);                   0
+*x*                 ;					#(A)
+(vector-push 'b *x*);					1
+*x*                 ;					#(A B)
+(vector-push 'c *x*);					2
+*x*                 ;					#(A B C)
+(vector-pop *x*)    ;					C
+*x*                 ;					#(A B)
+(vector-pop *x*)    ;					B
+*x*                 ;					#(A)
+(vector-pop *x*)    ;					A
+*x*                 ;					#()
 
 
 
-    ;; You can also specify that a vector only contains certain types of elements (if non-specified, then it could take different kinds of elements).
-    (make-array 5 :fill-pointer 0 :adjustable t :element-type 'character)
+;; To make an arbitrarily resizable vector, you need to pass MAKE-ARRAY another keyword argument: `:adjustable`.
+(make-array 5 :fill-pointer 0 :adjustable t); #()
 
+
+
+;; You can also specify that a vector only contains certain types of elements (if non-specified, then it could take different kinds of elements).
+(make-array 5 :fill-pointer 0 :adjustable t :element-type 'character)
 </code></pre>
     <br/>
     <br/>
     <li>Vector as sequence:</li>
-<pre><code class="language-lisp line-numbers">
-	(sbcl)    (defparameter *x* (vector 1 2 3))
+<pre><code class="language-lisp line-numbers">(sbcl)    (defparameter *x* (vector 1 2 3))
 
-	(sbcl)    (length *x*); 3
-	(sbcl)    (elt *x* 0) ; 1
-	(sbcl)    (elt *x* 1) ; 2
-	(sbcl)    (elt *x* 2) ; 3
-	(sbcl)    (elt *x* 3) ; error
+(sbcl)    (length *x*); 3
+(sbcl)    (elt *x* 0) ; 1
+(sbcl)    (elt *x* 1) ; 2
+(sbcl)    (elt *x* 2) ; 3
+(sbcl)    (elt *x* 3) ; error
 
-	(sbcl)    (setf (elt *x* 0) 10)
-	(sbcl)    *x*; #(10 2 3)
+(sbcl)    (setf (elt *x* 0) 10)
+(sbcl)    *x*; #(10 2 3)
 </code></pre>
     <br/>
     <br/>
@@ -1867,78 +1834,76 @@ NIL
             </tr>
         </tbody>
     </table>
-<pre><code class="language-lisp line-numbers">
+    <br/>
+<pre><code class="language-lisp line-numbers">(count 1 #(1 2 1 2 3 1 2 3 4))        ;		3
+(remove 1 #(1 2 1 2 3 1 2 3 4))       ;		#(2 2 3 2 3 4)
+(remove 1 '(1 2 1 2 3 1 2 3 4))       ;		(2 2 3 2 3 4)
+(remove #\a "foobarbaz")              ;		"foobrbz"
+(substitute 10 1 #(1 2 1 2 3 1 2 3 4));		#(10 2 10 2 3 10 2 3 4)
+(substitute 10 1 '(1 2 1 2 3 1 2 3 4));		(10 2 10 2 3 10 2 3 4)
+(substitute #\x #\b "foobarbaz")      ;		"fooxarxaz"
+(find 1 #(1 2 1 2 3 1 2 3 4))         ;		1
+(find 10 #(1 2 1 2 3 1 2 3 4))        ;		NIL
+(position 1 #(1 2 1 2 3 1 2 3 4))     ;		0
 
-    (count 1 #(1 2 1 2 3 1 2 3 4))        ;		3
-    (remove 1 #(1 2 1 2 3 1 2 3 4))       ;		#(2 2 3 2 3 4)
-    (remove 1 '(1 2 1 2 3 1 2 3 4))       ;		(2 2 3 2 3 4)
-    (remove #\a "foobarbaz")              ;		"foobrbz"
-    (substitute 10 1 #(1 2 1 2 3 1 2 3 4));		#(10 2 10 2 3 10 2 3 4)
-    (substitute 10 1 '(1 2 1 2 3 1 2 3 4));		(10 2 10 2 3 10 2 3 4)
-    (substitute #\x #\b "foobarbaz")      ;		"fooxarxaz"
-    (find 1 #(1 2 1 2 3 1 2 3 4))         ;		1
-    (find 10 #(1 2 1 2 3 1 2 3 4))        ;		NIL
-    (position 1 #(1 2 1 2 3 1 2 3 4))     ;		0
+(count "foo" #("foo" "bar" "baz") :test #'string=)   ; 1
+(find 'c #((a 10) (b 20) (c 30) (d 40)) :key #'first); (C 30)
 
-    (count "foo" #("foo" "bar" "baz") :test #'string=)   ; 1
-    (find 'c #((a 10) (b 20) (c 30) (d 40)) :key #'first); (C 30)
+(find 'a #((a 10) (b 20) (a 30) (b 40)) :key #'first)            ; (A 10)
+(find 'a #((a 10) (b 20) (a 30) (b 40)) :key #'first :from-end t); (A 30)
 
-    (find 'a #((a 10) (b 20) (a 30) (b 40)) :key #'first)            ; (A 10)
-    (find 'a #((a 10) (b 20) (a 30) (b 40)) :key #'first :from-end t); (A 30)
+(remove #\a "foobarbaz" :count 1)            ; "foobrbaz"
+(remove #\a "foobarbaz" :count 1 :from-end t); "foobarbz"
 
-    (remove #\a "foobarbaz" :count 1)            ; "foobrbaz"
-    (remove #\a "foobarbaz" :count 1 :from-end t); "foobarbz"
+(count-if #'evenp #(1 2 3 4 5))        ; 2
 
-    (count-if #'evenp #(1 2 3 4 5))        ; 2
+(count-if-not #'evenp #(1 2 3 4 5))    ; 3
 
-    (count-if-not #'evenp #(1 2 3 4 5))    ; 3
+(position-if #'digit-char-p "abcd0001"); 4
 
-    (position-if #'digit-char-p "abcd0001"); 4
+(remove-if-not #'(lambda (x) (char= (elt x 0) #\f))
+  #("foo" "bar" "baz" "foom"))
+;; #("foo" "foom")
 
-    (remove-if-not #'(lambda (x) (char= (elt x 0) #\f))
-      #("foo" "bar" "baz" "foom"))
-    ;; #("foo" "foom")
+(remove-duplicates #(1 2 1 2 3 1 2 3 4))    ; #(1 2 3 4)
 
-    (remove-duplicates #(1 2 1 2 3 1 2 3 4))    ; #(1 2 3 4)
+(concatenate 'vector #(1 2 3) '(4 5 6))     ; #(1 2 3 4 5 6)
+(concatenate 'list #(1 2 3) '(4 5 6))       ; (1 2 3 4 5 6)
+(concatenate 'string "abc" '(#\d #\e #\f))  ; "abcdef"
 
-    (concatenate 'vector #(1 2 3) '(4 5 6))     ; #(1 2 3 4 5 6)
-    (concatenate 'list #(1 2 3) '(4 5 6))       ; (1 2 3 4 5 6)
-    (concatenate 'string "abc" '(#\d #\e #\f))  ; "abcdef"
+(merge 'vector #(1 3 5) #(2 4 6) #'&lt;)    ; #(1 2 3 4 5 6)
+(merge 'list #(1 3 5) #(2 4 6) #'&lt;)      ; (1 2 3 4 5 6)
 
-    (merge 'vector #(1 3 5) #(2 4 6) #'&lt;)    ; #(1 2 3 4 5 6)
-    (merge 'list #(1 3 5) #(2 4 6) #'&lt;)      ; (1 2 3 4 5 6)
-
-    (subseq "foobarbaz" 3)                      ; "barbaz"
-    (subseq "foobarbaz" 3 6)                    ; "bar"
-
-
-
-    (defparameter *x* (copy-seq "foobarbaz"))
-
-    (setf (subseq *x* 3 6) "xxx")  ; subsequence and new value are same length
-    *x*
-    ;; "fooxxxbaz"
-
-    (setf (subseq *x* 3 6) "abcd") ; new value too long, extra character ignored.
-    *x*
-    ;; "fooabcbaz"
-
-    (setf (subseq *x* 3 6) "xx")   ; new value too short, only two characters changed
-    *x*
-    ;; "fooxxcbaz"
+(subseq "foobarbaz" 3)                      ; "barbaz"
+(subseq "foobarbaz" 3 6)                    ; "bar"
 
 
 
-    (every #'evenp #(1 2 3 4 5))   ; NIL
-    (some #'evenp #(1 2 3 4 5))    ; T
-    (notany #'evenp #(1 2 3 4 5))  ; NIL
-    (notevery #'evenp #(1 2 3 4 5)); T
+(defparameter *x* (copy-seq "foobarbaz"))
+
+(setf (subseq *x* 3 6) "xxx")  ; subsequence and new value are same length
+*x*
+;; "fooxxxbaz"
+
+(setf (subseq *x* 3 6) "abcd") ; new value too long, extra character ignored.
+*x*
+;; "fooabcbaz"
+
+(setf (subseq *x* 3 6) "xx")   ; new value too short, only two characters changed
+*x*
+;; "fooxxcbaz"
 
 
 
-    (map 'vector #'* #(1 2 3 4 5) #(10 9 8 7 6)); #(10 18 24 28 30)
-    (reduce #'+ #(1 2 3 4 5 6 7 8 9 10)); 55
+(every #'evenp #(1 2 3 4 5))   ; NIL
+(some #'evenp #(1 2 3 4 5))    ; T
+(notany #'evenp #(1 2 3 4 5))  ; NIL
+(notevery #'evenp #(1 2 3 4 5)); T
 
+
+
+(map 'vector #'* #(1 2 3 4 5) #(10 9 8 7 6)); #(10 18 24 28 30)
+(reduce #'+ #(1 2 3 4 5 6 7 8 9 10)); 55
 </code></pre>
     <br/>
     <br/>
@@ -2009,12 +1974,10 @@ NIL
     <br/>
     <br/>
     <li><code>(cons a d)</code> allocates a new cons cell whose <b>CAR</b> is <code>a</code> and <b>CDR</b> is <code>d</code>.</li>
-<pre><code class="language-lisp line-numbers">
-    (cons 1 2)          ; (1 . 2)   ;; an *improper* (dotted) pair
-    (cons 1 '(2 3))     ; (1 2 3)   ;; a proper list
-    (cons 'a 'b)        ; (A . B)
-    (cons '(a b) '(c d)); ((A B) C D)
-
+<pre><code class="language-lisp line-numbers">(cons 1 2)          ; (1 . 2)   ;; an *improper* (dotted) pair
+(cons 1 '(2 3))     ; (1 2 3)   ;; a proper list
+(cons 'a 'b)        ; (A . B)
+(cons '(a b) '(c d)); ((A B) C D)
 </code></pre>
     <br/>
     <br/>
@@ -2031,29 +1994,27 @@ NIL
     <br/>
     <br/>
     <li>Basic access: <code>CAR</code> and <code>CDR</code></li>
-<pre><code class="language-lisp line-numbers">
-    (car '(10 20 30)) ; 10
-    (cdr '(10 20 30)) ; (20 30)
-    (first '(10 20))  ; 10      ; synonyms: FIRST = CAR, REST = CDR
-    (rest  '(10 20))  ; (20)
+<pre><code class="language-lisp line-numbers">(car '(10 20 30)) ; 10
+(cdr '(10 20 30)) ; (20 30)
+(first '(10 20))  ; 10      ; synonyms: FIRST = CAR, REST = CDR
+(rest  '(10 20))  ; (20)
 
-    (cadr  '(a b c))  ; B   ; = (car (cdr ...))
-    (caddr '(a b c d)); C
-
-
-
-    (cons 0 '(1 2 3))       ; (0 1 2 3)   ; O(1) prepend
-    (list 1 2 3)            ; (1 2 3)     ; constructs a fresh proper list
-    (list* 1 2 3)           ; (1 2 . 3)   ; last arg becomes the final CDR (can make improper)
-    (append '(1 2) '(3 4))  ; (1 2 3 4)   ; copies all but last list; O(n) in first arg
+(cadr  '(a b c))  ; B   ; = (car (cdr ...))
+(caddr '(a b c d)); C
 
 
 
-    (let ((x (list 1 2 3)))
-      (setf (car x) 99)     ; x =&gt; (99 2 3)
-      (setf (cdr x) '(7))   ; x =&gt; (99 7)
-      x)
+(cons 0 '(1 2 3))       ; (0 1 2 3)   ; O(1) prepend
+(list 1 2 3)            ; (1 2 3)     ; constructs a fresh proper list
+(list* 1 2 3)           ; (1 2 . 3)   ; last arg becomes the final CDR (can make improper)
+(append '(1 2) '(3 4))  ; (1 2 3 4)   ; copies all but last list; O(n) in first arg
 
+
+
+(let ((x (list 1 2 3)))
+  (setf (car x) 99)     ; x =&gt; (99 2 3)
+  (setf (cdr x) '(7))   ; x =&gt; (99 7)
+  x)
 </code></pre>
     <br/>
     <br/>
