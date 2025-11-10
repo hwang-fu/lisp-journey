@@ -110,6 +110,7 @@
 
     body {
         font-family: "KaiTi", "楷体", "STKaiti", "Kaiti SC", serif;
+        font-variant-ligatures: none;
     }
 
     ul > li {
@@ -125,7 +126,6 @@
         font-family: "FiraCode Nerd Font", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
         font-size: 0.875rem;                /* 14px-ish; avoid bare numbers */
         line-height: 1.4;
-        font-variant-ligatures:contextual;
     }
 
     /* Block code container */
@@ -4228,15 +4228,19 @@ MY-APP:*SECRET*  ; use single colon for exported symbol
     <br/>
 
 
-    <li><b>Single colon: <code>pkg:symbol</code> → exported only</b></li>
+    <li><b>Single colon: <code>pkg:symbol</code> -> exported only</b></li>
     <br/>
     <ul>
-        <li><code>pkg:symbol</code> means: “Use the <b>exported</b> symbol named <code>SYMBOL</code> from package <code>PKG</code>.”</li>
+        <li><code>pkg:symbol</code> means: "Use the <b>exported</b> symbol named <code>SYMBOL</code> from package <code>PKG</code>."</li>
         <br/>
         <li>If that symbol isn’t exported, you get a <b>reader error</b> when loading/compiling code.</li>
     </ul>
 
-    <p>Example (assuming <code>start-app</code> is <u>not</u> exported):</p>
+    <br/>
+    <br/>
+
+    <ul>
+    <li>Example (assuming <code>start-app</code> is <u>not</u> exported):</li>
 <pre><code class="language-lisp line-numbers">;; Suppose:
 (defpackage :my-app
   (:use :cl))         ; no :export here
@@ -4248,12 +4252,11 @@ MY-APP:*SECRET*  ; use single colon for exported symbol
 
 
 ;; From CL-USER:
-CL-USER&gt; my-app:start-app
+CL-USER&gt; (my-app:start-app)
 ;; =&gt; Reader error:
 ;;    The symbol "START-APP" is not exported from package "MY-APP".
 </code></pre>
     <br/>
-    <ul>
         <li>So: <b>one colon</b> works only for <b>exported</b> (public) API symbols.</li>
     </ul>
     <br/>
