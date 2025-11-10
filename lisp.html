@@ -3988,8 +3988,7 @@ foo          ; =&gt; 10          ; value cell
         <br/>
         <li>If not, it creates a new symbol with that name in that package.</li>
     </ul>
-<pre><code class="language-lisp line-numbers">(multiple-value-bind (sym status)
-    (intern "FOO" "MY-APP")
+<pre><code class="language-lisp line-numbers">(multiple-value-bind (sym status) (intern "FOO" "MY-APP")
   (list sym status))
 ;; =&gt; (MY-APP::FOO :INTERNAL)  ; for a fresh symbol
 </code></pre>
@@ -4130,8 +4129,7 @@ foo          ; =&gt; 10          ; value cell
     <ul>
         <li>You can inspect a symbol’s name (string) and home package.</li>
     </ul>
-<pre><code class="language-lisp line-numbers">(multiple-value-bind (sym status)
-    (intern "FOO" "MY-APP")
+<pre><code class="language-lisp line-numbers">(multiple-value-bind (sym status) (intern "FOO" "MY-APP")
   (list (symbol-name sym)
         (symbol-package sym)
         status))
@@ -4200,7 +4198,213 @@ MY-APP:*SECRET*  ; use single colon for exported symbol
 
 
 <!-- * * * * * * * * * * * * * * -->
+<h3>Returning Multiple Values</h3>
+<ol>
+    <li><b>Introduction</b></li>
+    <br/>
+    <ul>
+        <li>In Common Lisp, a function can return <u>more than one value</u> directly.</li>
+        <br/>
+        <li>Unlike many languages that pack results into a list or tuple,
+            Lisp's multiple-value system is <b>native</b> and <b>efficient</b>.</li>
+        <br/>
+        <li>You create them with <code>VALUES</code> and retrieve them with <code>MULTIPLE-VALUE-BIND</code> or similar macros.</li>
+    </ul>
+<pre><code class="language-lisp line-numbers">(values 10 20 30)
+;; =&gt; 10
+;; (prints only first value in REPL, but others still exist!)
+</code></pre>
+    <br/>
+    <br/>
 
+
+    <li><b>Creating multiple values with VALUES</b></li>
+    <br/>
+    <ul>
+        <li><code>(values a b c)</code> returns all of <code>a</code>, <code>b</code>, and <code>c</code> as separate values.</li>
+        <br/>
+        <li>When the caller expects only one value, <b>only the first</b> is used.</li>
+    </ul>
+<pre><code class="language-lisp line-numbers">(defun divide (x y)
+  (values (floor (/ x y))  ; quotient
+          (mod x y)))      ; remainder
+
+(divide 10 3)
+;; =&gt; 3
+;; (prints 3, but second value 1 exists)
+
+(multiple-value-bind (q r) (divide 10 3)
+  (list q r))
+;; =&gt; (3 1)
+</code></pre>
+    <br/>
+    <br/>
+
+
+    <li><b>MULTIPLE-VALUE-BIND: unpacking values</b></li>
+    <br/>
+    <ul>
+        <li><code>multiple-value-bind</code> binds each returned value to a variable.</li>
+        <br/>
+        <li>Extra values beyond the variable list are ignored; missing ones become <code>NIL</code>.</li>
+    </ul>
+<pre><code class="language-lisp line-numbers">(multiple-value-bind (a b c) (values 1 2)
+  (list a b c))
+;; =&gt; (1 2 NIL)
+</code></pre>
+    <br/>
+    <ul>
+        <li>This is similar to destructuring assignment in other languages, but built into the function return system.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>MULTIPLE-VALUE-LIST</b></li>
+    <br/>
+    <ul>
+        <li><code>multiple-value-list</code> collects all values into a single list.</li>
+    </ul>
+<pre><code class="language-lisp line-numbers">(multiple-value-list (values 1 2 3))
+;; =&gt; (1 2 3)
+</code></pre>
+    <br/>
+    <ul>
+        <li>This is handy when you want to store or iterate over returned values.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>MULTIPLE-VALUE-CALL</b></li>
+    <br/>
+    <ul>
+        <li><code>multiple-value-call</code> applies a function to all values produced by its arguments.</li>
+    </ul>
+<pre><code class="language-lisp line-numbers">(multiple-value-call #'list (values 'a 'b 'c))
+;; =&gt; (A B C)
+</code></pre>
+    <br/>
+    <ul>
+        <li>It’s like calling <code>(apply #'list '(a b c))</code>, but directly supports multiple-value returns.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>Ignoring extra values</b></li>
+    <br/>
+    <ul>
+        <li>When a function returns multiple values but you only care about one, Lisp automatically ignores the rest.</li>
+    </ul>
+<pre><code class="language-lisp line-numbers">(defun test ()
+  (values 1 2 3))
+
+(+ (test) 5)
+;; =&gt; 6   ; only first value 1 used
+</code></pre>
+    <br/>
+    <ul>
+        <li>This makes multiple-value functions backward compatible with single-value code.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>VALUES-LIST</b></li>
+    <br/>
+    <ul>
+        <li>The opposite of <code>multiple-value-list</code>: it turns a list into multiple values.</li>
+    </ul>
+<pre><code class="language-lisp line-numbers">(values-list '(10 20 30))
+;; =&gt; 10, 20, 30
+</code></pre>
+    <br/>
+    <ul>
+        <li>Used internally by macros that forward unknown numbers of return values.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>Key Functions and Macros Summary</b></li>
+    <br/>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Purpose</th>
+                <th>Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>values</code></td>
+                <td>Return multiple values</td>
+                <td><code>(values a b c)</code></td>
+            </tr>
+            <tr>
+                <td><code>multiple-value-bind</code></td>
+                <td>Bind multiple results to variables</td>
+                <td><code>(multiple-value-bind (x y) (func) ...)</code></td>
+            </tr>
+            <tr>
+                <td><code>multiple-value-list</code></td>
+                <td>Collect values into a list</td>
+                <td><code>(multiple-value-list (func))</code></td>
+            </tr>
+            <tr>
+                <td><code>values-list</code></td>
+                <td>Return list elements as multiple values</td>
+                <td><code>(values-list '(1 2 3))</code></td>
+            </tr>
+            <tr>
+                <td><code>multiple-value-call</code></td>
+                <td>Call function with all returned values</td>
+                <td><code>(multiple-value-call #'list (values 1 2 3))</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <br/>
+    <br/>
+
+
+    <li><b>Comparison to lists and tuples</b></li>
+    <br/>
+    <table>
+        <thead>
+            <tr>
+                <th>Concept</th>
+                <th>Multiple Values</th>
+                <th>List</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Representation</td>
+                <td>Native runtime feature (not a list)</td>
+                <td>Explicit object</td>
+            </tr>
+            <tr>
+                <td>Memory allocation</td>
+                <td>No consing needed</td>
+                <td>Creates a list object</td>
+            </tr>
+            <tr>
+                <td>Efficiency</td>
+                <td>Very fast</td>
+                <td>Slower for temporary data</td>
+            </tr>
+            <tr>
+                <td>Backward compatibility</td>
+                <td>Only first value used if context ignores others</td>
+                <td>Always one object</td>
+            </tr>
+        </tbody>
+    </table>
+    <br/>
+</ol>
+<br/>
 <!-- * * * * * * * * * * * * * * -->
 
 
