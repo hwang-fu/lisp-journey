@@ -1950,7 +1950,130 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
+<h3>Basics on DOTIMES</h3>
+<ol>
+    <li><b>Purpose</b></li>
+    <br/>
+    <ul>
+        <li><b>DOTIMES</b> is a counter-based looping construct.</li>
+        <li>It executes its body a fixed number (N) of times — from <code>0</code> up to <code>N-1</code>.</li>
+        <li>It is useful when you need a simple index-based iteration or repeated action a known number of times.</li>
+    </ul>
+    <br/>
+    <br/>
 
+
+    <li><b>Syntax</b></li>
+    <br/>
+<pre><code class="language-lisp line-numbers">(dotimes (&lt;var&gt; &lt;count&gt; &amp;optional &lt;result-form&gt;)
+  &lt;body&gt;)
+</code></pre>
+    <br/>
+    <ul>
+        <li><code>var</code> &nbsp; &nbsp; — the loop counter variable (integer).</li>
+        <li><code>count</code> — the number of iterations.</li>
+        <li><code>result-form</code> — expression evaluated after the loop ends; becomes the loop's return value.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>Basic example</b></li>
+<pre><code class="language-lisp line-numbers">(dotimes (i 5)
+  (format t "i = ~A~%" i))
+;; i = 0
+;; i = 1
+;; i = 2
+;; i = 3
+;; i = 4
+;; =&gt; NIL
+</code></pre>
+    <br/>
+    <ul>
+        <li>The variable <code>i</code> automatically increases from <code>0</code> to <code>4</code> (for <code>count = 5</code>).</li>
+        <li>When <code>count</code> ≤ 0, the loop body is skipped entirely.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>Custom return value</b></li>
+<pre><code class="language-lisp line-numbers">(dotimes (i 3 "Loop done")
+  (print i))
+;; 0
+;; 1
+;; 2
+;; =&gt; "Loop done"
+</code></pre>
+    <br/>
+    <ul>
+        <li>The last argument ("Loop done") is evaluated after completion and returned as the loop result.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>Early exit with RETURN</b></li>
+    <br/>
+<pre><code class="language-lisp line-numbers">(dotimes (i 10 "completed")
+  (when (&gt; i 4)
+    (return (format nil "Stopped early at ~A" i)))
+  (format t "i = ~A~%" i))
+;; =&gt; "Stopped early at 5"
+</code></pre>
+    <br/>
+    <ul>
+        <li><code>RETURN</code> exits the implicit block of <code>dotimes</code> early and returns the provided value.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>Accumulating values</b></li>
+<pre><code class="language-lisp line-numbers">(let ((sum 0))
+  (dotimes (i 5 sum)
+    (incf sum (* i 2))))
+;; =&gt; 20
+</code></pre>
+    <br/>
+    <ul>
+        <li>Use a local variable defined outside the loop to accumulate results across iterations.</li>
+        <li>The final <code>sum</code> in the loop header is the <i>result-form</i>.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>Building lists inside DOTIMES</b></li>
+<pre><code class="language-lisp line-numbers">(let ((squares '()))
+  (dotimes (i 6 (nreverse squares))
+    (push (* i i) squares)))
+;; =&gt; (0 1 4 9 16 25)
+</code></pre>
+    <br/>
+    <ul>
+        <li>This example collects all squares of <code>i</code> into a list.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>Nested DOTIMES loops</b></li>
+<pre><code class="language-lisp line-numbers">(dotimes (x 3)
+  (dotimes (y 3)
+    (format t "(~A,~A) " x y))
+  (format t "~%"))
+;; (0,0) (0,1) (0,2)
+;; (1,0) (1,1) (1,2)
+;; (2,0) (2,1) (2,2)
+</code></pre>
+    <br/>
+    <ul>
+        <li>Nested <code>dotimes</code> loops are great for grid-like iteration or matrix traversal.</li>
+    </ul>
+    <br/>
+</ol>
+<br/>
 <!-- * * * * * * * * * * * * * * -->
 
 
