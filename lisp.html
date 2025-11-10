@@ -2292,12 +2292,44 @@ a                   ; global A =&gt; 200
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3></h3>
+<h3>Element Types and Specialized Arrays</h3>
 <ol>
-    <li></li>
+    <li>By default, arrays can hold any type (element type is <code>T</code>).<br/>
+        You can restrict the <b>element type</b> for efficiency (implementation-dependent optimizations).
+    </li>
     <br/>
     <br/>
-    <li></li>
+
+    <li><b>Character array</b> (like a mutable string buffer):</li>
+<pre><code class="language-lisp line-numbers">(defparameter *chars*
+  (make-array 5 :element-type 'character
+                :initial-element #\?))
+
+*chars* ; =&gt; #(#\? #\? #\? #\? #\?)
+
+(setf (aref *chars* 0) #\H)
+(setf (aref *chars* 1) #\i)
+
+*chars* ; =&gt; #(#\H #\i #\? #\? #\?)
+</code></pre>
+    <br/>
+    <br/>
+
+    <li><b>Numeric array</b>, e.g. <code>fixnum</code>:</li>
+<pre><code class="language-lisp line-numbers">(defparameter *ints*
+  (make-array 4 :element-type 'fixnum
+                :initial-element 0))
+
+(setf (aref *ints* 0) 10)
+(setf (aref *ints* 1) 20)
+*ints* ; =&gt; #(10 20 0 0)
+</code></pre>
+    <br/>
+    <br/>
+
+    <li>Element type does not change the <u>API</u> (you still use <code>aref</code> and <code>setf</code>),<br/>
+        but can allow the implementation to store data more compactly (for example, like a C <code>int[]</code> or <code>char[]</code>).
+    </li>
     <br/>
 </ol>
 <br/>
