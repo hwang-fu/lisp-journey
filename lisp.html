@@ -4357,7 +4357,7 @@ CL-USER&gt; (my-app::start-ap)
         <li>Use <b>two colons</b> (<code>pkg::foo</code>) only when:
             <ul>
                 <br/>
-                <li>You’re debugging, testing, or exploring.</li>
+                <li>You're debugging, testing, or exploring.</li>
                 <br/>
                 <li>You intentionally want to reach into private internals (with the risk that they may change).</li>
                 <br/>
@@ -4373,7 +4373,7 @@ CL-USER&gt; (my-app::start-ap)
     <li><mark>Summary</mark></li>
     <ul>
         <br/>
-        <li>If you don’t <code>:export</code> <code>start-app</code> from <code>MY-APP</code>:
+        <li>If you don't <code>:export</code> <code>start-app</code> from <code>MY-APP</code>:
             <ul>
                 <br/>
                 <li><code>my-app:start-app</code> → <b>error</b> (not exported).</li>
@@ -4383,9 +4383,9 @@ CL-USER&gt; (my-app::start-ap)
             </ul>
         </li>
         <br/>
-        <li>Single colon = “public, exported symbol only”.</li>
+        <li>Single colon = "public, exported symbol only".</li>
         <br/>
-        <li>Double colon = “any symbol (internal or external) with that name in the package.”</li>
+        <li>Double colon = "any symbol (internal or external) with that name in the package."</li>
         <br/>
     </ul>
     <br/>
