@@ -1882,171 +1882,204 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Keyword Argument Lists in Macros — Mini DSL Style</h3>
+<h3>Destructured Keyword &amp; Parameter Lists in Macros — Clean DSL Design</h3>
 <ol>
-    <li><b>Motivation</b></li>
+    <li><b>Introduction</b></li>
     <br/>
     <ul>
-        <li>In many macros, you want to pass configuration options (like <code>:prefix</code>, <code>:times</code>, etc.) alongside a code body.</li>
+        <li>Common Lisp macros can use <b>destructuring parameter lists</b> — a feature that allows you to directly unpack structured arguments.</li>
         <br/>
-        <li>The naive approach uses <code>&amp;body</code> alone, which forces you to manually separate real code forms from keyword-value pairs using <code>loop</code> or <code>reverse</code>.</li>
+        <li>This means you can write macros that feel like <b>mini-DSLs</b> ("domain-specific languages") with readable, keyword-rich syntax, instead of manually parsing <code>&amp;body</code> or <code>&amp;rest</code> lists.</li>
         <br/>
-        <li>A more elegant approach is to <b>group those keyword arguments into a destructured parameter list</b> — using a <code>(&amp;key ...)</code> sublist as a single macro argument.</li>
-        <br/>
-        <li>This not only makes the macro definition cleaner, but also makes the macro's syntax look like a <b>mini DSL (domain-specific language)</b>.</li>
+        <li>You can mix and match <b>required parameters</b>, <b>optional parameters</b>, and <b>keyword arguments</b> — even nested within one destructured list.</li>
     </ul>
     <br/>
     <br/>
 
 
-    <li><b>Macro parameter destructuring</b></li>
+    <li><b>Why destructured parameters?</b></li>
     <br/>
     <ul>
-        <li>Common Lisp macro parameters can destructure lists directly.</li>
-        <br/>
-        <li>That means a macro argument can itself be a structured list pattern, such as:</li>
+        <li>In simple macros, the whole argument list is often captured via <code>&amp;body</code>:</li>
     </ul>
-<pre><code class="language-lisp line-numbers">(defmacro demo ((&amp;key a b c) &amp;body body)
-  `(list ,a ,b ,c ,@body))
-
-(demo (:a 1 :b 2 :c 3)
-  (print "Hello"))
-;; =&gt; (1 2 3 (PRINT "Hello"))
-</code></pre>
-    <br/>
-    <ul>
-        <li>Here the first argument <code>(:a 1 :b 2 :c 3)</code> is automatically destructured into <code>a</code>, <code>b</code>, and <code>c</code>.</li>
-        <br/>
-        <li>No manual parsing of keyword/value pairs is needed — Lisp does it for you.</li>
-    </ul>
-    <br/>
-    <br/>
-
-
-    <li><b>Applying destructuring to a real-world macro</b></li>
-    <br/>
-    <p>Let's revisit the earlier <code>echo-times</code> macro, which originally had to "clean" its body to remove keywords at the end:</p>
-<pre><code class="language-lisp line-numbers">(defmacro echo-times (&amp;body body &amp;key (times 1) (prefix "=&gt; "))
-  ;; original version that had to clean keywords manually...
+<pre><code class="language-lisp line-numbers">(defmacro naive-prefix (&amp;body body)
+  ;; manual keyword cleanup required...
   ...)
 </code></pre>
     <br/>
-    <p>We can rewrite it using <b>destructuring</b> to completely avoid the cleanup step:</p>
+    <ul>
+        <li>But in structured macros, you can destructure arguments directly in the macro's parameter list:</li>
+    </ul>
 <pre><code class="language-lisp line-numbers">(defmacro with-prefix ((&amp;key (prefix "=&gt; ") (times 1)) &amp;body body)
-  "Repeat BODY multiple times, each prefixed by a label string."
   `(dotimes (i ,times)
      (format t "~A" ,prefix)
      (progn ,@body)))
 </code></pre>
     <br/>
     <ul>
-        <li>Notice the first parameter is not a normal symbol but a <code>(...)</code> list pattern.</li>
-        <li>Lisp automatically binds <code>prefix</code> and <code>times</code> from the keyword arguments passed by the caller.</li>
-        <li>This works just like destructuring-bind but happens inside the macro parameter list.</li>
+        <li>This eliminates all manual keyword separation logic — Lisp handles it automatically.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>Example: keyword-based DSL</b></li>
+<pre><code class="language-lisp line-numbers">(with-prefix (:prefix "[*] " :times 2)
+  (format t "Hello~%")
+  (format t "World~%"))
+
+;; =&gt;
+;; [*] Hello
+;; [*] World
+;; [*] Hello
+;; [*] World
+</code></pre>
+    <br/>
+    <ul>
+        <li>The macro parameter list pattern <code>((&amp;key ...))</code> tells Lisp to destructure the first argument — automatically binding <code>prefix</code> and <code>times</code>.</li>
+        <br/>
+        <li>This is conceptually similar to <code>DESTRUCTURING-BIND</code>, but it happens directly in the macro's parameter list.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>Combining destructuring with required and optional parameters</b></li>
+    <br/>
+    <ul>
+        <li>Macros can freely combine required parameters, optional parameters, and keyword destructuring within the same definition.</li>
+        <br/>
+        <li>This gives you fine-grained control over both syntax and behavior.</li>
+    </ul>
+<pre><code class="language-lisp line-numbers">(defmacro styled-print (title
+                        (&amp;key (color "green") (times 1) (prefix "=&gt; "))
+                        &amp;optional (uppercase nil)
+                        &amp;body body)
+  "Print TITLE and BODY multiple times with options and optional uppercase."
+  `(dotimes (i ,times)
+     (format t "~%~A[~A] " ,prefix ,color)
+     (format t "~A~%" ,(if uppercase `(string-upcase ,title) title))
+     (progn ,@body)))
+</code></pre>
+    <br/>
+    <ul>
+        <li><code>title</code> → required parameter (always present).</li>
+        <li><code>(&amp;key ...)</code> → grouped destructured options (prefix, color, times).</li>
+        <li><code>&amp;optional (uppercase nil)</code> → toggles extra behavior if supplied.</li>
+        <li><code>&amp;body body</code> → code to execute under this style context.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>Example usage</b></li>
+<pre><code class="language-lisp line-numbers">(styled-print "Hello Lisp!"
+              (:prefix "[*] " :times 2 :color "cyan")
+              t
+  (format t "Nested body here.~%"))
+
+;; Output:
+;; [*] [cyan] HELLO LISP!
+;; Nested body here.
+;; [*] [cyan] HELLO LISP!
+;; Nested body here.
+</code></pre>
+    <br/>
+    <ul>
+        <li>The macro automatically binds all keyword arguments and optional flags.</li>
+        <li>No list traversal or parsing required — the argument structure itself defines the behavior.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>What happens internally</b></li>
+<pre><code class="language-lisp line-numbers">(macroexpand-1
+ '(styled-print "Hi"
+                (:prefix "[*] " :color "red" :times 2)
+                nil
+    (format t "Body~%")))
+
+;; =&gt;
+;; (DOTIMES (I 2)
+;;   (FORMAT T "~%~A[~A] " "[*] " "red")
+;;   (FORMAT T "~A~%" "Hi")
+;;   (PROGN (FORMAT T "Body~%")))
+</code></pre>
+    <br/>
+    <ul>
+        <li>Lisp directly expands the destructured parameters into bindings, just as if you had written them by hand.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>Mixing parameter types more generally</b></li>
+    <br/>
+    <p>You can also use this structure to build macros that accept:</p>
+    <ul>
+        <li>Required arguments (always present),</li>
+        <li>Optional arguments (default values if omitted),</li>
+        <li>Keyword groups for configuration,</li>
+        <li>And a body of forms to execute.</li>
+    </ul>
+<pre><code class="language-lisp line-numbers">(defmacro do-labeled-range ((start end &amp;key (step 1) (label "Range:"))
+                            &amp;optional (prefix "=&gt; ")
+                            &amp;body body)
+  "Iterate from START to END printing LABEL and executing BODY each step."
+  `(do ((i ,start (+ i ,step)))
+       ((&gt; i ,end) 'done)
+     (format t "~A ~A ~A~%" ,prefix ,label i)
+     (progn ,@body)))
+</code></pre>
+    <br/>
+    <ul>
+        <li><code>(start end &amp;key ...)</code> destructures the first argument list directly — like <code>(do-labeled-range (1 10 :step 2))</code>.</li>
+        <li><code>&amp;optional prefix</code> defines a default optional prefix string.</li>
+        <li>The body can contain any Lisp forms to be run on each iteration.</li>
     </ul>
     <br/>
     <br/>
 
 
     <li><b>Usage example</b></li>
-<pre><code class="language-lisp line-numbers">(with-prefix (:prefix "[*] " :times 2)
-  (format t "Hello~%")
-  (format t "World~%"))
+<pre><code class="language-lisp line-numbers">(do-labeled-range (1 5 :step 2 :label "Odd numbers:")
+                  "[*] "
+  (format t "i squared = ~A~%" (* i i)))
 
 ;; Output:
-;; [*] Hello
-;; [*] World
-;; [*] Hello
-;; [*] World
+;; [*] Odd numbers: 1
+;; i squared = 1
+;; [*] Odd numbers: 3
+;; i squared = 9
+;; [*] Odd numbers: 5
+;; i squared = 25
+;; =&gt; DONE
 </code></pre>
     <br/>
     <ul>
-        <li>The argument list <code>(:prefix "[*] " :times 2)</code> is destructured by the macro.</li>
-        <li>The body forms <code>(format ...)</code> are passed as usual under <code>&amp;body</code>.</li>
-        <li>No keyword cleaning logic is needed — everything is separated naturally by the macro call syntax.</li>
+        <li>This shows how destructuring can be combined across <b>multiple parameter types</b> to build powerful, readable macro syntaxes.</li>
     </ul>
     <br/>
     <br/>
 
 
-    <li><b>Expanding manually</b></li>
+    <li><b>Why this design is powerful</b></li>
     <br/>
     <ul>
-        <li>Let's see what the macro expands into:</li>
-    </ul>
-<pre><code class="language-lisp line-numbers">(macroexpand-1
- '(with-prefix (:prefix "[*] " :times 2)
-    (format t "Hello~%")
-    (format t "World~%")))
-
-;; =&gt;
-;; (DOTIMES (I 2)
-;;   (FORMAT T "~A" "[*] ")
-;;   (PROGN (FORMAT T "Hello~%")
-;;          (FORMAT T "World~%")))
-</code></pre>
-    <br/>
-    <ul>
-        <li>The macro expansion is perfectly clean: there's no keyword-handling logic inside the generated code.</li>
-    </ul>
-    <br/>
-    <br/>
-
-
-    <li><b>Advantages of keyword argument grouping</b></li>
-    <br/>
-    <ul>
-        <li><b>Cleaner macro definitions</b> — you no longer need to manually filter keyword-value pairs from the <code>&amp;body</code> list.</li>
+        <li>You get all the flexibility of <code>DEFUN</code>-style argument lists, but applied to code-generation time.</li>
         <br/>
-        <li><b>Declarative syntax</b> — the user can pass options in a structured, readable way.</li>
+        <li>No need for parsing logic — argument structure alone defines how data is bound.</li>
         <br/>
-        <li><b>Natural DSL feel</b> — your macro call starts to look like a configuration block.</li>
+        <li>It's an idiomatic Lisp technique for defining small, declarative DSLs (domain-specific sublanguages) that resemble natural configuration blocks.</li>
         <br/>
-        <li><b>Automatic defaults</b> — you can assign default values for each keyword using <code>(keyword default)</code>.</li>
-        <br/>
-        <li><b>Built-in validation</b> — if the caller omits required keywords, Lisp signals an error automatically.</li>
-    </ul>
-    <br/>
-    <br/>
-
-
-    <li><b>Example: a styled printing DSL</b></li>
-<pre><code class="language-lisp line-numbers">(defmacro with-style ((&amp;key (color "green") (times 1) (prefix ""))
-                      &amp;body body)
-  "Run BODY multiple times with styling parameters."
-  `(dotimes (i ,times)
-     (format t "~A[~A] " ,prefix ,color)
-     (progn ,@body)))
-
-(with-style (:color "blue" :times 3 :prefix "[*]")
-  (format t "Hello~%"))
-
-;; [*][blue] Hello
-;; [*][blue] Hello
-;; [*][blue] Hello
-</code></pre>
-    <br/>
-    <ul>
-        <li>This macro lets you define small "declarative" print blocks that resemble a custom mini-language.</li>
-    </ul>
-    <br/>
-    <br/>
-
-
-    <li><b>Why this pattern matters</b></li>
-    <br/>
-    <ul>
-        <li>In Lisp, macros are often used to <b>design syntactic layers</b> or "embedded DSLs."</li>
-        <br/>
-        <li>By grouping configuration keywords in one destructured argument list:
+        <li>This style is used by many standard macros:
             <ul>
-                <li>You avoid manual parsing.</li>
-                <li>You make the syntax self-documenting.</li>
-                <li>You keep the macro call expressive and intuitive.</li>
+                <li><code>WITH-OPEN-FILE</code> — destructures file and mode.</li>
+                <li><code>WITH-SLOTS</code> — destructures object slots.</li>
+                <li><code>DO-SYMBOLS</code>, <code>DO-EXTERNAL-SYMBOLS</code> — destructure parameters with optional parts.</li>
             </ul>
         </li>
-        <br/>
-        <li>This approach is common in many popular Lisp libraries (e.g. <code>with-open-file</code>, <code>with-slots</code>, <code>with-accessors</code>).</li>
     </ul>
     <br/>
 </ol>
