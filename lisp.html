@@ -1288,7 +1288,7 @@ foo        ; =&gt; 42       (variable)
     <li><b>How DEFUN uses BLOCK</b></li>
     <br/>
     <ul>
-        <li>Every function defined by <code>DEFUN</code> is automatically wrapped in a <b>BLOCK</b> whose name is the same as the function’s name.</li>
+        <li>Every function defined by <code>DEFUN</code> is automatically wrapped in a <b>BLOCK</b> whose name is the same as the function's name.</li>
         <li>That means you can use <code>RETURN-FROM</code> with the function's name to exit immediately and specify a return value.</li>
     </ul>
 <pre><code class="language-lisp line-numbers">(defun first-positive (xs)
@@ -1812,59 +1812,145 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>DOLIST and DOTIMES</h3>
+<h3>Basics on DOLIST</h3>
 <ol>
-    <li><b>DOLIST</b> iterates over each element in a list, binding it to a variable for each iteration.<br/>
-        Syntax: <code>(dolist (&lt;variable&gt; &lt;list&gt; &amp;optional &lt;return-value&gt;) &lt;body&gt;)</code></li>
+    <li><b>Purpose</b></li>
+    <br/>
     <ul>
+        <li><b>DOLIST</b> is a simple looping construct used to iterate over each element of a list.</li>
         <br/>
-        <li><i>variable</i>: The loop variable that it takes on each element of <i>list</i>.</li>
+        <li>It binds a loop variable to each successive element of the list and executes the body for each iteration.</li>
         <br/>
-        <li><i>list</i>: The list to iterate over.</li>
-        <br/>
-        <li><i>body</i>: Evaluation for each iteration.</li>
-        <br/>
-        <li><i>return-value</i>: Expression evaluated and returned after the loop finishes.</li>
+        <li>It also supports an optional <u>result-form</u> that determines the final return value after the loop completes.</li>
     </ul>
     <br/>
+    <br/>
+
+
+    <li><b>Syntax</b></li>
+    <br/>
+<pre><code class="language-lisp line-numbers">(dolist (&lt;var&gt; &lt;list&gt; &amp;optional &lt;result-form&gt;)
+  &lt;body&gt;)
+</code></pre>
+    <br/>
+    <ul>
+        <li><code>var</code> &nbsp; — variable bound to each element of the list.</li>
+        <li><code>list</code> — the list to iterate over (quoted or evaluated).</li>
+        <li><code>body</code> — the forms executed for each element.</li>
+        <li><code>result-form</code> — evaluated after the loop ends, its value becomes the loop's result.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>Basic example</b></li>
 <pre><code class="language-lisp line-numbers">(dolist (x '(a b c))
   (format t "Element: ~A~%" x))
 ;; Element: A
 ;; Element: B
 ;; Element: C
-
-
-(dolist (x '(1 2 3) "Done")
-  (print x))
-;; Returns "Done" after printing the numbers.
+;; =&gt; NIL
 </code></pre>
-    <br/>
-    <br/>
-    <li><b>DOTIMES</b> iterates over a fixed number of times.<br/>
-        Syntax: <code>(dotimes (&lt;variable&gt; &lt;N&gt; &amp;optional &lt;return-value&gt;) &lt;body&gt;)</code></li>
     <br/>
     <ul>
-        <li>The loop counter starts at <i>0</i> and ends at <i>N-1</i>, exactly <i>N</i> iterations.</li>
-        <br/>
+        <li>By default, <code>dolist</code> returns <code>NIL</code> if no <code>result-form</code> is provided.</li>
     </ul>
-<pre><code class="language-lisp line-numbers">(dotimes (i 5)
-  (format t "i = ~A~%" i))
-;; i = 0
-;; i = 1
-;; i = 2
-;; i = 3
-;; i = 4
+    <br/>
+    <br/>
 
 
-(dotimes (i 3 "Loop done")
-  (print i))
-;; i = 0
-;; i = 1
-;; i = 2
-;; "Loop done"
+    <li><b>Specifying a result value</b></li>
+<pre><code class="language-lisp line-numbers">(dolist (x '(1 2 3) "Loop Finished")
+  (print x))
+;; 1
+;; 2
+;; 3
+;; =&gt; "Loop Finished"
 </code></pre>
+    <br/>
+    <ul>
+        <li>The last argument ("Loop Finished") is evaluated after iteration completes and becomes the loop's return value.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>Accumulating a result</b></li>
+    <br/>
+    <ul>
+        <li>Often, you will use a local variable (created by <code>LET</code>) to accumulate a total or list.</li>
+    </ul>
+<pre><code class="language-lisp line-numbers">(let ((sum 0))
+  (dolist (x '(1 2 3 4 5) sum)
+    (incf sum x)))
+;; =&gt; 15
+</code></pre>
+    <br/>
+    <ul>
+        <li>The final <code>sum</code> in the loop header acts as the <i>result-form</i>, returning the accumulated value.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>Early exit using RETURN</b></li>
+    <br/>
+    <ul>
+        <li><code>dolist</code> creates an implicit <b>block</b> — so you can exit early with <code>RETURN</code>.</li>
+    </ul>
+<pre><code class="language-lisp line-numbers">(dolist (x '(3 -1 4 -2 5))
+  (when (minusp x)
+    (return (format nil "Found a negative: ~A" x)))
+  (format t "Checked: ~A~%" x))
+;; =&gt; "Found a negative: -1"
+</code></pre>
+    <br/>
+    <ul>
+        <li>Once <code>RETURN</code> is executed, the loop ends immediately and returns its given value.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>Nesting DOLIST loops</b></li>
+    <br/>
+<pre><code class="language-lisp line-numbers">(dolist (row '((1 2 3) (4 5 6)))
+  (dolist (x row)
+    (format t "~A " x))
+  (format t "~%"))
+;; 1 2 3
+;; 4 5 6
+</code></pre>
+    <br/>
+    <ul>
+        <li>Inner <code>dolist</code> loops can access outer variables by lexical scope.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>Advanced usage: collecting transformed elements</b></li>
+    <br/>
+<pre><code class="language-lisp line-numbers">(let ((result '()))
+  (dolist (x '(1 2 3 4) (nreverse result))
+    (push (* x x) result)))
+;; =&gt; (1 4 9 16)
+</code></pre>
+    <br/>
+    <ul>
+        <li><code>push</code> adds each squared number to <code>result</code>, and <code>nreverse</code> restores the original order.</li>
+    </ul>
+    <br/>
 </ol>
 <br/>
+<!-- * * * * * * * * * * * * * * -->
+
+
+<hr/>
+
+
+<!-- * * * * * * * * * * * * * * -->
+
 <!-- * * * * * * * * * * * * * * -->
 
 
@@ -3026,7 +3112,7 @@ a                   ; global A =&gt; 200
     <li>Every Common Lisp array has an <b>element type</b> — this tells Lisp what kinds of values may be stored in it.</li>
     <br/>
     <br/>
-    <li>If you don’t specify one, the default is <code>T</code> (anything).<br/>
+    <li>If you don't specify one, the default is <code>T</code> (anything).<br/>
         That means the array can hold numbers, strings, symbols, lists, other arrays — anything at all.
     </li>
     <br/>
@@ -3281,7 +3367,7 @@ a                   ; global A =&gt; 200
             <tr>
                 <td><code>(car '(10 20 30))</code></td>
                 <td>
-                    Returns first cell’s left part
+                    Returns first cell's left part
                 </td>
                 <td><code>10</code></td>
             </tr>
@@ -3413,7 +3499,7 @@ a                   ; global A =&gt; 200
         <br/>
         <li>Modern names: <code>FIRST</code>, <code>REST</code>, <code>SECOND</code>, <code>THIRD</code>.</li>
         <br/>
-        <li>CAR/CDR are to Lisp what pointer dereferencing is to C — they’re the fundamental way of walking linked structures.</li>
+        <li>CAR/CDR are to Lisp what pointer dereferencing is to C — they're the fundamental way of walking linked structures.</li>
         <br/>
     </ul>
     <br/>
@@ -3537,7 +3623,7 @@ a                   ; global A =&gt; 200
 </code></pre>
     <br/>
     <ul>
-        <li><code>CONS</code> only adds a single element to the front; it doesn’t flatten lists.</li>
+        <li><code>CONS</code> only adds a single element to the front; it doesn't flatten lists.</li>
         <br/>
         <li>If you want to concatenate, use <code>APPEND</code> instead.</li>
     </ul>
@@ -3706,7 +3792,7 @@ a                       ; =&gt; 100   ; evaluates to the value cell of A
     <li><b>Using symbols as function names</b></li>
     <br/>
     <ul>
-        <li>When you define a function with <code>DEFUN</code>, the symbol’s <b>function cell</b> is filled.</li>
+        <li>When you define a function with <code>DEFUN</code>, the symbol's <b>function cell</b> is filled.</li>
     </ul>
 <pre><code class="language-lisp line-numbers">(defun square (x)
   (* x x))
@@ -3866,7 +3952,7 @@ foo          ; =&gt; 10          ; value cell
 </code></pre>
     <br/>
     <ul>
-        <li>This sometimes confuses beginners, but it’s powerful — code and data can use the same symbolic names with different roles.</li>
+        <li>This sometimes confuses beginners, but it's powerful — code and data can use the same symbolic names with different roles.</li>
     </ul>
     <br/>
     <br/>
@@ -4143,7 +4229,7 @@ foo          ; =&gt; 10          ; value cell
         <li>This plist is a list of alternating keys and values:
             <code>(key1 val1 key2 val2 ...)</code></li>
         <br/>
-        <li>It’s accessed through <code>(symbol-plist 'symbol-name)</code>.</li>
+        <li>It's accessed through <code>(symbol-plist 'symbol-name)</code>.</li>
     </ul>
 <pre><code class="language-lisp line-numbers">(symbol-plist 'apple)
 ;; =&gt; NIL  (no properties yet)
@@ -4292,7 +4378,7 @@ foo          ; =&gt; 10          ; value cell
     <br/>
 
 
-    <li><b>Iterating over a symbol’s plist</b></li>
+    <li><b>Iterating over a symbol's plist</b></li>
     <br/>
 <pre><code class="language-lisp line-numbers">(let ((plist (symbol-plist 'apple)))
   (loop for (key val) on plist by #'cddr
@@ -4559,7 +4645,7 @@ foo          ; =&gt; 10          ; value cell
     <li><b>SYMBOL-NAME and SYMBOL-PACKAGE</b></li>
     <br/>
     <ul>
-        <li>You can inspect a symbol’s name (string) and home package.</li>
+        <li>You can inspect a symbol's name (string) and home package.</li>
     </ul>
 <pre><code class="language-lisp line-numbers">(multiple-value-bind (sym status) (intern "FOO" "MY-APP")
   (list (symbol-name sym)
@@ -4654,7 +4740,7 @@ MY-APP:*SECRET*  ; use single colon for exported symbol
     <ul>
         <li>Here, <code>start-app</code> and <code>*version*</code> are <b>exported</b> from <code>MY-APP</code>.</li>
         <br/>
-        <li>Other symbols you define but don’t list in <code>:export</code> stay internal.</li>
+        <li>Other symbols you define but don't list in <code>:export</code> stay internal.</li>
     </ul>
     <br/>
     <br/>
@@ -4665,7 +4751,7 @@ MY-APP:*SECRET*  ; use single colon for exported symbol
     <ul>
         <li><code>pkg:symbol</code> means: "Use the <b>exported</b> symbol named <code>SYMBOL</code> from package <code>PKG</code>."</li>
         <br/>
-        <li>If that symbol isn’t exported, you get a <b>reader error</b> when loading/compiling code.</li>
+        <li>If that symbol isn't exported, you get a <b>reader error</b> when loading/compiling code.</li>
     </ul>
 
     <br/>
@@ -4698,7 +4784,7 @@ CL-USER&gt; (my-app:start-app)
     <li><b>Double colon: <code>pkg::symbol</code> → internal or external</b></li>
     <br/>
     <ul>
-        <li><code>pkg::symbol</code> means: "Give me the symbol named <code>SYMBOL</code> in package <code>PKG</code>, even if it’s internal."</li>
+        <li><code>pkg::symbol</code> means: "Give me the symbol named <code>SYMBOL</code> in package <code>PKG</code>, even if it's internal."</li>
         <br/>
         <li>It can see both:
             <ul>
@@ -4717,13 +4803,13 @@ NIL
     <ul>
         <li><code>my-app::start-app</code> works even though <code>start-app</code> was not exported.</li>
         <br/>
-        <li>This is how you can "peek inside" another package’s internal implementation.</li>
+        <li>This is how you can "peek inside" another package's internal implementation.</li>
     </ul>
     <br/>
     <br/>
 
 
-    <li><b>What if the symbol doesn’t exist?</b></li>
+    <li><b>What if the symbol doesn't exist?</b></li>
     <br/>
     <ul>
         <li>If you typo the name with <code>pkg::typo-name</code>, the reader will <b>intern a new symbol</b> in that package:</li>
@@ -4738,7 +4824,7 @@ CL-USER&gt; (my-app::start-ap)
     <ul>
         <li>So <code>::</code> will not throw a reader error — it either finds the symbol or creates a new internal one.</li>
         <br/>
-        <li>If it’s new and you try to call it as a function, you’ll get a normal <b>undefined function</b> runtime error.</li>
+        <li>If it's new and you try to call it as a function, you'll get a normal <b>undefined function</b> runtime error.</li>
     </ul>
     <br/>
     <br/>
@@ -5026,7 +5112,7 @@ CL-USER&gt; (my-app::start-ap)
         <br/>
         <li><code>:my-app</code> is a symbol whose name is <code>"MY-APP"</code> — both refer to the same package name.</li>
         <br/>
-        <li>That’s why you see:
+        <li>That's why you see:
             <ul>
                 <br/>
                 <li><code>(defpackage :my-app ...)</code> — symbol designator.</li>
@@ -5137,7 +5223,7 @@ CL-USER&gt; (my-app::start-ap)
 </code></pre>
     <br/>
     <ul>
-        <li>It’s like calling <code>(apply #'list '(a b c))</code>, but directly supports multiple-value returns.</li>
+        <li>It's like calling <code>(apply #'list '(a b c))</code>, but directly supports multiple-value returns.</li>
     </ul>
     <br/>
     <br/>
@@ -5323,7 +5409,7 @@ CL-USER&gt; (my-app::start-ap)
     <br/>
     <ul>
         <li>Each step returns a new function that "remembers" the previous argument value.</li>
-        <li>That’s why currying <b>uses closures under the hood</b>.</li>
+        <li>That's why currying <b>uses closures under the hood</b>.</li>
     </ul>
 <pre><code class="language-lisp line-numbers">((curry #'+) 2 5)
 ;; =&gt; 7
