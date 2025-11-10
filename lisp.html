@@ -1241,21 +1241,151 @@ foo        ; =&gt; 42       (variable)
 <!-- * * * * * * * * * * * * * * -->
 <h3>Function Return Values</h3>
 <ol>
-    <li><b>RETURN-FROM</b> is actually not tied to functions at all.
-        It is used to return from a block of code defined with the <b>BLOCK</b> special operator.<br/>
+    <li><b>Returning from a function</b></li>
+    <br/>
+    <ul>
+        <li>In Common Lisp, a function normally returns the value of the <u>last evaluated expression</u> in its body.</li>
+        <li>However, sometimes you want to return early from the middle of the body — similar to <code>return</code> in other languages.</li>
+        <li>That's what <code>RETURN-FROM</code> and <code>RETURN</code> are for.</li>
+    </ul>
+<pre><code class="language-lisp line-numbers">(defun absolute-value (x)
+  (if (minusp x)
+      (return-from absolute-value (- x))
+      x))
+
+(absolute-value -10) ; =&gt; 10
+(absolute-value  10) ; =&gt; 10
+</code></pre>
     <br/>
     <br/>
-    <li>
-        However, <b>DEFUN</b> automatically wraps the whole function body in a block with the same name as the function.<br/>
-        So, evaluating a <b>RETURN-FROM</b> with the <u>name of the function</u> and the <u>value</u> you want to return will cause the function to immediately exit with that value.</li>
-    </li>
+
+
+    <li><b>RETURN-FROM and BLOCK</b></li>
+    <br/>
+    <ul>
+        <li><b>RETURN-FROM</b> is not limited to functions — it exits from a <u>block</u> of code.</li>
+        <li>A <code>BLOCK</code> is a named region introduced by the <code>BLOCK</code> special operator.</li>
+        <li>Form: <code>(block name body...)</code></li>
+    </ul>
+<pre><code class="language-lisp line-numbers">(block my-block
+  (format t "Before~%")
+  (return-from my-block 42)
+  (format t "After~%")) ; never executed
+;; =&gt; 42
+</code></pre>
+    <br/>
+    <ul>
+        <li>When <code>RETURN-FROM</code> is executed, control jumps out of the block named <code>my-block</code>, returning the specified value.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>How DEFUN uses BLOCK</b></li>
+    <br/>
+    <ul>
+        <li>Every function defined by <code>DEFUN</code> is automatically wrapped in a <b>BLOCK</b> whose name is the same as the function’s name.</li>
+        <li>That means you can use <code>RETURN-FROM</code> with the function's name to exit immediately and specify a return value.</li>
+    </ul>
 <pre><code class="language-lisp line-numbers">(defun first-positive (xs)
   (dolist (x xs)
     (when (plusp x)
       (return-from first-positive x)))
   nil)
 
-(first-positive '(-3 -2 0 4 -1)); 4
+(first-positive '(-3 -2 0 4 -1))
+;; =&gt; 4
+</code></pre>
+    <br/>
+    <ul>
+        <li>Here, the function stops as soon as a positive number is found, and returns it right away.</li>
+        <li>If no positive number exists, the loop ends and the final expression <code>nil</code> is returned.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>The RETURN shorthand</b></li>
+    <br/>
+    <ul>
+        <li><b>RETURN</b> is a shorthand that exits the <b>nearest implicit block</b>.</li>
+        <li>Many iteration constructs like <code>DOLIST</code> and <code>DO</code> automatically create such a block.</li>
+    </ul>
+<pre><code class="language-lisp line-numbers">(dolist (x '(3 2 1 0 -1))
+  (when (zerop x)
+    (return 'done))
+  (format t "x=~A~%" x))
+;; Prints:
+;; x=3
+;; x=2
+;; x=1
+;; =&gt; DONE
+</code></pre>
+    <br/>
+    <ul>
+        <li>In this case, <code>RETURN</code> acts as <code>(return-from &lt;implicit-block&gt; 'done)</code>.</li>
+    </ul>
+    <br/>
+    <br/>
+
+
+    <li><b>RETURN-FROM vs RETURN</b></li>
+    <br/>
+    <table>
+        <thead>
+            <tr>
+                <th>Form</th>
+                <th>Returns from</th>
+                <th>Typical use</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>(return-from name value)</code></td>
+                <td>Explicitly named block (or function body)</td>
+                <td>Used in <code>defun</code> or custom <code>block</code></td>
+            </tr>
+            <tr>
+                <td><code>(return value)</code></td>
+                <td>Nearest implicit block (like <code>dolist</code>, <code>do</code>, etc.)</td>
+                <td>Quick exit inside iteration</td>
+            </tr>
+        </tbody>
+    </table>
+    <br/>
+    <br/>
+
+
+    <li><b>Early exits in complex logic</b></li>
+    <br/>
+    <ul>
+        <li><code>RETURN-FROM</code> is useful for exiting multiple nested forms early without deep <code>IF</code> chains.</li>
+    </ul>
+<pre><code class="language-lisp line-numbers">(defun safe-divide (a b)
+  (if (zerop b)
+      (return-from safe-divide :divide-by-zero)
+      (/ a b)))
+
+(safe-divide 10 2) ; =&gt; 5
+(safe-divide 10 0) ; =&gt; :DIVIDE-BY-ZERO
+</code></pre>
+    <br/>
+    <br/>
+
+
+    <li><b>Multiple values and RETURN-FROM</b></li>
+    <br/>
+    <ul>
+        <li><code>RETURN-FROM</code> can also return multiple values using <code>VALUES</code>.</li>
+    </ul>
+<pre><code class="language-lisp line-numbers">(defun divide-with-remainder (a b)
+  (if (zerop b)
+      (return-from divide-with-remainder (values nil nil))
+      (return-from divide-with-remainder (values (floor (/ a b)) (mod a b)))))
+
+(multiple-value-bind (q r) (divide-with-remainder 10 3)
+  (list q r))
+;; =&gt; (3 1)
 </code></pre>
     <br/>
 </ol>
