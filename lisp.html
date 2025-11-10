@@ -113,6 +113,10 @@
         font-variant-ligatures: none;
     }
 
+    table {
+        font-family: "KaiTi", "楷体", "STKaiti", "Kaiti SC", serif;
+    }
+
     ul > li {
         list-style-type: disc;
     }
@@ -2768,7 +2772,7 @@ a                   ; global A =&gt; 200
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Adjustable Arrays and “Dynamic” Behavior</h3>
+<h3>Adjustable Arrays and "Dynamic" Behavior</h3>
 <ol>
     <li>JavaScript / TypeScript arrays are <b>dynamic</b>: you can always <code>push</code> / <code>pop</code> and change their length.<br/>
         Common Lisp arrays are normally <b>fixed-size</b>, more like C arrays.<br/>
@@ -2794,7 +2798,7 @@ a                   ; global A =&gt; 200
                 <br/>
                 <li>a <b>physical size</b> (capacity) → how many slots are allocated in memory;</li>
                 <br/>
-                <li>a <b>fill pointer</b> → how many elements are considered “in use”.</li>
+                <li>a <b>fill pointer</b> → how many elements are considered "in use".</li>
                 <br/>
             </ul>
         </li>
@@ -2803,7 +2807,7 @@ a                   ; global A =&gt; 200
         <br/>
         <li>Printing the array also shows only the part up to the fill pointer.</li>
         <br/>
-        <li>You can still read/write elements beyond the fill pointer with <code>aref</code>, but they are “hidden” until you move the fill pointer forward.</li>
+        <li>You can still read/write elements beyond the fill pointer with <code>aref</code>, but they are "hidden" until you move the fill pointer forward.</li>
         <br/>
     </ul>
     <br/>
@@ -2931,7 +2935,7 @@ a                   ; global A =&gt; 200
             </tr>
             <tr>
                 <td><code>:fill-pointer t</code></td>
-                <td>Fill pointer is initially set to the full size (all elements “in use”).</td>
+                <td>Fill pointer is initially set to the full size (all elements "in use").</td>
                 <td>Start full, then shrink/grow by changing fill pointer.</td>
             </tr>
             <tr>
@@ -3000,7 +3004,7 @@ a                   ; global A =&gt; 200
         <br/>
         <li>Plain <code>MAKE-ARRAY</code> → fixed-size, C-like array.</li>
         <br/>
-        <li><code>:fill-pointer</code> → adds a “logical length” on top of the physical buffer.</li>
+        <li><code>:fill-pointer</code> → adds a "logical length" on top of the physical buffer.</li>
         <br/>
         <li><code>:adjustable t</code> → lets you grow/shrink the buffer itself.</li>
         <br/>
@@ -3217,9 +3221,9 @@ a                   ; global A =&gt; 200
         The names <code>CAR</code> and <code>CDR</code> come from the 1950s IBM 704 machine architecture.
         <ul>
             <br/>
-            <li><code>CAR</code> stood for “Contents of the Address Register”</li>
+            <li><code>CAR</code> stood for "Contents of the Address Register"</li>
             <br/>
-            <li><code>CDR</code> stood for “Contents of the Decrement Register”</li>
+            <li><code>CDR</code> stood for "Contents of the Decrement Register"</li>
             <br/>
             <li>They referred to two parts of a memory word that held a pair of pointers.</li>
             <br/>
@@ -3441,7 +3445,7 @@ a                   ; global A =&gt; 200
 </code></pre>
     <br/>
     <ul>
-        <li>This notation <code>(A . B)</code> means “a pair whose CAR is A and CDR is B”.</li>
+        <li>This notation <code>(A . B)</code> means "a pair whose CAR is A and CDR is B".</li>
         <li>If the CDR is <code>NIL</code>, Lisp prints it as a normal list: <code>(A)</code>.</li>
     </ul>
     <br/>
@@ -3740,7 +3744,7 @@ a                       ; =&gt; 100   ; evaluates to the value cell of A
 </code></pre>
     <br/>
     <ul>
-        <li>This is the core of “code as data”: Lisp programs are made of symbols and lists, and you can manipulate them directly.</li>
+        <li>This is the core of "code as data": Lisp programs are made of symbols and lists, and you can manipulate them directly.</li>
     </ul>
 <pre><code class="language-lisp line-numbers">(defparameter *expr* '(+ 1 2))
 *expr*           ; =&gt; (+ 1 2)  ; data (list of symbols and numbers)
@@ -3829,7 +3833,7 @@ a                       ; =&gt; 100   ; evaluates to the value cell of A
     <br/>
     <ul>
         <li>Each symbol lives in a <b>package</b>. A package is basically a namespace.</li>
-        <li>When you see <code>cl:car</code>, it means “the symbol named CAR from the COMMON-LISP package”.</li>
+        <li>When you see <code>cl:car</code>, it means "the symbol named CAR from the COMMON-LISP package".</li>
     </ul>
 <pre><code class="language-lisp line-numbers">(symbol-name 'car)       ; =&gt; "CAR"
 (symbol-package 'car)    ; =&gt; #&lt;PACKAGE "COMMON-LISP"&gt;
@@ -3888,7 +3892,7 @@ foo          ; =&gt; 10          ; value cell
         <br/>
         <li>Keywords like <code>:name</code> are symbols in the <b>KEYWORD</b> package and evaluate to themselves.</li>
         <br/>
-        <li>When you think “symbol”, think “a named slot object that can represent code, data, and metadata at the same time”.</li>
+        <li>When you think "symbol", think "a named slot object that can represent code, data, and metadata at the same time".</li>
         <br/>
     </ul>
 </ol>
@@ -3959,7 +3963,7 @@ foo          ; =&gt; 10          ; value cell
     <li><b>Adding or updating entries</b></li>
     <br/>
     <ul>
-        <li>You can prepend a new pair using <code>acons</code> (“add cons”).</li>
+        <li>You can prepend a new pair using <code>acons</code> ("add cons").</li>
         <li>It constructs <code>(cons (cons key value) alist)</code>.</li>
     </ul>
 <pre><code class="language-lisp line-numbers">(defparameter *grades* nil)
@@ -4575,7 +4579,7 @@ foo          ; =&gt; 10          ; value cell
     <li><b>Exporting and importing symbols</b></li>
     <br/>
     <ul>
-        <li>To make a symbol “public” from a package, call <code>EXPORT</code>.</li>
+        <li>To make a symbol "public" from a package, call <code>EXPORT</code>.</li>
     </ul>
 <pre><code class="language-lisp line-numbers">(in-package :my-app)
 
@@ -4589,7 +4593,7 @@ MY-APP:*SECRET*  ; use single colon for exported symbol
 </code></pre>
     <br/>
     <ul>
-        <li>To “use” exported symbols from another package without writing the prefix every time, use <code>USE-PACKAGE</code>:</li>
+        <li>To "use" exported symbols from another package without writing the prefix every time, use <code>USE-PACKAGE</code>:</li>
     </ul>
 <pre><code class="language-lisp line-numbers">(use-package :my-app)
 *secret* ; now accessible directly (if no name conflict)
@@ -4611,7 +4615,7 @@ MY-APP:*SECRET*  ; use single colon for exported symbol
         <br/>
         <li><code>pkg:foo</code> refers to an <b>exported</b> symbol; <code>pkg::foo</code> refers to an internal one.</li>
         <br/>
-        <li><code>IN-PACKAGE</code> switches the “current” package for reading and interning symbols.</li>
+        <li><code>IN-PACKAGE</code> switches the "current" package for reading and interning symbols.</li>
         <br/>
         <li><code>EXPORT</code> and <code>USE-PACKAGE</code> control what becomes your public API.</li>
         <br/>
@@ -4694,7 +4698,7 @@ CL-USER&gt; (my-app:start-app)
     <li><b>Double colon: <code>pkg::symbol</code> → internal or external</b></li>
     <br/>
     <ul>
-        <li><code>pkg::symbol</code> means: “Give me the symbol named <code>SYMBOL</code> in package <code>PKG</code>, even if it’s internal.”</li>
+        <li><code>pkg::symbol</code> means: "Give me the symbol named <code>SYMBOL</code> in package <code>PKG</code>, even if it’s internal."</li>
         <br/>
         <li>It can see both:
             <ul>
@@ -4713,7 +4717,7 @@ NIL
     <ul>
         <li><code>my-app::start-app</code> works even though <code>start-app</code> was not exported.</li>
         <br/>
-        <li>This is how you can “peek inside” another package’s internal implementation.</li>
+        <li>This is how you can "peek inside" another package’s internal implementation.</li>
     </ul>
     <br/>
     <br/>
@@ -4918,7 +4922,7 @@ CL-USER&gt; (my-app::start-ap)
     <li><b>Why <code>"MY-APP"</code> in <code>FIND-SYMBOL</code> / <code>INTERN</code> examples?</b></li>
     <br/>
     <ul>
-        <li>Because those functions are being shown in their most “raw” form: <code>(find-symbol name package-name-string)</code>.</li>
+        <li>Because those functions are being shown in their most "raw" form: <code>(find-symbol name package-name-string)</code>.</li>
         <br/>
         <li>But remember: they accept <b>any package designator</b>, so all of these are equivalent:</li>
     </ul>
@@ -5259,7 +5263,152 @@ CL-USER&gt; (my-app::start-ap)
 
 
 <!-- * * * * * * * * * * * * * * -->
+<h3>Currying vs Closures</h3>
+<ol>
+    <li><b>Closures</b> — Functions that remember</li>
+    <br/>
+    <ul>
+        <li>A <b>closure</b> is a function that "remembers" variables from the environment where it was created.</li>
+        <br/>
+        <li>Even after that environment is gone, the function retains access to those variables — they are <b>closed over</b>.</li>
+    </ul>
+<pre><code class="language-lisp line-numbers">(defun make-adder (n)
+  "Return a function that adds N to its argument."
+  #'(lambda (x)
+      (+ x n)))
 
+(setq add5 (make-adder 5))
+(funcall add5 10)   ; =&gt; 15
+(funcall add5 100)  ; =&gt; 105
+</code></pre>
+    <br/>
+    <ul>
+        <li>Here <code>make-adder</code> returns a function that captures the variable <code>n</code>.</li>
+        <li>Each call to <code>make-adder</code> creates a <b>new closure</b> with its own private <code>n</code>.</li>
+    </ul>
+<pre><code class="language-lisp line-numbers">(setq add2 (make-adder 2))
+(setq add10 (make-adder 10))
+
+(funcall add2 3)   ; =&gt; 5
+(funcall add10 3)  ; =&gt; 13
+</code></pre>
+    <br/>
+    <ul>
+        <li>This pattern is common in Lisp — functions that "carry their environment" with them.</li>
+    </ul>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+
+    <li><b>Currying</b> — Functions that take one argument at a time</li>
+    <br/>
+    <ul>
+        <li><b>Currying</b> is a functional programming transformation that turns a multi-argument function into a chain of single-argument functions.</li>
+        <br/>
+        <li>Mathematically, a function <code>f(x, y)</code> becomes <code>f(x)(y)</code>.</li>
+    </ul>
+<pre><code class="language-lisp line-numbers">(defun curry (fn)
+  "Transform a two-argument function into a curried one."
+  #'(lambda (a)
+      #'(lambda (b)
+          (funcall fn a b))))
+
+(setq curried-add (curry #'+))
+
+(setq add3 (funcall curried-add 3))
+(funcall add3 4) ; =&gt; 7
+</code></pre>
+    <br/>
+    <ul>
+        <li>Each step returns a new function that "remembers" the previous argument value.</li>
+        <li>That’s why currying <b>uses closures under the hood</b>.</li>
+    </ul>
+<pre><code class="language-lisp line-numbers">((curry #'+) 2 5)
+;; =&gt; 7
+</code></pre>
+    <br/>
+    <br/>
+
+
+    <li><b>Comparison Table</b></li>
+    <br/>
+    <table>
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>Closure</th>
+                <th>Currying</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>Definition</b></td>
+                <td>Function that captures variables from its environment.</td>
+                <td>Transformation turning <code>f(a,b)</code> into <code>f(a)(b)</code>.</td>
+            </tr>
+            <tr>
+                <td><b>Purpose</b></td>
+                <td>To preserve data across calls ("remembering" variables).</td>
+                <td>To allow partial application and functional chaining.</td>
+            </tr>
+            <tr>
+                <td><b>Changes arity?</b></td>
+                <td>No.</td>
+                <td>Yes — from many arguments to one-at-a-time functions.</td>
+            </tr>
+            <tr>
+                <td><b>Built with</b></td>
+                <td>Lexical scope capture.</td>
+                <td>Closures plus function nesting.</td>
+            </tr>
+            <tr>
+                <td><b>Example (Lisp)</b></td>
+                <td><code>(make-adder 5)</code></td>
+                <td><code>(curry #'+)</code></td>
+            </tr>
+            <tr>
+                <td><b>Analogy</b></td>
+                <td>"A backpack that carries its variables."</td>
+                <td>"A conveyor belt feeding one argument at a time."</td>
+            </tr>
+        </tbody>
+    </table>
+    <br/>
+    <br/>
+
+
+    <li><b>Example side-by-side</b></li>
+    <br/>
+<pre><code class="language-lisp line-numbers">;; Closure
+(defun make-multiplier (factor)
+  #'(lambda (x) (* x factor)))
+
+(setq double (make-multiplier 2))
+(funcall double 10) ; =&gt; 20
+
+
+;; Currying
+(defun curry (fn)
+  #'(lambda (a)
+      #'(lambda (b)
+          (funcall fn a b))))
+
+(setq curried-mul (curry #'*))
+(funcall (funcall curried-mul 2) 10) ; =&gt; 20
+</code></pre>
+    <br/>
+    <ul>
+        <li>Both produce the same result — but they represent different ideas.</li>
+        <br/>
+        <li>The closure <code>make-multiplier</code> keeps a private value <code>factor</code> inside its environment.</li>
+        <br/>
+        <li>The curried <code>mul</code> transforms multiplication into a series of single-argument calls.</li>
+    </ul>
+    <br/>
+</ol>
+<br/>
 <!-- * * * * * * * * * * * * * * -->
 
 
