@@ -1065,7 +1065,7 @@ B
 </code></pre>
     <br/>
     <ul>
-        <li>To redefine a function, just call <code>defun</code> again with the same name — the old version will be replaced.</li>
+        <li>To redefine a function, just call <code>defun</code> again with the same name: the old version will be replaced.</li>
     </ul>
     <br/>
     <br/>
@@ -1114,7 +1114,7 @@ foo        ; =&gt; 42       (variable)
     <br/>
     <ul>
         <li>In Common Lisp, a function normally returns the value of the <u>last evaluated expression</u> in its body.</li>
-        <li>However, sometimes you want to return early from the middle of the body — similar to <code>return</code> in other languages.</li>
+        <li>However, sometimes you want to return early from the middle of the body: similar to <code>return</code> in other languages.</li>
         <li>That's what <code>RETURN-FROM</code> and <code>RETURN</code> are for.</li>
     </ul>
 <pre><code class="language-lisp line-numbers">(defun absolute-value (x)
@@ -1132,7 +1132,7 @@ foo        ; =&gt; 42       (variable)
     <li><b>RETURN-FROM and BLOCK</b></li>
     <br/>
     <ul>
-        <li><b>RETURN-FROM</b> is not limited to functions — it exits from a <u>block</u> of code.</li>
+        <li><b>RETURN-FROM</b> is not limited to functions: it exits from a <u>block</u> of code.</li>
         <li>A <code>BLOCK</code> is a named region introduced by the <code>BLOCK</code> special operator.</li>
         <li>Form: <code>(block name body...)</code></li>
     </ul>
@@ -1285,7 +1285,7 @@ foo        ; =&gt; 42       (variable)
 </code></pre>
     <br/>
     <ul>
-        <li><code>#'</code> is to <code>FUNCTION</code> what <code>'</code> is to <code>QUOTE</code> — shorthand notation.</li>
+        <li><code>#'</code> is to <code>FUNCTION</code> what <code>'</code> is to <code>QUOTE</code>: shorthand notation.</li>
         <br/>
         <li><code>'foo</code> &nbsp; → the symbol <code>FOO</code><br/>
             <code>#'foo</code> → the <u>function object</u> bound to <code>FOO</code></li>
@@ -1370,7 +1370,7 @@ foo        ; =&gt; 42       (variable)
 </code></pre>
     <br/>
     <ul>
-        <li>Here, <code>fn</code> can be any function — built-in, user-defined, or anonymous.</li>
+        <li>Here, <code>fn</code> can be any function: built-in, user-defined, or anonymous.</li>
     </ul>
     <br/>
     <br/>
@@ -1423,7 +1423,7 @@ foo        ; =&gt; 42       (variable)
     <li><b>Closures: functions that capture variables</b></li>
     <br/>
     <ul>
-        <li>If a <code>LAMBDA</code> refers to variables from its surrounding scope, it "remembers" them even after that scope ends — this is called a <b>closure</b>.</li>
+        <li>If a <code>LAMBDA</code> refers to variables from its surrounding scope, it "remembers" them even after that scope ends: this is called a <b>closure</b>.</li>
     </ul>
 <pre><code class="language-lisp line-numbers">(defun make-counter (&amp;optional (start 0))
   (let ((n start))
@@ -1458,7 +1458,7 @@ foo        ; =&gt; 42       (variable)
 </code></pre>
     <br/>
     <ul>
-        <li>This pattern is common in functional programming — you can build specialized functions dynamically.</li>
+        <li>This pattern is common in functional programming: you can build specialized functions dynamically.</li>
     </ul>
     <br/>
     <br/>
@@ -1475,7 +1475,7 @@ foo        ; =&gt; 42       (variable)
 </code></pre>
     <br/>
     <ul>
-        <li><code>mapcar</code>, <code>mapcan</code>, and <code>map</code> are higher-order functions — they use other functions to perform their operations.</li>
+        <li><code>mapcar</code>, <code>mapcan</code>, and <code>map</code> are higher-order functions: they use other functions to perform their operations.</li>
     </ul>
     <br/>
     <br/>
@@ -1484,7 +1484,7 @@ foo        ; =&gt; 42       (variable)
     <li><mark>Summary</mark></li>
     <ul>
         <br/>
-        <li>Functions in Lisp are <b>objects</b> — you can store, pass, and return them.</li>
+        <li>Functions in Lisp are <b>objects</b>: you can store, pass, and return them.</li>
         <br/>
         <li><code>#'name</code> retrieves a function object; <code>'name</code> refers to a symbol.</li>
         <br/>
@@ -1498,7 +1498,7 @@ foo        ; =&gt; 42       (variable)
         <br/>
         <li><code>MAPCAR</code> and friends → apply functions elementwise to collections.</li>
         <br/>
-        <li>Treating functions as data enables higher-order programming — passing logic, not just numbers.</li>
+        <li>Treating functions as data enables higher-order programming: passing logic, not just numbers.</li>
         <br/>
     </ul>
     <br/>
@@ -1518,7 +1518,7 @@ foo        ; =&gt; 42       (variable)
     <br/>
     <br/>
     <br/>
-    <li><code>'(3 4 5)</code> is a quoted list — a literal value.<br/><br/>
+    <li><code>'(3 4 5)</code> is a quoted list: a literal value.<br/><br/>
         The single quote ( <code>'</code> ) is shorthand for </code>(quote ...)</code>.</li>
     <br/>
 </ol>
@@ -1560,16 +1560,16 @@ foo        ; =&gt; 42       (variable)
 </code></pre>
     <br/>
     <ul>
-        <li><code>defmacro</code> — the defining operator for macros.</li>
+        <li><code>defmacro</code>: the defining operator for macros.</li>
         <br/>
-        <li><code>macro-name</code> — symbol naming the macro (how you'll call it).</li>
+        <li><code>macro-name</code>: symbol naming the macro (how you'll call it).</li>
         <br/>
-        <li><code>lambda-list</code> — parameter list, but it receives <b>unevaluated forms</b>.
+        <li><code>lambda-list</code>: parameter list, but it receives <b>unevaluated forms</b>.
             It supports almost everything <code>defun</code> does: <code>&amp;optional</code>, <code>&amp;rest</code>, <code>&amp;key</code>, and also <code>&amp;body</code>.</li>
         <br/>
-        <li><code>doc-string</code> — optional documentation string, visible via <code>(documentation 'macro-name 'function)</code>.</li>
+        <li><code>doc-string</code>: optional documentation string, visible via <code>(documentation 'macro-name 'function)</code>.</li>
         <br/>
-        <li><code>body-forms</code> — these run at macro-expansion-time and must return <b>code</b> (a Lisp form), not the final result of the computation.</li>
+        <li><code>body-forms</code>: these run at macro-expansion-time and must return <b>code</b> (a Lisp form), not the final result of the computation.</li>
     </ul>
     <br/>
     <br/>
@@ -1603,8 +1603,8 @@ foo        ; =&gt; 42       (variable)
         <br/>
         <li>Inside a backquoted form:</li>
         <ul>
-            <li><code>,expr</code> — "unquote": evaluate <code>expr</code> and insert its value.</li>
-            <li><code>,@expr</code> — "unquote-splicing": evaluate <code>expr</code> and splice its elements into the surrounding list.</li>
+            <li><code>,expr</code>: "unquote": evaluate <code>expr</code> and insert its value.</li>
+            <li><code>,@expr</code>: "unquote-splicing": evaluate <code>expr</code> and splice its elements into the surrounding list.</li>
         </ul>
     </ul>
     <br/>
@@ -1662,13 +1662,13 @@ foo        ; =&gt; 42       (variable)
 </code></pre>
     <br/>
     <ul>
-        <li><code>lambda-list</code> — like in <code>defun</code>: supports <code>&amp;optional</code>, <code>&amp;key</code>, <code>&amp;rest</code>, <code>&amp;body</code>, and even destructuring (covered elsewhere in your notes).</li>
+        <li><code>lambda-list</code>: like in <code>defun</code>: supports <code>&amp;optional</code>, <code>&amp;key</code>, <code>&amp;rest</code>, <code>&amp;body</code>, and even destructuring (covered elsewhere in your notes).</li>
         <br/>
-        <li><code>doc-string</code> — optional, shown by <code>DOCUMENTATION</code>.</li>
+        <li><code>doc-string</code>: optional, shown by <code>DOCUMENTATION</code>.</li>
         <br/>
-        <li><code>declarations</code> — compiler hints (e.g. <code>(declare (special x))</code>); you can add them between the doc-string and the body.</li>
+        <li><code>declarations</code>: compiler hints (e.g. <code>(declare (special x))</code>); you can add them between the doc-string and the body.</li>
         <br/>
-        <li><code>body</code> — produces the expansion form. It does <b>not</b> directly perform the user's work; it <b>returns code</b> that will be run later.</li>
+        <li><code>body</code>: produces the expansion form. It does <b>not</b> directly perform the user's work; it <b>returns code</b> that will be run later.</li>
     </ul>
     <br/>
     <br/>
@@ -1882,16 +1882,16 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Destructured Keyword &amp; Parameter Lists in Macros — Clean DSL Design</h3>
+<h3>Destructured Keyword &amp; Parameter Lists in Macros: Clean DSL Design</h3>
 <ol>
     <li><b>Introduction</b></li>
     <br/>
     <ul>
-        <li>Common Lisp macros can use <b>destructuring parameter lists</b> — a feature that allows you to directly unpack structured arguments.</li>
+        <li>Common Lisp macros can use <b>destructuring parameter lists</b>: a feature that allows you to directly unpack structured arguments.</li>
         <br/>
         <li>This means you can write macros that feel like <b>mini-DSLs</b> ("domain-specific languages") with readable, keyword-rich syntax, instead of manually parsing <code>&amp;body</code> or <code>&amp;rest</code> lists.</li>
         <br/>
-        <li>You can mix and match <b>required parameters</b>, <b>optional parameters</b>, and <b>keyword arguments</b> — even nested within one destructured list.</li>
+        <li>You can mix and match <b>required parameters</b>, <b>optional parameters</b>, and <b>keyword arguments</b>: even nested within one destructured list.</li>
     </ul>
     <br/>
     <br/>
@@ -1917,7 +1917,7 @@ foo        ; =&gt; 42       (variable)
 </code></pre>
     <br/>
     <ul>
-        <li>This eliminates all manual keyword separation logic — Lisp handles it automatically.</li>
+        <li>This eliminates all manual keyword separation logic: Lisp handles it automatically.</li>
     </ul>
     <br/>
     <br/>
@@ -1936,7 +1936,7 @@ foo        ; =&gt; 42       (variable)
 </code></pre>
     <br/>
     <ul>
-        <li>The macro parameter list pattern <code>((&amp;key ...))</code> tells Lisp to destructure the first argument — automatically binding <code>prefix</code> and <code>times</code>.</li>
+        <li>The macro parameter list pattern <code>((&amp;key ...))</code> tells Lisp to destructure the first argument: automatically binding <code>prefix</code> and <code>times</code>.</li>
         <br/>
         <li>This is conceptually similar to <code>DESTRUCTURING-BIND</code>, but it happens directly in the macro's parameter list.</li>
     </ul>
@@ -1987,7 +1987,7 @@ foo        ; =&gt; 42       (variable)
     <br/>
     <ul>
         <li>The macro automatically binds all keyword arguments and optional flags.</li>
-        <li>No list traversal or parsing required — the argument structure itself defines the behavior.</li>
+        <li>No list traversal or parsing required: the argument structure itself defines the behavior.</li>
     </ul>
     <br/>
     <br/>
@@ -2034,7 +2034,7 @@ foo        ; =&gt; 42       (variable)
 </code></pre>
     <br/>
     <ul>
-        <li><code>(start end &amp;key ...)</code> destructures the first argument list directly — like <code>(do-labeled-range (1 10 :step 2))</code>.</li>
+        <li><code>(start end &amp;key ...)</code> destructures the first argument list directly: like <code>(do-labeled-range (1 10 :step 2))</code>.</li>
         <li><code>&amp;optional prefix</code> defines a default optional prefix string.</li>
         <li>The body can contain any Lisp forms to be run on each iteration.</li>
     </ul>
@@ -2069,15 +2069,15 @@ foo        ; =&gt; 42       (variable)
     <ul>
         <li>You get all the flexibility of <code>DEFUN</code>-style argument lists, but applied to code-generation time.</li>
         <br/>
-        <li>No need for parsing logic — argument structure alone defines how data is bound.</li>
+        <li>No need for parsing logic: argument structure alone defines how data is bound.</li>
         <br/>
         <li>It's an idiomatic Lisp technique for defining small, declarative DSLs (domain-specific sublanguages) that resemble natural configuration blocks.</li>
         <br/>
         <li>This style is used by many standard macros:
             <ul>
-                <li><code>WITH-OPEN-FILE</code> — destructures file and mode.</li>
-                <li><code>WITH-SLOTS</code> — destructures object slots.</li>
-                <li><code>DO-SYMBOLS</code>, <code>DO-EXTERNAL-SYMBOLS</code> — destructure parameters with optional parts.</li>
+                <li><code>WITH-OPEN-FILE</code>: destructures file and mode.</li>
+                <li><code>WITH-SLOTS</code>: destructures object slots.</li>
+                <li><code>DO-SYMBOLS</code>, <code>DO-EXTERNAL-SYMBOLS</code>: destructure parameters with optional parts.</li>
             </ul>
         </li>
     </ul>
@@ -2303,10 +2303,10 @@ foo        ; =&gt; 42       (variable)
 </code></pre>
     <br/>
     <ul>
-        <li><code>var</code> &nbsp; — variable bound to each element of the list.</li>
-        <li><code>list</code> — the list to iterate over (quoted or evaluated).</li>
-        <li><code>body</code> — the forms executed for each element.</li>
-        <li><code>result-form</code> — evaluated after the loop ends, its value becomes the loop's result.</li>
+        <li><code>var</code> &nbsp;: variable bound to each element of the list.</li>
+        <li><code>list</code>: the list to iterate over (quoted or evaluated).</li>
+        <li><code>body</code>: the forms executed for each element.</li>
+        <li><code>result-form</code>: evaluated after the loop ends, its value becomes the loop's result.</li>
     </ul>
     <br/>
     <br/>
@@ -2365,7 +2365,7 @@ foo        ; =&gt; 42       (variable)
     <li><b>Early exit using RETURN</b></li>
     <br/>
     <ul>
-        <li><code>dolist</code> creates an implicit <b>block</b> — so you can exit early with <code>RETURN</code>.</li>
+        <li><code>dolist</code> creates an implicit <b>block</b>: so you can exit early with <code>RETURN</code>.</li>
     </ul>
 <pre><code class="language-lisp line-numbers">(dolist (x '(3 -1 4 -2 5))
   (when (minusp x)
@@ -2425,7 +2425,7 @@ foo        ; =&gt; 42       (variable)
     <br/>
     <ul>
         <li><b>DOTIMES</b> is a counter-based looping construct.</li>
-        <li>It executes its body a fixed number (N) of times — from <code>0</code> up to <code>N-1</code>.</li>
+        <li>It executes its body a fixed number (N) of times: from <code>0</code> up to <code>N-1</code>.</li>
         <li>It is useful when you need a simple index-based iteration or repeated action a known number of times.</li>
     </ul>
     <br/>
@@ -2439,9 +2439,9 @@ foo        ; =&gt; 42       (variable)
 </code></pre>
     <br/>
     <ul>
-        <li><code>var</code> &nbsp; &nbsp; — the loop counter variable (integer).</li>
-        <li><code>count</code> — the number of iterations.</li>
-        <li><code>result-form</code> — expression evaluated after the loop ends; becomes the loop's return value.</li>
+        <li><code>var</code> &nbsp; &nbsp;: the loop counter variable (integer).</li>
+        <li><code>count</code>: the number of iterations.</li>
+        <li><code>result-form</code>: expression evaluated after the loop ends; becomes the loop's return value.</li>
     </ul>
     <br/>
     <br/>
@@ -2565,7 +2565,7 @@ foo        ; =&gt; 42       (variable)
             <li>And specify a flexible termination condition.</li>
         </ul>
         <br/>
-        <li>In essence, <code>DO</code> is Lisp's "manual gearbox" for iteration — you control exactly what happens each cycle.</li>
+        <li>In essence, <code>DO</code> is Lisp's "manual gearbox" for iteration: you control exactly what happens each cycle.</li>
     </ul>
     <br/>
     <br/>
@@ -2581,15 +2581,15 @@ foo        ; =&gt; 42       (variable)
 </code></pre>
     <br/>
     <ul>
-        <li><b>var</b> — loop variable name.</li>
-        <li><b>init</b> — initial value, evaluated once before the loop begins.</li>
-        <li><b>step</b> — optional; expression used to update the variable after each iteration.
+        <li><b>var</b>: loop variable name.</li>
+        <li><b>init</b>: initial value, evaluated once before the loop begins.</li>
+        <li><b>step</b>: optional; expression used to update the variable after each iteration.
             If omitted, the variable keeps its last value.</li>
-        <li><b>end-test</b> — condition evaluated at the start of each iteration.
+        <li><b>end-test</b>: condition evaluated at the start of each iteration.
             If true, the loop terminates and evaluates <b>result-form</b>.</li>
-        <li><b>result-form</b> — optional; determines what the loop returns.
+        <li><b>result-form</b>: optional; determines what the loop returns.
             If omitted, <code>NIL</code> is returned by default.</li>
-        <li><b>body</b> — one or more forms evaluated on each iteration until the end-test succeeds.</li>
+        <li><b>body</b>: one or more forms evaluated on each iteration until the end-test succeeds.</li>
     </ul>
     <br/>
     <br/>
@@ -2685,7 +2685,7 @@ foo        ; =&gt; 42       (variable)
     <br/>
     <ul>
         <li>Because there's no <code>step</code> form, <code>x</code> never changes.</li>
-        <li>The condition <code>(&lt;= x 0)</code> remains false forever — resulting in an infinite loop.</li>
+        <li>The condition <code>(&lt;= x 0)</code> remains false forever: resulting in an infinite loop.</li>
         <li>Use <code>(return ...)</code> to manually break out when needed.</li>
     </ul>
     <br/>
@@ -2820,7 +2820,7 @@ foo        ; =&gt; 42       (variable)
     </ul>
     <br/>
     <br/>
-    <li><mark>NOTE</mark>: <b>LOOP</b> syntax is non-Lispy — it doesn't follow S-expression style.</li>
+    <li><mark>NOTE</mark>: <b>LOOP</b> syntax is non-Lispy: it doesn't follow S-expression style.</li>
     <br/>
     <br/>
     <li>Examples:</li>
@@ -2940,7 +2940,7 @@ foo        ; =&gt; 42       (variable)
     <br/>
     <br/>
     <li>In a <b>DEFMACRO</b>,
-        your lambda list doesn't just bind symbols to arguments — it can pattern-match the entire shape of the call form.</li>
+        your lambda list doesn't just bind symbols to arguments: it can pattern-match the entire shape of the call form.</li>
 <pre><code class="language-lisp line-numbers">(defmacro swap! ((a b))
   `(let ((temp ,a))
      (setf ,a ,b
@@ -3863,16 +3863,16 @@ a                   ; global A =&gt; 200
 <!-- * * * * * * * * * * * * * * -->
 <h3>Array Element Types</h3>
 <ol>
-    <li>Every Common Lisp array has an <b>element type</b> — this tells Lisp what kinds of values may be stored in it.</li>
+    <li>Every Common Lisp array has an <b>element type</b>: this tells Lisp what kinds of values may be stored in it.</li>
     <br/>
     <br/>
     <li>If you don't specify one, the default is <code>T</code> (anything).<br/>
-        That means the array can hold numbers, strings, symbols, lists, other arrays — anything at all.
+        That means the array can hold numbers, strings, symbols, lists, other arrays: anything at all.
     </li>
     <br/>
     <br/>
 
-    <li>However, when you restrict the element type, Lisp can often use a more compact and efficient internal representation —
+    <li>However, when you restrict the element type, Lisp can often use a more compact and efficient internal representation:
         similar to how C arrays of <code>int</code> or <code>float</code> are faster and smaller than generic pointer arrays.
     </li>
     <br/>
@@ -3985,7 +3985,7 @@ a                   ; global A =&gt; 200
     <ul>
         <li>Each Lisp implementation may store specialized arrays (e.g., <code>(unsigned-byte 8)</code>) as compact byte vectors.</li>
         <br/>
-        <li>This enables efficient binary I/O — e.g., reading/writing images, files, or raw buffers.</li>
+        <li>This enables efficient binary I/O: e.g., reading/writing images, files, or raw buffers.</li>
         <br/>
     </ul>
 <pre><code class="language-lisp line-numbers">(defparameter *bytes*
@@ -4253,7 +4253,7 @@ a                   ; global A =&gt; 200
         <br/>
         <li>Modern names: <code>FIRST</code>, <code>REST</code>, <code>SECOND</code>, <code>THIRD</code>.</li>
         <br/>
-        <li>CAR/CDR are to Lisp what pointer dereferencing is to C — they're the fundamental way of walking linked structures.</li>
+        <li>CAR/CDR are to Lisp what pointer dereferencing is to C: they're the fundamental way of walking linked structures.</li>
         <br/>
     </ul>
     <br/>
@@ -4274,7 +4274,7 @@ a                   ; global A =&gt; 200
             <li><b>CAR</b> → the first value (left half)</li>
             <li><b>CDR</b> → the second value (right half)</li>
         </ul>
-        Together, these form a <b>cons cell</b> — the atomic "node" of all lists in Lisp.
+        Together, these form a <b>cons cell</b>: the atomic "node" of all lists in Lisp.
     </li>
     <br/>
     <br/>
@@ -4291,7 +4291,7 @@ a                   ; global A =&gt; 200
     <br/>
     <br/>
 
-    <li><b>CONS is how all lists are built</b> — a list is just a chain of cons cells where each CDR points to the next cons (and the last points to <code>NIL</code>):</li>
+    <li><b>CONS is how all lists are built</b>: a list is just a chain of cons cells where each CDR points to the next cons (and the last points to <code>NIL</code>):</li>
 <pre><code class="language-lisp line-numbers">(cons 'a (cons 'b (cons 'c nil)))
 ;; =&gt; (A B C)
 
@@ -4362,7 +4362,7 @@ a                   ; global A =&gt; 200
 </code></pre>
     <br/>
     <ul>
-        <li>Each cell always holds exactly two parts — even in lists of many elements.</li>
+        <li>Each cell always holds exactly two parts: even in lists of many elements.</li>
     </ul>
     <br/>
     <br/>
@@ -4481,7 +4481,7 @@ a                   ; global A =&gt; 200
         <br/>
         <li><code>PUSH</code> and <code>POP</code> macros are built upon <code>CONS</code>.</li>
         <br/>
-        <li><b>Everything in Lisp lists</b> — trees, stacks, queues, association tables — is ultimately built from <code>CONS</code> cells.</li>
+        <li><b>Everything in Lisp lists</b>: trees, stacks, queues, association tables: is ultimately built from <code>CONS</code> cells.</li>
         <br/>
     </ul>
     <br/>
@@ -4502,13 +4502,13 @@ a                   ; global A =&gt; 200
         <li>A symbol is an object with (conceptually) 4 main slots:
             <ul>
                 <br/>
-                <li><b>NAME</b> — how it prints, e.g. <code>"FOO"</code></li>
+                <li><b>NAME</b>: how it prints, e.g. <code>"FOO"</code></li>
                 <br/>
-                <li><b>VALUE</b> — used when the symbol is evaluated as a variable</li>
+                <li><b>VALUE</b>: used when the symbol is evaluated as a variable</li>
                 <br/>
-                <li><b>FUNCTION</b> — used when it is called as a function</li>
+                <li><b>FUNCTION</b>: used when it is called as a function</li>
                 <br/>
-                <li><b>PLIST</b> — a property list attached to this symbol</li>
+                <li><b>PLIST</b>: a property list attached to this symbol</li>
                 <br/>
             </ul>
         </li>
@@ -4575,7 +4575,7 @@ a                       ; =&gt; 100   ; evaluates to the value cell of A
     <li><b>Symbols as data (quoted)</b></li>
     <br/>
     <ul>
-        <li>If you write a symbol <b>quoted</b>, Lisp does not treat it as a variable or function — it is just data.</li>
+        <li>If you write a symbol <b>quoted</b>, Lisp does not treat it as a variable or function: it is just data.</li>
     </ul>
 <pre><code class="language-lisp line-numbers">'foo       ; symbol FOO
 (quote foo); same
@@ -4706,7 +4706,7 @@ foo          ; =&gt; 10          ; value cell
 </code></pre>
     <br/>
     <ul>
-        <li>This sometimes confuses beginners, but it's powerful — code and data can use the same symbolic names with different roles.</li>
+        <li>This sometimes confuses beginners, but it's powerful: code and data can use the same symbolic names with different roles.</li>
     </ul>
     <br/>
     <br/>
@@ -4815,7 +4815,7 @@ foo          ; =&gt; 10          ; value cell
 </code></pre>
     <br/>
     <ul>
-        <li>Updating a key is easy — just use <code>assoc</code> and <code>rplacd</code> to change its value in place.</li>
+        <li>Updating a key is easy: just use <code>assoc</code> and <code>rplacd</code> to change its value in place.</li>
     </ul>
 <pre><code class="language-lisp line-numbers">(let ((cell (assoc 'bob *grades*)))
   (when cell
@@ -4933,7 +4933,7 @@ foo          ; =&gt; 10          ; value cell
 </code></pre>
     <br/>
     <ul>
-        <li>These operations mutate structure in place — use with care.</li>
+        <li>These operations mutate structure in place: use with care.</li>
     </ul>
     <br/>
     <br/>
@@ -5224,20 +5224,15 @@ foo          ; =&gt; 10          ; value cell
     <br/>
     <ul>
         <li>You can create a new package at runtime using <code>MAKE-PACKAGE</code>.</li>
-        <li>Basic form:
-            <br/><code>(make-package "NAME" &amp;key :use)</code></li>
+        <li>Basic form: <code>(make-package "NAME" &amp;key :use)</code></li>
     </ul>
 <pre><code class="language-lisp line-numbers">(make-package "MY-APP" :use '("COMMON-LISP"))
 ;; =&gt; #&lt;PACKAGE "MY-APP"&gt;
 </code></pre>
     <br/>
     <ul>
-        <li><code>:use '("COMMON-LISP")</code> means:
-            <ul>
-                <br/>
-                <li>Inside <code>MY-APP</code>, you can refer to <code>CAR</code>, <code>IF</code>, etc. without writing <code>CL:CAR</code>, <code>CL:IF</code>.</li>
-                <br/>
-            </ul>
+        <li><code>:use '("COMMON-LISP")</code>:
+                Inside <code>MY-APP</code>, you can refer to <code>CAR</code>, <code>IF</code>, etc. without writing <code>CL:CAR</code>, <code>CL:IF</code>.
         </li>
     </ul>
     <br/>
@@ -5576,7 +5571,7 @@ CL-USER&gt; (my-app::start-ap)
 </code></pre>
     <br/>
     <ul>
-        <li>So <code>::</code> will not throw a reader error — it either finds the symbol or creates a new internal one.</li>
+        <li>So <code>::</code> will not throw a reader error: it either finds the symbol or creates a new internal one.</li>
         <br/>
         <li>If it's new and you try to call it as a function, you'll get a normal <b>undefined function</b> runtime error.</li>
     </ul>
@@ -5772,7 +5767,7 @@ CL-USER&gt; (my-app::start-ap)
 </code></pre>
     <br/>
     <ul>
-        <li>The choice is mostly style — many people prefer keywords in code:</li>
+        <li>The choice is mostly style: many people prefer keywords in code:</li>
     </ul>
 <pre><code class="language-lisp line-numbers">(intern "FOO" :my-app)
 (find-symbol "BAR" :my-app)
@@ -5864,14 +5859,14 @@ CL-USER&gt; (my-app::start-ap)
         <br/>
         <li>Many package-related functions accept a <b>package designator</b>: string, symbol, or package.</li>
         <br/>
-        <li><code>:my-app</code> is a symbol whose name is <code>"MY-APP"</code> — both refer to the same package name.</li>
+        <li><code>:my-app</code> is a symbol whose name is <code>"MY-APP"</code>: both refer to the same package name.</li>
         <br/>
         <li>That's why you see:
             <ul>
                 <br/>
-                <li><code>(defpackage :my-app ...)</code> — symbol designator.</li>
+                <li><code>(defpackage :my-app ...)</code>: symbol designator.</li>
                 <br/>
-                <li><code>(find-symbol "FOO" "MY-APP")</code> — string designator.</li>
+                <li><code>(find-symbol "FOO" "MY-APP")</code>: string designator.</li>
                 <br/>
             </ul>
         </li>
@@ -6105,12 +6100,12 @@ CL-USER&gt; (my-app::start-ap)
 <!-- * * * * * * * * * * * * * * -->
 <h3>Currying vs Closures</h3>
 <ol>
-    <li><b>Closures</b> — Functions that remember</li>
+    <li><b>Closures</b>: Functions that remember</li>
     <br/>
     <ul>
         <li>A <b>closure</b> is a function that "remembers" variables from the environment where it was created.</li>
         <br/>
-        <li>Even after that environment is gone, the function retains access to those variables — they are <b>closed over</b>.</li>
+        <li>Even after that environment is gone, the function retains access to those variables: they are <b>closed over</b>.</li>
     </ul>
 <pre><code class="language-lisp line-numbers">(defun make-adder (n)
   "Return a function that adds N to its argument."
@@ -6134,7 +6129,7 @@ CL-USER&gt; (my-app::start-ap)
 </code></pre>
     <br/>
     <ul>
-        <li>This pattern is common in Lisp — functions that "carry their environment" with them.</li>
+        <li>This pattern is common in Lisp: functions that "carry their environment" with them.</li>
     </ul>
     <br/>
     <br/>
@@ -6142,7 +6137,7 @@ CL-USER&gt; (my-app::start-ap)
     <br/>
 
 
-    <li><b>Currying</b> — Functions that take one argument at a time</li>
+    <li><b>Currying</b>: Functions that take one argument at a time</li>
     <br/>
     <ul>
         <li><b>Currying</b> is a functional programming transformation that turns a multi-argument function into a chain of single-argument functions.</li>
@@ -6196,7 +6191,7 @@ CL-USER&gt; (my-app::start-ap)
             <tr>
                 <td><b>Changes arity?</b></td>
                 <td>No.</td>
-                <td>Yes — from many arguments to one-at-a-time functions.</td>
+                <td>Yes: from many arguments to one-at-a-time functions.</td>
             </tr>
             <tr>
                 <td><b>Built with</b></td>
@@ -6240,7 +6235,7 @@ CL-USER&gt; (my-app::start-ap)
 </code></pre>
     <br/>
     <ul>
-        <li>Both produce the same result — but they represent different ideas.</li>
+        <li>Both produce the same result: but they represent different ideas.</li>
         <br/>
         <li>The closure <code>make-multiplier</code> keeps a private value <code>factor</code> inside its environment.</li>
         <br/>
@@ -6256,7 +6251,86 @@ CL-USER&gt; (my-app::start-ap)
 
 
 <!-- * * * * * * * * * * * * * * -->
+<h3>Basics on Printing in Common Lisp</h3>
+<ol>
+    <li>
+        <b>PRINT</b>: prints an object in a readable way with quotes and <u>a trailing newline</u>.
+        Often used for debugging.
+    </li>
 
+<pre><code class="language-lisp line-numbers">(print "Hello")
+;; prints:  "Hello"
+;; returns: "Hello"</code></pre>
+    <br/>
+    <br/>
+
+    <li>
+        <b>PRINC</b>: prints the object in a more human-readable form (without quotes or escapes).
+        Useful for user-facing messages rather than debugging.
+    </li>
+
+<pre><code class="language-lisp line-numbers">(princ "Hello")
+;; prints:   Hello
+;; returns: "Hello"</code></pre>
+    <br/>
+    <br/>
+
+    <li>
+        <b>WRITE</b>: the most general printing function, with many keyword options to control behavior.<br/>
+        It can specify whether to print readably, add escape characters, or include structure indentation.
+    </li>
+
+<pre><code class="language-lisp line-numbers">(write "Hello" :escape nil :pretty t)
+;; prints:   Hello
+;; returns: "Hello"</code></pre>
+
+    <br/>
+    <br/>
+
+    <li>
+        <b>FORMAT</b>: the most powerful printing utility, allowing formatted text output (similar to <code>printf</code> in C).<br/>
+        It can print to the terminal or to a string, and supports rich directives starting with <code>~</code>.
+    </li>
+
+<pre><code class="language-lisp line-numbers">(format t "Hello, ~a!~%" "World")
+;; prints:  Hello, World!
+;; returns: NIL</code></pre>
+
+    <br/>
+    <br/>
+
+    <li>
+        By using <code>NIL</code> as the first argument, <code>FORMAT</code> returns the formatted string instead of printing it.
+    </li>
+<pre><code class="language-lisp line-numbers">(format nil "Sum of ~d and ~d is ~d." 3 4 (+ 3 4))
+;; returns: "Sum of 3 and 4 is 7."</code></pre>
+
+    <br/>
+    <br/>
+
+    <li>
+        <b>FORMAT directives (common ones):</b><br/>
+        <ul>
+            <li><code>~a</code>: aesthetic printing (no quotes, user-friendly)</li>
+            <li><code>~s</code>: standard printing (readable by Lisp reader)</li>
+            <li><code>~d</code>: decimal integer</li>
+            <li><code>~%</code>: newline</li>
+            <li><code>~~</code>: literal tilde (<code>~</code>)</li>
+        </ul>
+    </li>
+    <br/>
+
+<pre><code class="language-lisp line-numbers">(format t "Name: ~a~%Age: ~d~%Code: ~~ABC~~~%" "Hwangfucius" 23)
+;; prints:
+;;      Name: Hwangfucius
+;;      Age: 23
+;;      Code: ~ABC~
+;; returns:
+;;      NIL
+</code></pre>
+  <br/>
+</ol>
+<br/>
 <!-- * * * * * * * * * * * * * * -->
 
 
