@@ -15,6 +15,15 @@
     <script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/line-numbers/prism-line-numbers.min.js"></script>
 
 <style>
+
+    .nav-icon {
+        width: 18px;          /* adjust size here */
+        height: 18px;
+        object-fit: contain;  /* keep aspect ratio */
+        vertical-align: middle;
+        margin-left: 0.3rem;  /* small gap from text */
+    }
+
     table {
         border-collapse: collapse;      /* merge borders so you don't get double lines */
         width: 100%;                    /* optional: make it full width */
@@ -111,7 +120,7 @@
 
 <!-- * * * * * * * * * * * * * * -->
 <nav id="toc" style="margin-bottom: 2rem;">
-    <h2>📘 Lisp Documentation Index</h2>
+    <h2> <img src="../resources/common-lisp.gif" alt="Common Lisp Logo" class="nav-icon"/> Common Lisp Index</h2>
     <ul style="line-height: 1.8;">
         <li><a href="#lisp-how-to-use-sbcl">How to use SBCL?</a></li>
         <li><a href="#lisp-hello-world">Hello World</a></li>
