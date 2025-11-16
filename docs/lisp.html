@@ -107,12 +107,73 @@
 
 
 <hr/>
-<h1>Common Lisp</h1>
+
+
+<!-- * * * * * * * * * * * * * * -->
+<nav id="toc" style="margin-bottom: 2rem;">
+    <h2>📘 Lisp Documentation Index</h2>
+    <ul style="line-height: 1.8;">
+        <li><a href="#lisp-how-to-use-sbcl">How to use SBCL?</a></li>
+        <li><a href="#lisp-hello-world">Hello World</a></li>
+        <li><a href="#lisp-prefix-notation">Prefix Notation</a></li>
+        <li><a href="#lisp-basic-building-blocks">Basic Building Blocks</a></li>
+        <li><a href="#lisp-comments">Comments</a></li>
+        <li><a href="#lisp-variables">Variables</a></li>
+        <li><a href="#lisp-diff-let-let-star">Difference between <code>LET</code> and <code>LET*</code></a></li>
+        <li><a href="#lisp-esc-char">Escape Character</a></li>
+        <li><a href="#lisp-basics-on-symbol">Basics about Symbol</a></li>
+        <li><a href="#lisp-kw-symbol">Keyword Symbol</a></li>
+        <li><a href="#lisp-if-stmt"><code>IF</code> Statement</a></li>
+        <li><a href="#lisp-basics-on-quote">Basics about <code>QUOTE</code></a></li>
+        <li><a href="#lisp-tfe">True, False and Equality</a></li>
+        <li><a href="#lisp-basics-on-cond">Basics about <code>COND</code></a></li>
+        <li><a href="#lisp-basics-on-function">Basics about Functions</a></li>
+        <li><a href="#lisp-func-ret-values">Function Return Values</a></li>
+        <li><a href="#lisp-functions-as-data">Functions as Data (Higher-Order Functions)</a></li>
+        <li><a href="#lisp-diff-between-list-and-quote">The difference between (3 4 5) and '(3 4 5)</a></li>
+        <li><a href="#lisp-macro">Macro</a></li>
+        <li><a href="#lisp-dtor-param-list-in-macro">Destructured Keyword and Parameter Lists in Macros</a></li>
+        <li><a href="#lisp-diff-between-quote-and-list">'(a b c) VS (list a b c)</a></li>
+        <li><a href="#lisp-progn">About <code>PROGN</code></a></li>
+        <li><a href="#lisp-when">About <code>WHEN</code></a></li>
+        <li><a href="#lisp-unless">About <code>UNLESS</code></a></li>
+        <li><a href="#lisp-and-or-not">About <code>AND</code>, <code>OR</code>, and <code>NOT</code></a></li>
+        <li><a href="#lisp-basics-on-dolist">Basics on <code>DOLIST</code></a></li>
+        <li><a href="#lisp-basics-on-dotimes">Basics on <code>DOTIMES</code></a></li>
+        <li><a href="#lisp-basics-on-do">Basics on <code>DO</code></a></li>
+        <li><a href="#lisp-loop">About <code>LOOP</code></a></li>
+        <li><a href="#lisp-quote-vs-backquote">Quote vs. Backquote</a></li>
+        <li><a href="#lisp-dtor-param-in-defmacro">Destructing Parameter in <code>DEFMACRO</code></a></li>
+        <li><a href="#lisp-collections">Collections</a></li>
+        <li><a href="#lisp-cons">About <code>CONS</code></a></li>
+        <li><a href="#lisp-set-setq-setf"><code>SET</code>, <code>SEQ</code> and <code>SETF</code></a></li>
+        <li><a href="#lisp-arrays">Arrays (like in C / JS / TS)</a></li>
+        <li><a href="#lisp-multi-dim-arrays">Multi-Dimensional Arrays</a></li>
+        <li><a href="#lisp-elem-types-and-specialized-arrays">Element Types and Specialized Arrays</a></li>
+        <li><a href="#lisp-adjustable-arrays-and-dynamic-behavior">Adjustable Arrays and "Dynamic" Behavior</a></li>
+        <li><a href="#lisp-array-elem-types">Array Element Types</a></li>
+        <li><a href="#lisp-car-cdr"><code>CAR</code> and <code>CDR</code></a></li>
+        <li><a href="#lisp-cons-again"><code>CONS</code> Revisited</a></li>
+        <li><a href="#lisp-using-symbols">Using Symbols in Common Lisp</a></li>
+        <li><a href="#lisp-alist">Association Lists (Alists)</a></li>
+        <li><a href="#lisp-sym-prop-and-symbol-plist">Symbol Properties and <code>SYMBOL-PLIST</code></a></li>
+        <li><a href="#lisp-package-intern-and-ns">Packages, <code>INTERN</code>, and Namespaces</a></li>
+        <li><a href="#lisp-package-vs"><code>my-app:start-app</code> VS <code>my-app::start-app</code></a></li>
+        <li><a href="#lisp-pkg-designators">Package Designators: <code>:my-app</code> VS <code>"MY-APP"</code></a></li>
+        <li><a href="#lisp-return-multiple-values">Returning Multiple Values</a></li>
+        <li><a href="#lisp-currying-vs-closures">Currying vs Closures</a></li>
+        <li><a href="#lisp-basics-on-printing">Basics on Printing in Common Lisp</a></li>
+        <li><a href="#lisp-details-on-format">Details on <code>FORMAT</code></a></li>
+    </ul>
+</nav>
+<!-- * * * * * * * * * * * * * * -->
+
+
 <hr/>
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>How to use SBCL?</h3>
+<h3 id="lisp-how-to-use-sbcl">How to use SBCL?</h3>
 <ol>
     <li>To run a <i>.lisp</i> or <i>.lsp</i> file:<br/><br/>
         <code>sbcl --script &lt;filename&gt;</code></li>
@@ -139,7 +200,7 @@
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Hello World in Common Lisp</h3>
+<h3 id="lisp-hello-world">Hello World in Common Lisp</h3>
 <ol>
     <li>Genre 1:<br/><br/>
         <code>(write-line "Hello World!")</code>
@@ -163,7 +224,7 @@
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Lisp Uses Prefix Notation</h3>
+<h3 id="lisp-prefix-notation">Lisp Uses Prefix Notation</h3>
 <ol>
     <li>In prefix notation, operators are written before their operands.</li>
 <pre><code class="language-lisp line-numbers">a * (b + c) / d
@@ -179,7 +240,7 @@
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Basic Building Blocks in Lisp</h3>
+<h3 id="lisp-basic-building-blocks">Basic Building Blocks in Lisp</h3>
 <ol>
     <li>Lisp programs are made of three basic building blocks.</li>
     <br/>
@@ -226,7 +287,7 @@ abc123
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Comments</h3>
+<h3 id="lisp-comments">Comments</h3>
 <ol>
     <li>The semicolon <code>;</code> indicates a line-comment.</li>
     <br/>
@@ -239,7 +300,7 @@ abc123
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Variables</h3>
+<h3 id="lisp-variables">Variables</h3>
 <ol>
     <li>Global variables are generally declared using the <code>DEFVAR</code> construct.</li>
 <pre><code class="language-lisp line-numbers">; Define a global variable x with a value of `100`
@@ -359,7 +420,7 @@ return &lt;- original place1
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Difference between <code>LET</code> and <code>LET*</code></h3>
+<h3 id="lisp-diff-let-let-star">Difference between <code>LET</code> and <code>LET*</code></h3>
 <ol>
     <li><code>LET</code>: All variables are initialized in parallel.</li>
     <br/>
@@ -382,7 +443,7 @@ return &lt;- original place1
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Difference between <code>DEFVAR</code> and <code>DEFPARAMETER</code></h3>
+<h3 id="lisp-">Difference between <code>DEFVAR</code> and <code>DEFPARAMETER</code></h3>
 <ol>
     <li><code>DEFVAR</code>: re-decl does not overwrite an existing value (can be later changed with assignment).</li>
 <pre><code class="language-lisp line-numbers">(sbcl) (defvar *x* 10)
@@ -408,7 +469,7 @@ return &lt;- original place1
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Escape Character</h3>
+<h3 id="lisp-esc-char">Escape Character</h3>
 <ol>
     <li>A backslash ( <code>\</code> ) escapes the next character, causing it to be included in the string regardless of what it is.</li>
 <pre><code class="language-lisp line-numbers">"foo"       ; foo
@@ -426,7 +487,7 @@ return &lt;- original place1
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Basics about Symbol</h3>
+<h3 id="lisp-basics-on-symbol">Basics about Symbol</h3>
 <ol>
     <li>There are 10 characters that serve other syntactic purposes can NOT appear in names:</li>
     <br/>
@@ -487,7 +548,7 @@ return &lt;- original place1
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Keyword Symbols</h3>
+<h3 id="lisp-kw-symbol">Keyword Symbols</h3>
 <ol>
     <li>Keyword symbols are prefixed with a colon (e.g., <code>:name</code>, <code>:id</code>).<br/><br/>
         This prefix automatically makes them part of the <b>KEYWORD</b> package.</li>
@@ -541,7 +602,7 @@ return &lt;- original place1
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3><u>if</u> Statement</h3>
+<h3 id="lisp-if-stmt"><u>if</u> Statement</h3>
 <ol>
     <li>Syntax:<code> (if &lt;cond&gt; &lt;then&gt; [&lt;else&gt;]) </code></li>
     <br/>
@@ -587,7 +648,7 @@ return &lt;- original place1
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Basics about <u>quote</u></h3>
+<h3 id="lisp-basics-on-quote">Basics about <u>quote</u></h3>
 <ol>
     <li>It is used to prevent an expression from being evaluated.</li>
     <br/>
@@ -663,7 +724,7 @@ B
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>True, False and Equality</h3>
+<h3 id="lisp-tfe">True, False and Equality</h3>
 <ol>
     <li>The symbol <b>t</b> or <b>T</b> is conventionally treated as true in Common Lisp.<br/><br/>
         <code>(if t "True" "False")</code><code class="hl-grey-fg"> ; returns "True"</code></li>
@@ -713,7 +774,7 @@ B
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Basics about <u>cond</u></h3>
+<h3 id="lisp-basics-on-cond">Basics about <u>cond</u></h3>
 <ol>
     <li><b>cond</b> is a versatile conditional construcy used for multi-branch descision-making.
         It is preferred over nested <b>if</b>.</li>
@@ -768,7 +829,7 @@ B
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Basics about Functions</h3>
+<h3 id="lisp-basics-on-function">Basics about Functions</h3>
 <ol>
     <li><b>Defining functions with DEFUN</b></li>
     <br/>
@@ -1052,7 +1113,7 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Function Return Values</h3>
+<h3 id="lisp-func-ret-values">Function Return Values</h3>
 <ol>
     <li><b>Returning from a function</b></li>
     <br/>
@@ -1210,7 +1271,7 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Functions as Data (Higher-Order Functions)</h3>
+<h3 id="lisp-functions-as-data">Functions as Data (Higher-Order Functions)</h3>
 <ol>
     <li><b>Functions are first-class values</b></li>
     <br/>
@@ -1455,7 +1516,7 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>The difference between (3 4 5) and '(3 4 5)</h3>
+<h3 id="lisp-diff-between-list-and-quote">The difference between (3 4 5) and '(3 4 5)</h3>
 <ol>
     <li><code>(3 4 5)</code> is a function call.<br/><br/>
         In Lisp, anything inside parentheses is treated as a function call unless you explicitly prevent evaluation.</li>
@@ -1474,7 +1535,7 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Macro</h3>
+<h3 id="lisp-macro">Macro</h3>
 <ol>
     <li><b>What is a macro?</b></li>
     <br/>
@@ -1826,16 +1887,16 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Destructured Keyword &amp; Parameter Lists in Macros: Clean DSL Design</h3>
+<h3 id="lisp-dtor-param-list-in-macro">Destructured Keyword and Parameter Lists in Macros: Clean DSL Design</h3>
 <ol>
     <li><b>Introduction</b></li>
     <br/>
     <ul>
-        <li>Common Lisp macros can use <b>destructuring parameter lists</b>: a feature that allows you to directly unpack structured arguments.</li>
+        <li>Common Lisp macros can use <u>destructuring parameter lists</u>: a feature that allows you to directly unpack structured arguments.</li>
         <br/>
-        <li>This means you can write macros that feel like <b>mini-DSLs</b> ("domain-specific languages") with readable, keyword-rich syntax, instead of manually parsing <code>&amp;body</code> or <code>&amp;rest</code> lists.</li>
+        <li>This means you can write macros that feel like <u>mini-DSLs</u> ("domain-specific languages") with readable, keyword-rich syntax, instead of manually parsing <code>&amp;body</code> or <code>&amp;rest</code> lists.</li>
         <br/>
-        <li>You can mix and match <b>required parameters</b>, <b>optional parameters</b>, and <b>keyword arguments</b>: even nested within one destructured list.</li>
+        <li>You can mix and match <u>required parameters</u>, <u>optional parameters</u>, and <u>keyword arguments</u>: even nested within one destructured list.</li>
     </ul>
     <br/>
     <br/>
@@ -2035,7 +2096,7 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>'(a b c) VS (list a b c)</h3>
+<h3 id="lisp-diff-between-quote-and-list">'(a b c) VS (list a b c)</h3>
 <ol>
     <li>They are NOT the same thing!</li>
     <br/>
@@ -2061,7 +2122,7 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>PROGN</h3>
+<h3 id="lisp-progn">PROGN</h3>
 <ol>
     <li><b>PROGN</b> is a special operator in Common Lisp that evaluates multiple expressions in sequence and returns the value of the last one.</li>
     <br/>
@@ -2090,7 +2151,7 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>WHEN</h3>
+<h3 id="lisp-when">WHEN</h3>
 <ol>
     <li>
         <code>WHEN</code> is a simplified <code>IF</code> that only has a <u>then</u> branch (no <u>else</u>).<br/>
@@ -2136,7 +2197,7 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>UNLESS</h3>
+<h3 id="lisp-unless">UNLESS</h3>
 <ol>
     <li>
         <code>UNLESS</code> is the logical opposite of <code>WHEN</code>.<br/>
@@ -2176,7 +2237,7 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>AND, OR, and NOT</h3>
+<h3 id="lisp-and-or-not">AND, OR, and NOT</h3>
 <ol>
     <li><b>AND</b> evaluates the arguments from left to right. <code>(and &lt;expr1&gt; &lt;expr2&gt; ... &lt;exprN&gt;)</code><br/>
         It returns:</li>
@@ -2225,7 +2286,7 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Basics on DOLIST</h3>
+<h3 id="lisp-basics-on-dolist">Basics on DOLIST</h3>
 <ol>
     <li><b>Purpose</b></li>
     <br/>
@@ -2363,7 +2424,7 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Basics on DOTIMES</h3>
+<h3 id="lisp-basics-on-dotimes">Basics on DOTIMES</h3>
 <ol>
     <li><b>Purpose</b></li>
     <br/>
@@ -2494,7 +2555,7 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Basics on DO</h3>
+<h3 id="lisp-basics-on-do">Basics on DO</h3>
 <ol>
     <li><b>Purpose</b></li>
     <br/>
@@ -2739,7 +2800,7 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>LOOP</h3>
+<h3 id="lisp-loop">LOOP</h3>
 <ol>
     <li><b>LOOP</b> is a <u>macro</u> in Common Lisp that provides a declarative, English-like syntax for performing iterations and collecting results.</li>
     <br/>
@@ -2836,7 +2897,7 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Quote vs. Backquote</h3>
+<h3 id="lisp-quote-vs-backquote">Quote vs. Backquote</h3>
 <ol>
     <li>Quote (<code>'</code> or <code>(quote ...)</code>): Don't evaluate, take it as data (prevents the usual evaluation of lists/symbols.).</li>
     <br/>
@@ -2872,7 +2933,7 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Destructing Parameter in DEFMACRO</h3>
+<h3 id="lisp-dtor-param-in-defmacro">Destructing Parameter in DEFMACRO</h3>
 <ol>
     <li>When you define a macro, you tell Lisp how to map the call form into symbols that you can use inside the macro body.</li>
 <pre><code class="language-lisp line-numbers">(defmacro simple (x y)
@@ -2942,7 +3003,7 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Collections</h3>
+<h3 id="lisp-collections">Collections</h3>
 <ol>
     <li>Vectors are Common Lisp's basic integer-indexed collection, and they come in two flavors: fixed-size vectors and resizable vectors.</li>
     <br/>
@@ -3177,7 +3238,7 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>CONS</h3>
+<h3 id="lisp-cons">CONS</h3>
 <ol>
     <li>A cons cell is the fundamental 2-slot building block of Lisp lists.</li>
     <ul>
@@ -3242,7 +3303,7 @@ foo        ; =&gt; 42       (variable)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>SET, SEQ and SETF</h3>
+<h3 id="lisp-set-setq-setf">SET, SEQ and SETF</h3>
 <ol>
     <li>Overview</li>
     <br/>
@@ -3349,7 +3410,7 @@ a                   ; global A =&gt; 200
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Arrays (like in C / JS / TS)</h3>
+<h3 id="lisp-arrays">Arrays (like in C / JS / TS)</h3>
 <ol>
     <li>In Common Lisp, an <b>array</b> is a fixed-size, indexable collection of elements.<br/>
         It is similar to:
@@ -3435,7 +3496,7 @@ a                   ; global A =&gt; 200
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Multi-Dimensional Arrays</h3>
+<h3 id="lisp-multi-dim-arrays">Multi-Dimensional Arrays</h3>
 <ol>
     <li>Common Lisp arrays can have <b>multiple dimensions</b>, like <code>int a[3][4];</code> in C.</li>
     <br/>
@@ -3508,7 +3569,7 @@ a                   ; global A =&gt; 200
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Element Types and Specialized Arrays</h3>
+<h3 id="lisp-elem-types-and-specialized-arrays">Element Types and Specialized Arrays</h3>
 <ol>
     <li>By default, arrays can hold any type (element type is <code>T</code>).<br/>
         You can restrict the <b>element type</b> for efficiency (implementation-dependent optimizations).
@@ -3556,7 +3617,7 @@ a                   ; global A =&gt; 200
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Adjustable Arrays and "Dynamic" Behavior</h3>
+<h3 id="lisp-adjustable-arrays-and-dynamic-behavior">Adjustable Arrays and "Dynamic" Behavior</h3>
 <ol>
     <li>JavaScript / TypeScript arrays are <b>dynamic</b>: you can always <code>push</code> / <code>pop</code> and change their length.<br/>
         Common Lisp arrays are normally <b>fixed-size</b>, more like C arrays.<br/>
@@ -3805,7 +3866,7 @@ a                   ; global A =&gt; 200
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Array Element Types</h3>
+<h3 id="lisp-array-elem-types">Array Element Types</h3>
 <ol>
     <li>Every Common Lisp array has an <b>element type</b>: this tells Lisp what kinds of values may be stored in it.</li>
     <br/>
@@ -3999,7 +4060,7 @@ a                   ; global A =&gt; 200
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>CAR and CDR</h3>
+<h3 id="lisp-car-cdr">CAR and CDR</h3>
 <ol>
     <li><b>Historical meaning:</b><br/>
         The names <code>CAR</code> and <code>CDR</code> come from the 1950s IBM 704 machine architecture.
@@ -4210,7 +4271,7 @@ a                   ; global A =&gt; 200
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>CONS</h3>
+<h3 id="lisp-cons-again">CONS</h3>
 <ol>
     <li>A <b>CONS</b> is the most fundamental data structure in Lisp.
         It constructs a pair of two values, traditionally called:
@@ -4438,7 +4499,7 @@ a                   ; global A =&gt; 200
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Using Symbols in Common Lisp</h3>
+<h3 id="lisp-using-symbols">Using Symbols in Common Lisp</h3>
 <ol>
     <li><b>What is a symbol really?</b></li>
     <br/>
@@ -4688,12 +4749,12 @@ foo          ; =&gt; 10          ; value cell
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Association Lists (Alists)</h3>
+<h3 id="lisp-alist">Association Lists (Alists)</h3>
 <ol>
     <li><b>What is an association list?</b></li>
     <br/>
     <ul>
-        <li>An <b>association list</b> (short: <b>alist</b>) is a list of pairs, each made by <code>CONS</code> or written as <code>(key . value)</code>.</li>
+        <li>An <u>association list</u> (short: <u>alist</u>) is a list of pairs, each made by <code>CONS</code> or written as <code>(key . value)</code>.</li>
         <br/>
         <li>It represents a simple mapping of <b>keys → values</b>.</li>
     </ul>
@@ -4917,7 +4978,7 @@ foo          ; =&gt; 10          ; value cell
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Symbol Properties and <code>SYMBOL-PLIST</code></h3>
+<h3 id="lisp-sym-prop-and-symbol-plist">Symbol Properties and <code>SYMBOL-PLIST</code></h3>
 <ol>
     <li><b>Every symbol has its own property list</b></li>
     <br/>
@@ -5131,7 +5192,7 @@ foo          ; =&gt; 10          ; value cell
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Packages, INTERN, and Namespaces</h3>
+<h3 id="lisp-package-intern-and-ns">Packages, <code>INTERN</code>, and Namespaces</h3>
 <ol>
     <li><b>What is a package?</b></li>
     <br/>
@@ -5409,7 +5470,7 @@ MY-APP:*SECRET*  ; use single colon for exported symbol
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3><code>my-app:start-app</code> VS <code>my-app::start-app</code></h3>
+<h3 id="lisp-package-vs"><code>my-app:start-app</code> VS <code>my-app::start-app</code></h3>
 <ol>
     <li><b>Recap: exported vs internal symbols</b></li>
     <br/>
@@ -5609,7 +5670,7 @@ CL-USER&gt; (my-app::start-ap)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Package Designators: <code>:my-app</code> VS <code>"MY-APP"</code></h3>
+<h3 id="lisp-pkg-designators">Package Designators: <code>:my-app</code> VS <code>"MY-APP"</code></h3>
 <ol>
     <li><b>The confusion</b></li>
     <br/>
@@ -5828,7 +5889,7 @@ CL-USER&gt; (my-app::start-ap)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3 id="multiple-values">Returning Multiple Values</h3>
+<h3 id="lisp-return-multiple-values">Returning Multiple Values</h3>
 <ol>
     <li><b>Introduction</b></li>
     <br/>
@@ -6042,7 +6103,7 @@ CL-USER&gt; (my-app::start-ap)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Currying vs Closures</h3>
+<h3 id="lisp-currying-vs-closures">Currying vs Closures</h3>
 <ol>
     <li><b>Closures</b>: Functions that remember</li>
     <br/>
@@ -6195,7 +6256,7 @@ CL-USER&gt; (my-app::start-ap)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Basics on Printing in Common Lisp</h3>
+<h3 id="lisp-basics-on-printing">Basics on Printing in Common Lisp</h3>
 <ol>
     <li>
         <b>PRINT</b>: prints an object in a readable way with quotes and <u>a trailing newline</u>.
@@ -6282,7 +6343,7 @@ CL-USER&gt; (my-app::start-ap)
 
 
 <!-- * * * * * * * * * * * * * * -->
-<h3>Details on FORMAT</h3>
+<h3 id="lisp-details-on-format">Details on <code>FORMAT</code></h3>
 <ol>
     <li>
         Its basic signature is:
