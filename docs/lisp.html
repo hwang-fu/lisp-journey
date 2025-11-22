@@ -5,10 +5,7 @@
     <meta charset="utf-8" />
     <title>Common Lisp</title>
 
-    <!-- Theme (pick any from Prism site) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/plugins/line-numbers/prism-line-numbers.min.css">
-
-    <!-- Prism core + Lisp language -->
     <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-core.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js"
             data-prismjs-autoloader-path="https://cdn.jsdelivr.net/npm/prismjs/components/"></script>
@@ -45,37 +42,37 @@
     }
 
     .nav-icon {
-        width: 18px;          /* adjust size here */
+        width: 18px;
         height: 18px;
-        object-fit: contain;  /* keep aspect ratio */
+        object-fit: contain;
         vertical-align: middle;
-        margin-left: 0.3rem;  /* small gap from text */
+        margin-left: 0.3rem;
     }
 
     table {
-        border-collapse: collapse;      /* merge borders so you don't get double lines */
-        width: 100%;                    /* optional: make it full width */
+        border-collapse: collapse;
+        width: 100%;
         font-family: system-ui, sans-serif;
         font-size: 14px;
     }
 
     th {
-        background-color: #f5f5f5;      /* light gray header background */
-        text-align: left;               /* header text alignment */
+        background-color: #f5f5f5;
+        text-align: left;
         font-weight: 600;
     }
 
     th, td {
-        border: 1px solid #ddd;         /* subtle border color */
-        padding: 8px 12px;              /* breathing room */
+        border: 1px solid #ddd;
+        padding: 8px 12px;
     }
 
     tr:nth-child(even) {
-        background-color: #fafafa;      /* zebra striping for readability */
+        background-color: #fafafa;
     }
 
     tr:hover {
-        background-color: #f0f8ff;      /* light hover highlight */
+        background-color: #f0f8ff;
     }
 
     .comment {
@@ -85,8 +82,8 @@
     .red-underline {
         text-decoration-line: underline;
         text-decoration-color: red;
-        text-decoration-thickness: 2px; /* optional: make it a bit thicker */
-        text-underline-offset: 2px;     /* optional: move it slightly down */
+        text-decoration-thickness: 2px;
+        text-underline-offset: 2px;
     }
 
     body {
@@ -103,38 +100,38 @@
     }
 
     code {
-        color: #24292e;                     /* text */
-        background-color: #f6f8fa;          /* bg */
-        border: 1px solid #d0d7de;          /* subtle frame */
+        color: #24292e;
+        background-color: #f6f8fa;
+        border: 1px solid #d0d7de;
         border-radius: .375rem;
         padding: .15rem .35rem;
         font-family: "FiraCode Nerd Font", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-        font-size: 0.875rem;                /* 14px-ish; avoid bare numbers */
+        font-size: 0.875rem;
         line-height: 1.4;
     }
 
-    /* Block code container */
+
     pre {
         margin: 1rem 0;
         padding: .8rem 1rem;
-        background-color: #f6f8fa;       /* match inline bg */
+        background-color: #f6f8fa;
         border: 1px solid #d0d7de;
         border-radius: .5rem;
-        overflow: auto;                   /* scroll if long */
-        tab-size: 4;                      /* adjust as needed */
+        overflow: auto;
+        tab-size: 4;
     }
 
-    /* Code inside pre: remove extra padding/background from inline style */
+
     pre code {
-        display: block;                   /* ensure full-width */
-        padding: 0;                       /* pre handles padding */
-        background: transparent;          /* avoid double bg */
-        border: 0;                        /* avoid double border */
+        display: block;
+        padding: 0;
+        background: transparent;
+        border: 0;
         color: #24292e;
         font-family: "FiraCode Nerd Font", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
         font-size: 0.875rem;
         line-height: 1.5;
-        white-space: pre;                 /* preserve spacing; use pre-wrap to wrap long lines */
+        white-space: pre;
     }
 </style>
 </head>
@@ -152,7 +149,7 @@
 <!-- * * * * * * * * * * * * * * -->
 <nav id="toc" style="margin-bottom: 2rem;">
     <h2> <img src="../resources/common-lisp.gif" alt="Common Lisp Logo" class="nav-icon"/> Common Lisp Index</h2>
-    <ul style="line-height: 1.8;">
+    <ol style="line-height: 1.8;">
         <li><a href="#lisp-how-to-use-sbcl">How to use SBCL?</a></li>
         <li><a href="#lisp-hello-world">Hello World</a></li>
         <li><a href="#lisp-prefix-notation">Prefix Notation</a></li>
@@ -204,7 +201,7 @@
         <li><a href="#lisp-currying-vs-closures">Currying vs Closures</a></li>
         <li><a href="#lisp-basics-on-printing">Basics on Printing in Common Lisp</a></li>
         <li><a href="#lisp-details-on-format">Details on <code>FORMAT</code></a></li>
-    </ul>
+    </ol>
 </nav>
 <!-- * * * * * * * * * * * * * * -->
 
